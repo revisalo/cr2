@@ -1,7 +1,7 @@
 class CreateSections < ActiveRecord::Migration
   def change
     create_table :sections do |t|
-      t.int :number
+      t.integer :number
       t.string :teacher
       t.string :subject_id
 
