@@ -4,8 +4,7 @@ class Pensum < ActiveRecord::Base
   belongs_to :magister
 
   #Validar todos los campos requeridos
-  validates :year, :semester, :presence => {true,
-  	:message => "Todos los campos son requeridos"}
+  validates :year, :semester, :presence => {:message => "Todos los campos son requeridos" }
   
   #Validar asociaciones -> No validar del otro lado (eg de materium a carpetum)
   validates_associated :subjects
@@ -18,6 +17,6 @@ class Pensum < ActiveRecord::Base
   validates :semester, :numericality => { :only_integer => true }
   validates :semester, :numericality => { :greater_than_or_equal_to => 0 }
   validates :semester, :numericality => { :less_than_or_equal_to => 2 }
-  validates :magister_id, :uniqueness => {true,
-  	:message => "El código de la maestría debe ser único"}
+  validates :magister_id, :uniqueness => true
+
 end

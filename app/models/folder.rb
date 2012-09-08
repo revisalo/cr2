@@ -4,8 +4,7 @@ class Folder < ActiveRecord::Base
   has_one :pensum
 
 #Validar todos los campos requeridos
-  validates :year, :code, :docid, :name, :semester, :presence => {true,
-  	:message => "Todos los campos son requeridos"}
+  validates :year, :code, :docid, :name, :semester, :presence => { :message => "Todos los campos son requeridos" }
   
   #Validar asociaciones -> No validar del otro lado (eg de materium a carpetum)
   validates_associated :subjects
