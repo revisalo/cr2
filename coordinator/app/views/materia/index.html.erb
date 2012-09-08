@@ -13,9 +13,9 @@
   <tr>
     <td><%= materium.nombre %></td>
     <td><%= materium.codigo %></td>
-    <td><%= link_to 'Show', materium %></td>
-    <td><%= link_to 'Edit', edit_materium_path(materium) %></td>
-    <td><%= link_to 'Destroy', materium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Mostrar', materium %></td>
+    <td><%= link_to 'Editar', edit_materium_path(materium) %></td>
+    <td><%= link_to 'Eliminar', materium, method: :delete, data: { confirm: 'Esta seguro que desea eliminar esta materia?' } %></td>
   </tr>
 <% end %>
 </table>
