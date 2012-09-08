@@ -1,0 +1,27 @@
+<h1>Listing pensums</h1>
+
+<table>
+  <tr>
+    <th>Year</th>
+    <th>Semester</th>
+    <th>Magister</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pensums.each do |pensum| %>
+  <tr>
+    <td><%= pensum.year %></td>
+    <td><%= pensum.semester %></td>
+    <td><%= pensum.magister_id %></td>
+    <td><%= link_to 'Show', pensum %></td>
+    <td><%= link_to 'Edit', edit_pensum_path(pensum) %></td>
+    <td><%= link_to 'Destroy', pensum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pensum', new_pensum_path %>

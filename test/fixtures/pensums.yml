@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  year: 1
+  semester: 1
+  magister_id: MyString
+
+two:
+  year: 1
+  semester: 1
+  magister_id: MyString
