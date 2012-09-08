@@ -1,13 +1,8 @@
 Cr2::Application.routes.draw do
 
-<<<<<<< HEAD
   get "home/index"
 
   resources :pensums
-=======
-  resources :pensums
-
->>>>>>> e151d33e11f1fdc2eee3cf5606cfd6673bc22303
 
   resources :sections
 
