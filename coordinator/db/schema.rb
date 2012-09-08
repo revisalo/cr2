@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120908171906) do
+ActiveRecord::Schema.define(:version => 20120908181110) do
 
   create_table "carpeta", :force => true do |t|
     t.string   "nombre"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(:version => 20120908171906) do
   create_table "pensums", :force => true do |t|
     t.integer  "ano"
     t.integer  "semestre"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "seccions", :force => true do |t|
+    t.integer  "numero"
+    t.integer  "creditos"
+    t.string   "profesor"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
