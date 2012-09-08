@@ -1,0 +1,23 @@
+<h1>Listing magisters</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @magisters.each do |magister| %>
+  <tr>
+    <td><%= magister.code %></td>
+    <td><%= link_to 'Show', magister %></td>
+    <td><%= link_to 'Edit', edit_magister_path(magister) %></td>
+    <td><%= link_to 'Destroy', magister, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Magister', new_magister_path %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Year:</b>
+  <%= @folder.year %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @folder.code %>
+</p>
+
+<p>
+  <b>Docid:</b>
+  <%= @folder.docid %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @folder.name %>
+</p>
+
+<p>
+  <b>Semester:</b>
+  <%= @folder.semester %>
+</p>
+
+
+<%= link_to 'Edit', edit_folder_path(@folder) %> |
+<%= link_to 'Back', folders_path %>
