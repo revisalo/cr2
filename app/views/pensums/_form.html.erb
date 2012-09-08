@@ -1,0 +1,29 @@
+<%= form_for(@pensum) do |f| %>
+  <% if @pensum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pensum.errors.count, "error") %> prohibited this pensum from being saved:</h2>
+
+      <ul>
+      <% @pensum.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :year %><br />
+    <%= f.number_field :year %>
+  </div>
+  <div class="field">
+    <%= f.label :semester %><br />
+    <%= f.number_field :semester %>
+  </div>
+  <div class="field">
+    <%= f.label :magister_id %><br />
+    <%= f.text_field :magister_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

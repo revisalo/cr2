@@ -1,4 +1,6 @@
 Cr2::Application.routes.draw do
+  resources :pensums
+
   resources :sections
 
   resources :subjects
