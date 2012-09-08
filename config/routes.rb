@@ -1,4 +1,7 @@
 Cr2::Application.routes.draw do
+
+  get "home/index"
+
   resources :pensums
 
   resources :sections
