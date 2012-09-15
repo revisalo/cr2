@@ -1,33 +1,3 @@
-Pensum:
-
-<p>
-  <b>Year:</b>
-  <%= @pensum.year %>
-</p>
-<p>
-  <b>Magister:</b>
-  <%= @pensum.magister_id %>
-</p>
-<p>
-  <b>Semester:</b>
-  <%= @pensum.semester %>
-</p>
-
-(<%= link_to "back", new_pensum_path  %>)
-
-<% @subjects.each do |subject| %>
-  <tr>
-    <td><%= subject.code %></td>
-    <td><%= subject.name %></td>
-    <td><%= subject.credits %></td>
-    <td><%= link_to 'Show', subject %></td>
-    <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
-    <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <!--<td><%= link_to 'Add to pensum', subject%></td>-->
-  </tr>
-<% end %>
-</table>
-
 <%= form_for @subject do |f| %>
   <% if @subject.errors.any? %>
     <div id="error_explanation">

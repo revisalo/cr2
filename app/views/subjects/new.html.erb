@@ -14,16 +14,15 @@ Pensum:
 
 (<%= link_to "backaaa", new_pensum_path  %>)
 <br>List all subjects:</br>
-  <table>
+   <table>
     <tr>
       <th>Code</th>
       <th>Name</th>
-      <th>Credits</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Credits</th>      
     </tr>
-  <% for subject in @subjects %>
+
+  
+  <% for subject in Pensum.find(params[:id]).subjects %>
     <tr>
       <td><%= subject.code %></td>
       <td><%= subject.name %></td>

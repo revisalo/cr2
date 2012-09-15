@@ -43,30 +43,10 @@ class SubjectsController < ApplicationController
   # POST /subjects.json
   def create
     @pensum = Pensum.find(params[:id])
-    @subject = @pensum.subjects.build(params[:subject])
-    @subjects = @pensum.subjects
+    @subject = @pensum.subjects.build(params[:subject])    
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @subjects }
-#    if @subject.save
-    end 
-    redirect_to new_subject_path
-#    else
-#      redirect_to new_magister_path
-#    else 
-#       redirect_to error.html.erb
-#  end
-#
-#    respond_to do |format|
-#      if @subject.save
-#        format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
-#        format.json { render json: @subject, status: :created, location: @subject }
-#      else
-#        format.html { render action: "new" }
-#        format.json { render json: @subject.errors, status: :unprocessable_entity }
-#      end
-#    end
+    @subject.save
+      redirect_to new_subject_path(:id => @pensum.id)
   end
 
   # PUT /subjects/1
