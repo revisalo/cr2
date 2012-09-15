@@ -1,5 +1,72 @@
-<h1>New subject</h1>
+Pensum:
+<p>
+  <b>Year:</b>
+  <%= @pensum.year %>
+</p>
+<p>
+  <b>Magister:</b>
+  <%= @pensum.magister_id %>
+</p>
+<p>
+  <b>Semester:</b>
+  <%= @pensum.semester %>
+</p>
 
-<%= render 'form' %>
+(<%= link_to "back", new_pensum_path  %>)
 
-<%= link_to 'Back', subjects_path %>
+<!--<% if !@pensum.subjects.blank? %>-->
+  <br>List all subjects:</br>
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Credits</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  <% for subject in @pensum.subjects %>
+    <tr>
+      <td><%= subject.code %></td>
+      <td><%= subject.name %></td>
+      <td><%= subject.credits %></td>
+      <td><%= link_to 'Show', subject %></td>
+      <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
+      <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </table> 
+<!--% else %>
+  <br>No subjects yet</br>  
+<% end %>-->
+
+
+<%= form_for @subject, :url => {:action => :create, :id => @pensum.id} do |f| %>
+  <% if @subject.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subject.errors.count, "error") %> prohibited this subject from being saved:</h2>
+
+      <ul>
+      <% @subject.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :credits %><br />
+    <%= f.text_field :credits %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

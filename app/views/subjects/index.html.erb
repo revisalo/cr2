@@ -1,12 +1,12 @@
-<h1>Listing subjects</h1>
+For the pensum fulanito*********
+
+<h1>Listing subjects of a pensum</h1>
 
 <table>
   <tr>
     <th>Code</th>
     <th>Name</th>
     <th>Credits</th>
-    <th>Folder</th>
-    <th>Pensum</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,11 +17,10 @@
     <td><%= subject.code %></td>
     <td><%= subject.name %></td>
     <td><%= subject.credits %></td>
-    <td><%= subject.folder_id %></td>
-    <td><%= subject.pensum_id %></td>
     <td><%= link_to 'Show', subject %></td>
     <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
     <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <!--<td><%= link_to 'Add to pensum', subject%></td>-->
   </tr>
 <% end %>
 </table>

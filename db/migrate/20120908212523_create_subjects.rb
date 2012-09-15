@@ -4,7 +4,6 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :code
       t.string :name
       t.integer :credits
-      t.string :folder_id
       t.string :pensum_id
 
       t.timestamps
