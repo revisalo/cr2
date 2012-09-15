@@ -1,14 +1,16 @@
 class Folder < ActiveRecord::Base
   attr_accessible :code, :docid, :name, :semester, :year
  # has_many :subjects
-  has_and_belongs_to_many :pensums
+#  has_one :pensum
+
+  has_and_belongs_to_many :subjects
 
 #Validar todos los campos requeridos
   validates :year, :code, :docid, :name, :semester, :presence => { :message => "Todos los campos son requeridos" }
   
   #Validar asociaciones -> No validar del otro lado (eg de materium a carpetum)
-  #validates_associated :subjects
-  validates_associated :pensum
+  validates_associated :subjects
+#  validates_associated :pensum
   
   #Validar tamaño y tipos
   validates :year, :length => { :is => 4 }
