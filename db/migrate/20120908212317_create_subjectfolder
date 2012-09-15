@@ -1,0 +1,4 @@
+class CreateSubjectFolderTable < ActiveRecord::Migration
+
+ 
+ end
