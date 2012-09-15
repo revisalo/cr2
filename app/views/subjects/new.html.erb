@@ -12,10 +12,8 @@ Pensum:
   <%= @pensum.semester %>
 </p>
 
-(<%= link_to "back", new_pensum_path  %>)
-
-<!--<% if !@pensum.subjects.blank? %>-->
-  <br>List all subjects:</br>
+(<%= link_to "backaaa", new_pensum_path  %>)
+<br>List all subjects:</br>
   <table>
     <tr>
       <th>Code</th>
@@ -25,7 +23,7 @@ Pensum:
       <th></th>
       <th></th>
     </tr>
-  <% for subject in @pensum.subjects %>
+  <% for subject in @subjects %>
     <tr>
       <td><%= subject.code %></td>
       <td><%= subject.name %></td>
@@ -35,11 +33,7 @@ Pensum:
       <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
-  </table> 
-<!--% else %>
-  <br>No subjects yet</br>  
-<% end %>-->
-
+  </table>
 
 <%= form_for @subject, :url => {:action => :create, :id => @pensum.id} do |f| %>
   <% if @subject.errors.any? %>

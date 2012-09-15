@@ -35,7 +35,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1/edit
   def edit
-    
+
     @subject = Subject.find(params[:id])
   end
 
@@ -44,12 +44,19 @@ class SubjectsController < ApplicationController
   def create
     @pensum = Pensum.find(params[:id])
     @subject = @pensum.subjects.build(params[:subject])
+    @subjects = @pensum.subjects
 
-    if @subject.save
-      redirect_to new_subject_path(:id => @pensum.id)
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @subjects }
+#    if @subject.save
+    end 
+    redirect_to new_subject_path
+#    else
+#      redirect_to new_magister_path
 #    else 
-#      redirect_to new_subject_path(:id => @pensum.id)
-    end
+#       redirect_to error.html.erb
+#  end
 #
 #    respond_to do |format|
 #      if @subject.save
