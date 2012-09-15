@@ -1,6 +1,8 @@
 class Subject < ActiveRecord::Base
   attr_accessible :code, :credits, :name
 
+  has_and_belongs_to_many :folders
+
   belongs_to :pensum
 
   #Validar todos los campos requeridos

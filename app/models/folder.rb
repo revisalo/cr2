@@ -3,6 +3,8 @@ class Folder < ActiveRecord::Base
  # has_many :subjects
   has_one :pensum
 
+  has_and_belongs_to_many :subjects
+
 #Validar todos los campos requeridos
   validates :year, :code, :docid, :name, :semester, :presence => { :message => "Todos los campos son requeridos" }
   
