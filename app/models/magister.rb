@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: magisters
+#
+#  id         :integer          not null, primary key
+#  code       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Magister < ActiveRecord::Base
   attr_accessible :code
   has_many :pensum

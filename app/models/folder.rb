@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: folders
+#
+#  id         :integer          not null, primary key
+#  year       :integer
+#  code       :string(255)
+#  docid      :integer
+#  name       :string(255)
+#  semester   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Folder < ActiveRecord::Base
   attr_accessible :code, :docid, :name, :semester, :year
   has_many :subjects
