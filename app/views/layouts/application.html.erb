@@ -2,26 +2,18 @@
 <html>
 <head>
   <title>Cr2</title>
-  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <link type="text/css" href="styles/reset.css" rel="stylesheet" media="all" />
+<link type="text/css" href="styles/text.css" rel="stylesheet" media="all" />
+<link type="text/css" href="styles/960.css" rel="stylesheet" media="all" />
+<link type="text/css" href="styles/style.css" rel="stylesheet" media="all" />
 </head>
 <body>
-<header class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <%= link_to "sample app", '#', id: "logo" %>
-          <nav>
-            <ul class="nav pull-right">
-              <li><%= link_to "Home",    '#' %></li>
-              <li><%= link_to "Help",    '#' %></li>
-              <li><%= link_to "Sign in", '#' %></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
+
 <%= yield %>
-</div>
+
 </body>
 </html>
