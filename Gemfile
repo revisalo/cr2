@@ -14,7 +14,7 @@ end
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+ gem 'annotate', '2.5.0'
 
 group :production do
 	gem "pg"
@@ -35,7 +35,7 @@ group :assets do
 end
 
 gem 'jquery-rails', '2.0.2'
-gem 'bootstrap-sass','2.0.4'
+
 
 group :test do
 	gem 'capybara', '1.1.2'

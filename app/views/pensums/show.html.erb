@@ -4,17 +4,15 @@
   <b>Year:</b>
   <%= @pensum.year %>
 </p>
-
+<p>
+  <b>Magister:</b>
+  <%= @pensum.magister_id %>
+</p>
 <p>
   <b>Semester:</b>
   <%= @pensum.semester %>
 </p>
 
-<p>
-  <b>Magister:</b>
-  <%= @pensum.magister_id %>
-</p>
 
-
-<%= link_to 'Edit', edit_pensum_path(@pensum) %> |
+<%= link_to 'Edit', edit_pensum_path(@pensum) %> | 
 <%= link_to 'Back', pensums_path %>

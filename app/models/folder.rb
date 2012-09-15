@@ -1,6 +1,6 @@
 class Folder < ActiveRecord::Base
   attr_accessible :code, :docid, :name, :semester, :year
-  has_many :subjects
+ # has_many :subjects
   has_one :pensum
 
 #Validar todos los campos requeridos

@@ -24,33 +24,42 @@ class SubjectsController < ApplicationController
   # GET /subjects/new
   # GET /subjects/new.json
   def new
-    @subject = Subject.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @subject }
-    end
+    @pensum = Pensum.find(params[:id])
+    @subject = @pensum.subjects.build
+#    @subject = Subject.new
+#    respond_to do |format|
+#      format.html # new.html.erb
+#      format.json { render json: @subject }
+#    end
   end
 
   # GET /subjects/1/edit
   def edit
+    
     @subject = Subject.find(params[:id])
   end
 
   # POST /subjects
   # POST /subjects.json
   def create
-    @subject = Subject.new(params[:subject])
+    @pensum = Pensum.find(params[:id])
+    @subject = @pensum.subjects.build(params[:subject])
 
-    respond_to do |format|
-      if @subject.save
-        format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
-        format.json { render json: @subject, status: :created, location: @subject }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @subject.errors, status: :unprocessable_entity }
-      end
+    if @subject.save
+      redirect_to new_subject_path(:id => @pensum.id)
+#    else 
+#      redirect_to new_subject_path(:id => @pensum.id)
     end
+#
+#    respond_to do |format|
+#      if @subject.save
+#        format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
+#        format.json { render json: @subject, status: :created, location: @subject }
+#      else
+#        format.html { render action: "new" }
+#        format.json { render json: @subject.errors, status: :unprocessable_entity }
+#      end
+#    end
   end
 
   # PUT /subjects/1
