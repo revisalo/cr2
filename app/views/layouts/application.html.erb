@@ -2,17 +2,11 @@
 <html>
 <head>
   <title>Cr2</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-
-  <link type="text/css" href="styles/reset.css" rel="stylesheet" media="all" />
-<link type="text/css" href="styles/text.css" rel="stylesheet" media="all" />
-<link type="text/css" href="styles/960.css" rel="stylesheet" media="all" />
-<link type="text/css" href="styles/style.css" rel="stylesheet" media="all" />
 </head>
 <body>
-<<<<<<< HEAD
 <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -26,7 +20,6 @@
             <li><%= link_to "Help",    '#' %></li>
             <li><%= link_to "Sign in", '#' %></li>
           </ul>
-          <button>Hola</button>
        </nav>
     </div>
   </div>
@@ -38,10 +31,5 @@
 <p>Powered by REVISALO</p>
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
 </div>
-=======
-
-<%= yield %>
-
->>>>>>> 8c0104539db2eb06f9906d23823c2829ed5f16db
 </body>
 </html>
