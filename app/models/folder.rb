@@ -1,7 +1,7 @@
 class Folder < ActiveRecord::Base
   attr_accessible :code, :docid, :name, :semester, :year
  # has_many :subjects
-  has_one :pensum
+#  has_one :pensum
 
   has_and_belongs_to_many :subjects
 
@@ -10,7 +10,7 @@ class Folder < ActiveRecord::Base
   
   #Validar asociaciones -> No validar del otro lado (eg de materium a carpetum)
   validates_associated :subjects
-  validates_associated :pensum
+#  validates_associated :pensum
   
   #Validar tamaño y tipos
   validates :year, :length => { :is => 4 }
