@@ -12,7 +12,6 @@ Pensum:
   <%= @pensum.semester %>
 </p>
 
-(<%= link_to "backaaa", new_pensum_path  %>)
 <br>List all subjects:</br>
    <table>
     <tr>
@@ -61,5 +60,6 @@ Pensum:
   </div>
   <div class="actions">
     <%= f.submit %>
+    <%= link_to "back", new_pensum_path  %>
   </div>
 <% end %>
