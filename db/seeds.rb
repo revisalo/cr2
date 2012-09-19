@@ -18,14 +18,15 @@ Subject.create(code: 'MATE-2', credits: 1, name: 'Materia 2')
 
 Subject.create(code: 'MATE-3', credits: 1, name: 'Materia 3')
 
-#fd1.subjects << sub1
+Pensum.create(year: 2008, semester: 1, name: 'Juan', semester: 2)
 
-#fd1.subjects << sub2
+Pensum.create(year: 2009, semester: 2, name: 'Manuel', semester: 1)
 
-#fd2.subjects << sub2
+Pensum.create(year: 2010, semester: 1, name: 'Laura', semester: 2)
 
-#fd2.subjects << sub3
+Magister.create(code: 'MISIS')
 
-#fd3.subjects << sub1
+Magister.create(code: 'MATI')
+
 
 #sub1.folders << fd1

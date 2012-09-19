@@ -21,7 +21,7 @@ class Folder < ActiveRecord::Base
   validates :code, :uniqueness => true
   validates :docid, :numericality => { :only_integer => true }
   validates :docid, :uniqueness => true
-  validates :name, :format => { :with => /\A[a-zA-Z]+\z/ }
+  validates :name, :format => { :with => /\A[a-zA-Z\s]+\z/ }
   validates :semester, :length => { :is => 1 }
   validates :semester, :numericality => { :only_integer => true }
   validates :semester, :numericality => { :greater_than_or_equal_to => 0 }
