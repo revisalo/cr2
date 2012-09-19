@@ -1,32 +1,28 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Year:</b>
-  <%= @folder.year %>
-</p>
-
-<p>
-  <b>Code:</b>
-  <%= @folder.code %>
-</p>
-
-<p>
-  <b>Docid:</b>
-  <%= @folder.docid %>
-</p>
-
+<h1>Folder</h1>
 <p>
   <b>Name:</b>
   <%= @folder.name %>
 </p>
-
+<p>
+  <b>Code:</b>
+  <%= @folder.code %>
+</p>
+<p>
+  <b>ID:</b>
+  <%= @folder.docid %>
+</p>
+<p>
+  <b>Year in:</b>
+  <%= @folder.year %>
+</p>
 <p>
   <b>Semester:</b>
   <%= @folder.semester %>
 </p>
 
 
-<br>List all subjects:</br>
+<h2>Subjects</h2>
    <table>
     <tr>
       <th>Code</th>
