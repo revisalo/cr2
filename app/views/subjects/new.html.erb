@@ -1,25 +1,24 @@
-Pensum:
-<p>
-  <b>Year:</b>
-  <%= @pensum.year %>
-</p>
+<h1>Pensum</h1>
 <p>
   <b>Magister:</b>
   <%= @pensum.magister_id %>
+</p>
+<p>
+  <b>Year:</b>
+  <%= @pensum.year %>
 </p>
 <p>
   <b>Semester:</b>
   <%= @pensum.semester %>
 </p>
 
-<br>List all subjects:</br>
+<h2>Subjects</h2>
    <table>
     <tr>
       <th>Code</th>
       <th>Name</th>
       <th>Credits</th>      
     </tr>
-
   
   <% for subject in Pensum.find(params[:id]).subjects %>
     <tr>
@@ -33,6 +32,7 @@ Pensum:
   <% end %>
   </table>
 
+<h2>Add subject</h2>
 <%= form_for @subject, :url => {:action => :create, :id => @pensum.id} do |f| %>
   <% if @subject.errors.any? %>
     <div id="error_explanation">
