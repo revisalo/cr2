@@ -1,12 +1,12 @@
-<h1>Folders</h1>
+<h1>Carpetas de estudiante</h1>
 
 <table>
   <tr>
-    <th>Year</th>
-    <th>Code</th>
-    <th>Document Id</th>
-    <th>Name</th>
-    <th>Semester</th>
+    <th>Año de ingreso</th>
+    <th>Código</th>
+    <th>No. Documento</th>
+    <th>Nombre</th>
+    <th>Semestre</th>
     <th></th>
     <th></th>
     <th></th>
@@ -19,14 +19,14 @@
     <td><%= folder.docid %></td>
     <td><%= folder.name %></td>
     <td><%= folder.semester %></td>
-    <td><%= link_to 'Show', folder %></td>
-    <td><%= link_to 'Edit', edit_folder_path(folder) %></td>
-    <td><%= link_to 'Destroy', folder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Ver', folder %></td>
+    <td><%= link_to 'Editar', edit_folder_path(folder) %></td>
+    <td><%= link_to 'Eliminar', folder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Folder', new_folder_path %>
+<%= link_to 'Nueva carpeta', new_folder_path %> |
 <a href="http://localhost:3000">Volver</a> 
