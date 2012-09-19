@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(:version => 20120919001417) do
     t.string   "code"
     t.string   "name"
     t.integer  "credits"
-    t.string   "pensum_id"
     t.string   "folder_id"
+    t.string   "pensum_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
