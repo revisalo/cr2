@@ -1,29 +1,45 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Year:</b>
-  <%= @folder.year %>
-</p>
-
-<p>
-  <b>Code:</b>
-  <%= @folder.code %>
-</p>
-
-<p>
-  <b>Docid:</b>
-  <%= @folder.docid %>
-</p>
-
+<h1>Folder</h1>
 <p>
   <b>Name:</b>
   <%= @folder.name %>
 </p>
-
+<p>
+  <b>Code:</b>
+  <%= @folder.code %>
+</p>
+<p>
+  <b>ID:</b>
+  <%= @folder.docid %>
+</p>
+<p>
+  <b>Year in:</b>
+  <%= @folder.year %>
+</p>
 <p>
   <b>Semester:</b>
   <%= @folder.semester %>
 </p>
+
+
+<h2>Subjects</h2>
+   <table>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Credits</th>      
+    </tr>
+
+  
+  <% for subject in Folder.find(params[:id]).subjects %>
+    <tr>
+      <td><%= subject.code %></td>
+      <td><%= subject.name %></td>
+      <td><%= subject.credits %></td>
+      <td><%= link_to 'Show', subject %></td>
+    </tr>
+  <% end %>
+  </table>
 
 
 <%= link_to 'Edit', edit_folder_path(@folder) %> |

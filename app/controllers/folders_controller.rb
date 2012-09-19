@@ -80,4 +80,11 @@ class FoldersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # DELETE /folders/1
+  # DELETE /folders/1.json
+  def fap
+    redirect_to subjects_url  
+  end
+  helper_method :fap
 end
