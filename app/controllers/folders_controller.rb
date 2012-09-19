@@ -40,7 +40,8 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    @folder = Folder.new(params[:folder])
+    @pensum = Pensum.find(params[:id])
+    @folder = @pensum.folders.build(params[:folder])    
 
     respond_to do |format|
       if @folder.save

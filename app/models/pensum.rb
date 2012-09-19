@@ -1,13 +1,16 @@
 class Pensum < ActiveRecord::Base
   attr_accessible :magister_id, :semester, :year
   has_many :subjects
+  has_many :folders
   belongs_to :magister
+
 
   #Validar todos los campos requeridos
   validates :year, :semester, :presence => {:message => "Todos los campos son requeridos" }
   
   #Validar asociaciones -> No validar del otro lado (eg de materium a carpetum)
-  validates_associated :subjects
+#  validates_associated :subjects
+  validates_associated :folders
   
   #Validar tamaño y tipos
   validates :year, :length => { :is => 4 }
