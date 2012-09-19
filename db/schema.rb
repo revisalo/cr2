@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(:version => 20120919001417) do
   end
 
   create_table "folders_subjects", :id => false, :force => true do |t|
-    t.integer "bookmark_id"
-    t.integer "tag_id"
+    t.integer "folder_id"
+    t.integer "subject_id"
   end
 
   create_table "magisters", :force => true do |t|
