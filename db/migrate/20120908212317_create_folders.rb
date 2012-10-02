@@ -6,6 +6,7 @@ class CreateFolders < ActiveRecord::Migration
       t.integer :docid
       t.string :name
       t.integer :semester
+      t.string :pensum_id
 
       t.timestamps
     end
