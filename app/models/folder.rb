@@ -27,4 +27,8 @@ class Folder < ActiveRecord::Base
   validates :semester, :numericality => { :greater_than_or_equal_to => 0 }
   validates :semester, :numericality => { :less_than_or_equal_to => 2 }
 
+  def id
+    @id
+  end
+
 end
