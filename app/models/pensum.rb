@@ -20,10 +20,9 @@ class Pensum < ActiveRecord::Base
   validates :semester, :numericality => { :only_integer => true }
   validates :semester, :numericality => { :greater_than_or_equal_to => 0 }
   validates :semester, :numericality => { :less_than_or_equal_to => 2 }
-  validates :magister_id, :uniqueness => true
+  
+  
 
- def id
-    @id
-  end
+ 
   
 end
