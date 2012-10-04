@@ -1,5 +1,5 @@
 class Folder < ActiveRecord::Base
-  attr_accessible :code, :docid, :name, :semester, :year
+  attr_accessible :code, :docid, :name, :semester, :year, :pensum_id, :magisterName
  # has_many :subjects
 #  has_one :pensum
 
@@ -26,5 +26,7 @@ class Folder < ActiveRecord::Base
   validates :semester, :numericality => { :only_integer => true }
   validates :semester, :numericality => { :greater_than_or_equal_to => 0 }
   validates :semester, :numericality => { :less_than_or_equal_to => 2 }
+
+ 
 
 end

@@ -1,4 +1,4 @@
-<h1>New folder</h1>
+<h1>New folder </h1>
 
 <%= form_for @folder, :url => {:action => :create, :id => '1'} do |f| %>
   <% if @folder.errors.any? %>
@@ -34,8 +34,8 @@
     <%= f.text_field :semester %>
   </div>
   <div class="field">
-    <%= f.label :pensum %><br />
-    <%= f.text_field :pensum %>
+    <%= f.label :magisterName %><br />
+    <%= f.text_field :magisterName %>
   </div>
   <div class="actions">
     <%= f.submit %>
