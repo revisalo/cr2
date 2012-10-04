@@ -41,9 +41,9 @@ class FoldersController < ApplicationController
   # POST /folders.json
   def create
     #@magisterF = Magister.find_by_code(params[:folder][:magisterName])
-    @pensumF = Pensum.where(:year => params[:folder][:year], :semester => params[:folder][:semester], :magister_id => params[:folder][:magisterName])
-    @folder = Folder.new(params[:folder].merge(:pensum_id => @pensumF.read_attribute(id)))
-
+    @pensumF = Pensum.where(:year => params[:folder][:year], :semester => params[:folder][:semester], :magister_id => params[:folder][:magisterName]).first
+    @folder = Folder.new(params[:folder].merge(:pensum_id => @pensumF.id))
+    
     respond_to do |format|
       if @folder.save
         format.html { redirect_to @folder, notice: 'Folder was successfully created.' }
