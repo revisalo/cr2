@@ -42,7 +42,7 @@ class FoldersController < ApplicationController
   def create
     #@magisterF = Magister.find_by_code(params[:folder][:magisterName])
     @pensumF = Pensum.where(:year => params[:folder][:year], :semester => params[:folder][:semester], :magister_id => params[:folder][:magisterName])
-    @folder = Folder.new(params[:folder], :pensum_id => @pensumF)
+    @folder = Folder.new(params[:folder].merge(:pensum_id => @pensumF.id))
 
     respond_to do |format|
       if @folder.save

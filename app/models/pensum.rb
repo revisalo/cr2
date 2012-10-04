@@ -22,4 +22,8 @@ class Pensum < ActiveRecord::Base
   validates :semester, :numericality => { :less_than_or_equal_to => 2 }
   validates :magister_id, :uniqueness => true
 
+ def id
+    @id
+  end
+  
 end
