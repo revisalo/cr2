@@ -20,7 +20,9 @@ class Pensum < ActiveRecord::Base
   validates :semester, :numericality => { :only_integer => true }
   validates :semester, :numericality => { :greater_than_or_equal_to => 0 }
   validates :semester, :numericality => { :less_than_or_equal_to => 2 }
-  
+
+  #Solo se tienen los pensums activos por eso solo puede haber un pensum por maestria
+  validates :magister_id, :uniqueness => true
   
 
  
