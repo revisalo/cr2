@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002225045) do
+ActiveRecord::Schema.define(:version => 20121006011656) do
 
   create_table "folders", :force => true do |t|
     t.integer  "year"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(:version => 20121002225045) do
     t.integer  "docid"
     t.string   "name"
     t.integer  "semester"
-    t.integer  "pensum_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "magisterName"
@@ -28,6 +27,14 @@ ActiveRecord::Schema.define(:version => 20121002225045) do
   create_table "folders_subjects", :id => false, :force => true do |t|
     t.integer "folder_id"
     t.integer "subject_id"
+  end
+
+  create_table "horarios", :force => true do |t|
+    t.string   "materia"
+    t.integer  "dia"
+    t.integer  "hora"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "magisters", :force => true do |t|
@@ -56,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20121002225045) do
     t.string   "code"
     t.string   "name"
     t.integer  "credits"
+    t.string   "folder_id"
     t.string   "pensum_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
