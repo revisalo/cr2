@@ -2,11 +2,10 @@
 
 <table>
   <tr>
-    <th>Year in</th>
     <th>Code</th>
     <th>ID Number</th>
     <th>Name</th>
-    <th>Semester</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,11 +13,10 @@
 
 <% @folders.each do |folder| %>
   <tr>
-    <td><%= folder.year %></td>
     <td><%= folder.code %></td>
     <td><%= folder.docid %></td>
     <td><%= folder.name %></td>
-    <td><%= folder.semester %></td>
+    <td><%= link_to 'Pensum', Pensum.where(:id => folder.pensum_id).first%></td>
     <td><%= link_to 'Show', folder %></td>
     <td><%= link_to 'Edit', edit_folder_path(folder) %></td>
     <td><%= link_to 'Delete', folder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
