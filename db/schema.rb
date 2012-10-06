@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121006145516) do
+ActiveRecord::Schema.define(:version => 20121006171208) do
 
   create_table "folders", :force => true do |t|
     t.integer  "year"
@@ -45,9 +45,10 @@ ActiveRecord::Schema.define(:version => 20121006145516) do
   end
 
   create_table "sections", :force => true do |t|
-    t.string   "subject"
     t.integer  "day"
     t.integer  "hour"
+    t.string   "pensum_id"
+    t.string   "subject_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

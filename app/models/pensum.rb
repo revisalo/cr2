@@ -2,6 +2,7 @@ class Pensum < ActiveRecord::Base
   attr_accessible :magister_id, :semester, :year
   has_many :subjects
   has_many :folders
+  has_many :sections
   belongs_to :magister
 
 

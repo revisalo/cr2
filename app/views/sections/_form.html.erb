@@ -12,16 +12,20 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :subject %><br />
-    <%= f.text_field :subject %>
-  </div>
-  <div class="field">
     <%= f.label :day %><br />
     <%= f.number_field :day %>
   </div>
   <div class="field">
     <%= f.label :hour %><br />
     <%= f.number_field :hour %>
+  </div>
+  <div class="field">
+    <%= f.label :pensum_id %><br />
+    <%= f.text_field :pensum_id %>
+  </div>
+  <div class="field">
+    <%= f.label :subject_id %><br />
+    <%= f.text_field :subject_id %>
   </div>
   <div class="actions">
     <%= f.submit %>
