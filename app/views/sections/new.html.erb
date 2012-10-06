@@ -77,7 +77,7 @@
     <% end %>
   </table>
 
-<h2>Add section</h2>
+<h2>Add Section</h2>
 <%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
