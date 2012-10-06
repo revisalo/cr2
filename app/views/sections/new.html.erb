@@ -91,13 +91,21 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :day %><br />
-    <%= f.text_field :day %>
+    <%= f.label :subject_id %><br />
+
+
+    <%= f.collection_select :subject_id, Subject.where(:pensum_id => params[:id]), :code, :code %>
   </div>
 
+  <div class="field">
+    <%= f.label :provisional %><br />
+    <%= f.select :provisional, options_for_select([["Si", "Si"], ["No", "No"]]) %>
+  </div>
 
-     
-      
+  <div class="field">
+    <%= f.label :day %><br />
+    <%= f.text_field :day %>
+  </div>  
 
   <div class="field">
     <%= f.label :hour %><br />
@@ -138,14 +146,6 @@
                </li>
           </ul>
               
-  </div>
-  <div class="field">
-    <%= f.label :subject_id %><br />
-
-
-    <%= f.collection_select :subject_id, Subject.where(:pensum_id => params[:id]), :code, :code %>
-
-
   </div>
   
   <div class="actions">
