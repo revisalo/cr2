@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-  attr_accessible :day, :hour, :pensum_id, :subject_id
+  attr_accessible :day, :hour, :pensum_id, :subject_id, :provisional
 
   belongs_to :pensum
 

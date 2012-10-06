@@ -6,6 +6,7 @@
     <th>Hour</th>
     <th>Pensum</th>
     <th>Subject</th>
+    <th>Provisional</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,6 +18,7 @@
     <td><%= section.hour %></td>
     <td><%= section.pensum_id %></td>
     <td><%= section.subject_id %></td>
+    <td><%= section.provisional %></td>
     <td><%= link_to 'Show', section %></td>
     <td><%= link_to 'Edit', edit_section_path(section) %></td>
     <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>

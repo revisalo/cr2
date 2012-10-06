@@ -21,6 +21,12 @@ class SectionsController < ApplicationController
     end
   end
 
+  def exjar
+
+  system("java -jar /tmp/gurobisalo.jar")
+
+  end
+
   # GET /sections/new
   # GET /sections/new.json
   def new
