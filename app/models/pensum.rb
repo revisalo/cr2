@@ -1,4 +1,4 @@
-class Pensum < ActiveRecord::Base
+ class Pensum < ActiveRecord::Base
   attr_accessible :magister_id, :semester, :year
   has_many :subjects
   has_many :folders
