@@ -16,5 +16,6 @@ class Section < ActiveRecord::Base
   validates :day, :numericality => { :greater_than_or_equal_to => 1 }
   validates :day, :numericality => { :less_than_or_equal_to => 6 }
   validates :pensum_id, :numericality => { :less_than_or_equal_to => 6 }
+  validates_uniqueness_of :subject_id, :scope => [:day, :hour]
     
 end
