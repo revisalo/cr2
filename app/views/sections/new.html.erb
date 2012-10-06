@@ -1,16 +1,18 @@
 <h2>Sections</h2>
    <table>
     <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Pensum</th>      
+      <th>Subject Name</th>
+      <th>Day</th>
+      <th>Hour</th>
+           
     </tr>
   
   <% for section in Pensum.find(params[:id]).sections %>
     <tr>
-      <td><%= section.id %></td>
       <td><%= section.subject_id %></td>
-      <td><%= section.pensum_id %></td>
+      <td><%= section.day %></td>
+      <td><%= section.hour %></td>
+      
       <td><%= link_to 'Show', section %></td>
       <td><%= link_to 'Edit', edit_section_path(section) %></td>
       <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -92,7 +94,7 @@
   </div>
   <div class="field">
     <%= f.label :hour %><br />
-    <%= f.text_field :hour %>
+   <%= f.collection_select :hour, horas= Array[ 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8], :hour, :hour %>
   </div>
   <div class="field">
     <%= f.label :subject_id %><br />
