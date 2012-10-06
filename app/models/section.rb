@@ -1,5 +1,9 @@
 class Section < ActiveRecord::Base
   attr_accessible :day, :hour, :pensum_id, :subject_id
+
+  #Se valida que todos los campos estén presentes
+  validates :day, :hour, :pensum_id, :subject_id, :presence => {:message => "Todos los campos son requeridos" }
+
   #Validar atributos
   validates :hour, :numericality => { :only_integer => true }
   validates :hour, :numericality => { :greater_than_or_equal_to => 1 }
