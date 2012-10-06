@@ -23,7 +23,7 @@ class Pensum < ActiveRecord::Base
 
   #Solo se tienen los pensums activos por eso solo puede haber un pensum por maestria
   validates :magister_id, :uniqueness => true
-  
+  has_one :schedule
 
  
   

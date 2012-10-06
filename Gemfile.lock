@@ -33,15 +33,8 @@ GEM
       rake
     arel (3.0.2)
     bootstrap-sass (2.0.4.0)
-<<<<<<< HEAD
-<<<<<<< HEAD
     builder (3.0.2)
-=======
     builder (3.0.3)
->>>>>>> 80126fce5609a0fc03f11a545f20972f79981d03
-=======
-    builder (3.0.3)
->>>>>>> 5a34e6c310f09269a8d64c7f883f2cc1f67e9650
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
