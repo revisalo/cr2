@@ -1,7 +1,5 @@
 Cr2::Application.routes.draw do
 
-  resources :schedules
-
   resources :sections
 
   get "home/index"
