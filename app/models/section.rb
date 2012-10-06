@@ -12,5 +12,5 @@ class Section < ActiveRecord::Base
 
   validates :hour, :uniqueness => { :scope => :day,
     :message => "" }
-    belongs_to :schedule
+    belongs_to :pensum
 end
