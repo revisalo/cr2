@@ -9,7 +9,7 @@ class Pensum < ActiveRecord::Base
   validates :year, :semester, :presence => {:message => "Todos los campos son requeridos" }
   
   #Validar asociaciones -> No validar del otro lado (eg de materium a carpetum)
-#  validates_associated :subjects
+  #  validates_associated :subjects
   validates_associated :folders
   
   #Validar tamaño y tipos

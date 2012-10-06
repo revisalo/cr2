@@ -41,6 +41,17 @@
   <% end %>
   </table>
 
+<% @pensumf = Pensum.where(:id => @folder.pensum_id).first %>
+
+<form name="Subjects">
+  <select name="List of subjects of the folder">
+    <% for i in @pensumf.subjects %>
+      <!-- hasta aca funciona, comprobado-->
+      <option value="m1"> "i.name"
+    <% end %>
+  </select>
+</form>
+
 
 <%= link_to 'Edit', edit_folder_path(@folder) %> |
 <%= link_to 'Back', folders_path %>

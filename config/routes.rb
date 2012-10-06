@@ -1,5 +1,7 @@
 Cr2::Application.routes.draw do
 
+  resources :horarios
+
   get "home/index"
 
   resources :pensums
