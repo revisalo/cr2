@@ -22,9 +22,9 @@ class SectionsController < ApplicationController
   end
 
   def exjar
-
-  system("/usr/lib/jvm/default-java/bisalo.jarva -jar /tmp/gurob")
-
+puts "ok!"
+  system("/usr/lib/jvm/default-java/jre/bin/java -jar /files/gurobisalo.jar")
+  
   end
 
   # GET /sections/new
