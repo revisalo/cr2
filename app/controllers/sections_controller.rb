@@ -40,17 +40,14 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    @section = Section.new(params[:section])
+    
+    @pensum = Pensum.find(params[:id])
+    @section = @pensum.sections.build(params[:section])    
 
-    respond_to do |format|
-      if @section.save
-        format.html { redirect_to @section, notice: 'Section was successfully created.' }
-        format.json { render json: @section, status: :created, location: @section }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @section.errors, status: :unprocessable_entity }
-      end
-    end
+    @section.save
+      redirect_to new_section_path(:id => @pensum.id)
+
+    
   end
 
   # PUT /sections/1

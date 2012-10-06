@@ -1,19 +1,16 @@
-<h1>Pensum</h1>
-
-
-<h2>sections</h2>
+<h2>Sections</h2>
    <table>
     <tr>
-      <th>Code</th>
+      <th>ID</th>
       <th>Name</th>
-      <th>Credits</th>      
+      <th>Pensum</th>      
     </tr>
   
   <% for section in Pensum.find(params[:id]).sections %>
     <tr>
-      <td><%= section.day %></td>
-      <td><%= section.name %></td>
-      <td><%= section.credits %></td>
+      <td><%= section.id %></td>
+      <td><%= section.subject_id %></td>
+      <td><%= section.pensum_id %></td>
       <td><%= link_to 'Show', section %></td>
       <td><%= link_to 'Edit', edit_section_path(section) %></td>
       <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -21,9 +18,62 @@
   <% end %>
   </table>
 
+<h2>Schedule</h2>
+  <table>
+    <tr>
+      <th>Hour</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+    </tr>
+    <!--1-8 are the hours of the day--> 
+    <% for j in 1..8 %>
+      <tr> 
+        <!--1 being monday and 6 being saturday--> 
+        <% for i in 0..6 %>
+          <td>
+              <%if i==0 %>
+                <% if j==1 %>
+                  <%="07:00 - 08:20" %>
+                <% end %>
+                <% if j==2 %>
+                  <%="08:30 - 09:50" %>
+                <% end %>
+                <% if j==3 %>
+                  <%="10:00 - 11:20" %>
+                <% end %>
+                <% if j==4 %>
+                  <%="11:30 - 12:50" %>
+                <% end %>
+                <% if j==5 %>
+                  <%="14:00 - 15:20" %>
+                <% end %>
+                <% if j==6 %>
+                  <%="15:30 - 16:50" %>
+                <% end %>
+                <% if j==7 %>
+                  <%="17:00 - 18:20" %>
+                <% end %>
+                <% if j==8 %>
+                  <%="18:30 - 19:50" %>
+                <% end %>
+              <% end %>
+            <% for section in Pensum.find(params[:id]).sections %>
+              <%if section.day == i && section.hour == j %>
+              <%=section.subject_id%>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
 <h2>Add section</h2>
-<%= form_for @section, :url => {:action => 
-	:create, :id => Pensum.find(params[:id]).id} do |f| %>
+<%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@section.errors.count, "error") %> prohibited this section from being saved:</h2>
@@ -46,12 +96,13 @@
   </div>
   <div class="field">
     <%= f.label :subject_id %><br />
-    <%= f.text_field :subject_id %>
+
+
+    <%= f.collection_select :subject_id, Subject.where(:pensum_id => params[:id]), :code, :code %>
+
+
   </div>
-  <div class="field">
-    <%= f.label :pensum_id %><br />
-    <%= f.text_field :pensum_id %>
-  </div>
+  
   <div class="actions">
     <%= f.submit %>
     <%= link_to "back", pensums_path  %>
