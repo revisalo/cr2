@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @pensum %> |
+    <td><%= link_to 'Show', :controller => :subjects, :action => :new, :id => @pensum.id %></td>
 <%= link_to 'Back', pensums_path %>
