@@ -1,13 +1,16 @@
 class Section < ActiveRecord::Base
-  attr_accessible :number, :subject_id, :teacher
-  belongs_to :subject
+  attr_accessible :day, :hour, :subject
 
-  #Validar todos los campos requeridos
-  validates :number, :profesor, :presence => { :message => "Todos los campos son requeridos" }
-  
-  #Validar tamaño y tipos
-  validates :number, :numericality => { :only_integer => true }
-  validates :number, :numericality => { :greater_than_or_equal_to => 0 }
-  validates :subject_id, :uniqueness =>  true
+  #Validar atributos
+  validates :hour, :numericality => { :only_integer => true }
+  validates :hour, :numericality => { :greater_than_or_equal_to => 1 }
+  validates :hour, :numericality => { :less_than_or_equal_to => 8 }
+
+  validates :day, :numericality => { :only_integer => true }
+  validates :day, :numericality => { :greater_than_or_equal_to => 1 }
+  validates :day, :numericality => { :less_than_or_equal_to => 6 }
+
+  validates :hour, :uniqueness => { :scope => :day,
+    :message => "" }
 
 end

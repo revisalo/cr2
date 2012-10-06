@@ -1,12 +1,10 @@
 Cr2::Application.routes.draw do
 
-  resources :horarios
+  resources :sections
 
   get "home/index"
 
   resources :pensums
-
-  resources :sections
 
   resources :subjects
 

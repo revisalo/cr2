@@ -2,9 +2,9 @@
 
 <table>
   <tr>
-    <th>Number</th>
-    <th>Teacher</th>
     <th>Subject</th>
+    <th>Day</th>
+    <th>Hour</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,12 +12,38 @@
 
 <% @sections.each do |section| %>
   <tr>
-    <td><%= section.number %></td>
-    <td><%= section.teacher %></td>
-    <td><%= section.subject_id %></td>
+    <td><%= section.subject %></td>
+    <td><%= section.day %></td>
+    <td><%= section.hour %></td>
     <td><%= link_to 'Show', section %></td>
     <td><%= link_to 'Edit', edit_section_path(section) %></td>
     <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<table>
+  <tr>
+    <th>Lunes</th>
+    <th>Martes</th>
+    <th>Miercoles</th>
+    <th>Jueves</th>
+    <th>Viernes</th>
+    <th>Sabado</th>
+  </tr>
+ <!--1-8 are the hours of the day--> 
+<% for j in 1..8 %>
+  <tr> 
+    <!--1 being monday and 6 being saturday--> 
+    <% for i in 1..6 %>
+      <td>
+        <% @sections.each do |section| %>
+          <%if section.day == i && section.hour == j %>
+          <%=section.subject%>
+          <% end %>
+        <% end %>
+      </td>
+    <% end %>
   </tr>
 <% end %>
 </table>
