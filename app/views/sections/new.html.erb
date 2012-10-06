@@ -94,9 +94,50 @@
     <%= f.label :day %><br />
     <%= f.text_field :day %>
   </div>
+
+
+     
+      
+
   <div class="field">
     <%= f.label :hour %><br />
-   <%= f.collection_select :hour, horas= Array[ 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8], :hour, :hour %>
+    <%= f.collection_select :hour, horas= Array[ Integer(1),2,3,4,5,6,7,8], :hour, :hour %>
+    
+          <ul>
+           
+             <li>
+               <%="1: 07:00 - 08:20"%>
+             </li>
+
+             <li>
+               <%="2: 08:30 - 09:50"%>
+             </li>
+             
+             <li>
+               <%="3: 10:00 - 11:20"%>
+             </li> 
+               
+             <li>
+               <%="4: 11:30 - 12:50"%>
+             </li>
+              
+              <li> 
+               <%="5: 14:00 - 15:20"%>
+              </li> 
+               
+              <li>
+               <%="6: 15:30 - 16:50"%>
+              </li>
+              
+              <li>
+               <%="7: 17:00 - 18:30"%>
+              </li>
+
+               <li>
+               <%="8: 18:30 - 20:00"%>
+               </li>
+          </ul>
+              
   </div>
   <div class="field">
     <%= f.label :subject_id %><br />
