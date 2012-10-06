@@ -1,15 +1,17 @@
 <h2>Sections</h2>
    <table>
     <tr>
-      <th>ID</th>
-      <th>Subject_Id</th>
+      <th>Subject Name</th>
+      <th>Day</th>
+      <th>Hour</th>
            
     </tr>
   
   <% for section in Pensum.find(params[:id]).sections %>
     <tr>
-      <td><%= section.id %></td>
       <td><%= section.subject_id %></td>
+      <td><%= section.day %></td>
+      <td><%= section.hour %></td>
       
       <td><%= link_to 'Show', section %></td>
       <td><%= link_to 'Edit', edit_section_path(section) %></td>
