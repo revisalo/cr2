@@ -9,7 +9,7 @@ class Section < ActiveRecord::Base
 
   #Validar atributos
   validates :hour, :numericality => { :only_integer => true }
-  validates :hour, :numericality 2=> { :greater_than_or_equal_to => 1 }
+  validates :hour, :numericality => { :greater_than_or_equal_to => 1 }
   validates :hour, :numericality => { :less_than_or_equal_to => 8 }
 
   validates :day, :numericality => { :only_integer => true }
