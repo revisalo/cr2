@@ -1,6 +1,7 @@
 <h2>Sections</h2>
    <table>
     <tr>
+
       <th>Subject Code </th>
       <th>Day</th>
       <th>Hour</th>
@@ -76,7 +77,7 @@
     <% end %>
   </table>
 
-<h2>Add section</h2>
+<h2>Add Section</h2>
 <%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
@@ -91,25 +92,34 @@
   <% end %>
 
   <div class="field">
+
+    <%= f.label :day %><br />
+    
+    <%= f.select :day, options_for_select([["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5],["Saturday", 6] ]) %>
+  </div>
+
+
+     
+      
+
+  <div class="field">
+    <%= f.label :hour %><br />
+    <%= f.select :hour, options_for_select([["07:00 - 08:20", 1], ["08:30 - 09:50", 2], ["10:00 - 11:20", 3], ["11:30 - 12:50", 4], ["14:00 - 15:20", 5], ["15:30 - 16:50", 6], ["17:00 - 18:30", 7], ["18:30 - 19:50", 8] ]) %>
+
     <%= f.label :subject_id %><br />
     <%= f.collection_select :subject_id, Subject.where(:pensum_id => params[:id]), :code, :code %>
 
-    <%= f.label :day %><br />    
-    <%= f.select :day, options_for_select([["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5] ]) %>
-  </div>
 
   <div class="field">
     <%= f.label :provisional %><br />
     <%= f.select :provisional, options_for_select([["Si", "Si"], ["No", "No"]]) %>
   </div>
 
-  <div class="field">
-    <%= f.label :hour %><br />
-    <%= f.select :hour, options_for_select([["07:00 - 08:20", 1], ["08:30 - 09:50", 2], ["10:00 - 11:20", 3], ["11:30 - 12:50", 4], ["14:00 - 15:20", 5], ["15:30 - 16:50", 6], ["17:00 - 18:30", 7], ["18:30 - 20:00", 8] ]) %>
+ 
     
           
               
-  </div>
+ 
   
   <div class="actions">
     <%= f.submit %>
