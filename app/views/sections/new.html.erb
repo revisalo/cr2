@@ -116,3 +116,5 @@
     <%= link_to "back", pensums_path  %>
   </div>
 <% end %>
+
+<%= submit_tag "Generate a Schedule", :type => 'button', :onclick => {:controller => :Subject, :action => :exjar, :id => Pensum.find(params[:id]).id} %>
