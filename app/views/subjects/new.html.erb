@@ -17,7 +17,8 @@
     <tr>
       <th>Code</th>
       <th>Name</th>
-      <th>Credits</th>      
+      <th>Credits</th>   
+      <th>Capacity</th>      
     </tr>
   
   <% for subject in Pensum.find(params[:id]).subjects %>
@@ -25,6 +26,7 @@
       <td><%= subject.code %></td>
       <td><%= subject.name %></td>
       <td><%= subject.credits %></td>
+      <td><%= subject.capacity %></td>
       <td><%= link_to 'Show', subject %></td>
       <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
       <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -58,6 +60,10 @@
     <%= f.label :credits %><br />
     <%= f.text_field :credits %>
   </div>
+  <div class="field">
+    <%= f.label :capacity %><br />
+    <%= f.text_field :capacity %>
+  </div>
   <div class="actions">
 
 <<<<<<< HEAD
@@ -65,8 +71,6 @@
     <%= link_to "Horario! ", :controller => :sections, :action => :new, :id => @pensum.id %>
   
 
-=======
->>>>>>> ec85057b02cc63a86e91a6101c81a9cb4aa451f8
     <%= f.submit %>
     <%= link_to "back", pensums_path  %>
     <%= link_to "Horario! ", :controller => :sections, :action => :new, :id => @pensum.id %>
