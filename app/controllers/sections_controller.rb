@@ -3,36 +3,33 @@ class SectionsController < ApplicationController
   # GET /sections.json
   def index
     @sections = Section.all
-
-    respond_to do |format|
+    
+        respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @sections }
-    end
+    
+  end
   end
 
   # GET /sections/1
   # GET /sections/1.json
   def show
-    @section = Section.find(params[:id])
-
+   @section = Section.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @section }
-    end
+     end
   end
 
-  def exjar
-puts "ok!"
-  system("/usr/lib/jvm/default-java/jre/bin/java -jar /files/gurobisalo.jar")
+
   
-  end
 
   # GET /sections/new
   # GET /sections/new.json
   def new
+ 
     @section = Section.new
-
-    respond_to do |format|
+       respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @section }
     end
@@ -46,13 +43,15 @@ puts "ok!"
   # POST /sections
   # POST /sections.json
   def create
-    
+    if params[:id]=="1"
+      leer
+    else
     @pensum = Pensum.find(params[:id])
     @section = @pensum.sections.build(params[:section])    
 
     @section.save
       redirect_to new_section_path(:id => @pensum.id)
-
+    end
     
   end
 
@@ -82,5 +81,9 @@ puts "ok!"
       format.html { redirect_to sections_url }
       format.json { head :no_content }
     end
+  end
+
+  def leer
+
   end
 end
