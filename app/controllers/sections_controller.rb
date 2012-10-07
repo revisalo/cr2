@@ -90,7 +90,7 @@ class SectionsController < ApplicationController
   end
 
   def escribir
-
+    @pensum = Pensum.find(@Section.find(params[:id]).pensum_id)
     File.open('/home/san/julian.data', 'w') do |f|
     f.puts params
   end
