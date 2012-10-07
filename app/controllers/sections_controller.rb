@@ -43,12 +43,14 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    if params[:id]=="1"
-      leer
-    else
     @pensum = Pensum.find(params[:id])
+    if params[:id]=="1"
+      escribir
+      leer
+      redirect_to new_section_path(:id => @pensum.id)
+    else
+    
     @section = @pensum.sections.build(params[:section])    
-
     @section.save
       redirect_to new_section_path(:id => @pensum.id)
     end
@@ -85,5 +87,11 @@ class SectionsController < ApplicationController
 
   def leer
 
+  end
+
+  def escribir
+    File.open('/home/san/julian.data', 'w') do |f|
+    f.puts "TEST"
+  end
   end
 end
