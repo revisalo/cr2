@@ -90,8 +90,9 @@ class SectionsController < ApplicationController
   end
 
   def escribir
+
     File.open('/home/san/julian.data', 'w') do |f|
-    f.puts "TEST"
+    f.puts params
   end
   end
 end
