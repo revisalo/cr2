@@ -14,11 +14,13 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.json
   def show
+    
    @section = Section.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @section }
      end
+   
   end
 
 
@@ -27,7 +29,6 @@ class SectionsController < ApplicationController
   # GET /sections/new
   # GET /sections/new.json
   def new
- 
     @section = Section.new
        respond_to do |format|
       format.html # new.html.erb
@@ -43,15 +44,30 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    if params[:id]=="1"
-      leer
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+    if params[:id]=="-1"
+     leer
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
     else
+    
     @pensum = Pensum.find(params[:id])
     @section = @pensum.sections.build(params[:section])    
 
     @section.save
       redirect_to new_section_path(:id => @pensum.id)
     end
+    
     
   end
 
@@ -84,6 +100,15 @@ class SectionsController < ApplicationController
   end
 
   def leer
-
+    
+       counter = 1
+   file = File.new("ejemplo.txt", "r")
+   while (line = file.gets)
+      puts "#{counter}: #{line}"
+      counter = counter + 1
   end
+  file.close
+
+   end
+
 end
