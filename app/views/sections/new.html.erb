@@ -123,8 +123,10 @@
   <div class="actions">
     <%= f.submit %>
     <%= link_to "back", pensums_path  %>
-
-    <%= button_to 'Approve', :controller => :sections, :action => :create, :id => 1%>
   </div>
 <% end %>
+
+
+
+    <%= button_to 'Approve', :controller => :sections, :action => :index, :id => -1%>
 

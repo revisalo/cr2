@@ -14,11 +14,13 @@ class SectionsController < ApplicationController
   # GET /sections/1
   # GET /sections/1.json
   def show
+    
    @section = Section.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @section }
      end
+   
   end
 
 
@@ -27,7 +29,6 @@ class SectionsController < ApplicationController
   # GET /sections/new
   # GET /sections/new.json
   def new
- 
     @section = Section.new
        respond_to do |format|
       format.html # new.html.erb
@@ -43,6 +44,26 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
+<<<<<<< HEAD
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+      system("echo ++++++++++++++++++++")
+    if params[:id]=="-1"
+     leer
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+     system("echo ++++++++++++++++++++")
+    else
+    
+    @pensum = Pensum.find(params[:id])
+=======
     @pensum = Pensum.find(params[:id])
     if params[:id]=="1"
       escribir
@@ -50,10 +71,12 @@ class SectionsController < ApplicationController
       redirect_to new_section_path(:id => @pensum.id)
     else
     
+>>>>>>> 711b8d89fc8676c6f97d3574a257ed4b5bf4a335
     @section = @pensum.sections.build(params[:section])    
     @section.save
       redirect_to new_section_path(:id => @pensum.id)
     end
+    
     
   end
 
@@ -86,8 +109,19 @@ class SectionsController < ApplicationController
   end
 
   def leer
-
+    
+       counter = 1
+   file = File.new("ejemplo.txt", "r")
+   while (line = file.gets)
+      puts "#{counter}: #{line}"
+      counter = counter + 1
   end
+<<<<<<< HEAD
+  file.close
+
+   end
+
+=======
 
   def escribir
     @pensum = Pensum.find(@Section.find(params[:id]).pensum_id)
@@ -95,4 +129,5 @@ class SectionsController < ApplicationController
     f.puts params
   end
   end
+>>>>>>> 711b8d89fc8676c6f97d3574a257ed4b5bf4a335
 end
