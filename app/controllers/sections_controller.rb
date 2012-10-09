@@ -44,40 +44,16 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-<<<<<<< HEAD
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-    if params[:id]=="-1"
-     leer
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-    else
-    
-    @pensum = Pensum.find(params[:id])
-=======
-    @pensum = Pensum.find(params[:id])
-    if params[:id]=="1"
-      escribir
+    if (params[:id]=="-1")
+      #escribir
       leer
-      redirect_to new_section_path(:id => @pensum.id)
+      redirect_to new_section_path(:id => params[:pensum_id])
     else
-    
->>>>>>> 711b8d89fc8676c6f97d3574a257ed4b5bf4a335
-    @section = @pensum.sections.build(params[:section])    
-    @section.save
+      @pensum = Pensum.find(params[:id])
+      @section = @pensum.sections.build(params[:section])    
+      @section.save
       redirect_to new_section_path(:id => @pensum.id)
     end
-    
-    
   end
 
   # PUT /sections/1
@@ -109,25 +85,40 @@ class SectionsController < ApplicationController
   end
 
   def leer
-    
-       counter = 1
-   file = File.new("ejemplo.txt", "r")
-   while (line = file.gets)
-      puts "#{counter}: #{line}"
-      counter = counter + 1
+    File.open("output.txt", "r") do |infile|
+      while (line = infile.gets)
+          #puts "#{counter}: #{line}"
+          datos = line.split(';')
+          code = datos[0]
+          day = datos[1]
+          hour = datos[2]
+          
+          section = Section.where(:subject_id => code, :day => day, :hour => hour).first
+          puts "**************************** #{section.subject_id}"
+      end
+    end
   end
-<<<<<<< HEAD
-  file.close
 
-   end
-
-=======
 
   def escribir
-    @pensum = Pensum.find(@Section.find(params[:id]).pensum_id)
-    File.open('/home/san/julian.data', 'w') do |f|
-    f.puts params
+    @pensum = Pensum.find(params[:pensum_id])
+    #File.open('/home/san/julian.data', 'w') do |f|
+    File.open('./input.data', 'w') do |f|
+      f.puts @pensum.subjects.count
+      f.puts "----------"
+      @pensum.subjects.each do |sub|
+        f.puts "#{sub.code};#{sub.capacity};2" 
+      end
+      f.puts "----------"
+      @pensum.subjects.each do |sub|
+        @pensum.sections.each do |sec|
+          if (sec.subject_id == sub.code)
+            f.puts "#{sub.code};#{sec.day};#{sec.hour}"
+          end
+        end
+      end
+      f.puts "----------"
+    end
   end
-  end
->>>>>>> 711b8d89fc8676c6f97d3574a257ed4b5bf4a335
+
 end

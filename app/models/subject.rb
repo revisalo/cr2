@@ -1,5 +1,5 @@
 class Subject < ActiveRecord::Base
-  attr_accessible :code, :credits, :name, :capacity
+  attr_accessible :code, :credits, :name, :capacity, :pensum_id
 
   has_and_belongs_to_many :folders
 
