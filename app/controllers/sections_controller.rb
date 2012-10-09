@@ -45,7 +45,7 @@ class SectionsController < ApplicationController
   # POST /sections.json
   def create
     if (params[:id]=="-1")
-      #escribir
+      escribir
       leer
       redirect_to new_section_path(:id => params[:pensum_id])
     else

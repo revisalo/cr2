@@ -24,5 +24,12 @@
 
   </table>
 
+<% @subjectsOfThePensum = Pensum.where(:id => @folder.pensum_id).first.subjects %>
+
+<h2>Select Seen Subjects</h2>
+<p>
+<%= collection_select(:folder, :pensum_id, @subjectsOfThePensum, :id, :name) %>
+</p>
+
 <%= link_to 'Show', @folder %> |
 <%= link_to 'Back', folders_path %>
