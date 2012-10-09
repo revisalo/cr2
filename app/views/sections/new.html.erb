@@ -23,6 +23,32 @@
   <% end %>
   </table>
 
+
+<% numE = 0%>
+<% numM = 0%>
+<% for subject in Pensum.find(params[:id]).subjects %>
+  <% nB = subject.blocks%>
+  <% sid = subject.code%>
+  <% numSec = 0%>
+  <% for section in Pensum.find(params[:id]).sections %>
+    <% if section.subject_id == sid && section.provisional == 0%>
+      <% numSec = numSec + 1%>
+    <% end %>
+  <% end %>
+  <% if numSec >= nB%>
+    <% numE = numE + subject.capacity%>
+    <% numM = numM + 1%>
+  <% end %>
+<% end %>
+<h2>Number of Students</h2>
+<%= numE%>
+<h2>Number of Subjects</h2>
+<%= numM%>
+<h2>Student Subjects Rate</h2>
+<%= numE/numM%>
+
+
+
 <h2>Schedule</h2>
   <table>
     <tr>

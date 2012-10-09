@@ -46,6 +46,7 @@ class SectionsController < ApplicationController
   def create
     if (params[:id]=="-1")
       escribir
+      system("/bin/bash ~/bash2.sh")
       leer
       redirect_to new_section_path(:id => params[:pensum_id])
     else
@@ -85,7 +86,7 @@ class SectionsController < ApplicationController
   end
 
   def leer
-    File.open("/files/results", "r") do |infile|
+    File.open("./files/result", "r") do |infile|
 
       Section.all.each do |sec|
         sec.provisional = 1    
@@ -113,11 +114,11 @@ class SectionsController < ApplicationController
   def escribir
     @pensum = Pensum.find(params[:pensum_id])
     #File.open('/home/san/julian.data', 'w') do |f|
-    File.open('/files/data', 'w') do |f|
+    File.open('./files/data', 'w') do |f|
       f.puts @pensum.subjects.count
       f.puts "----------"
       @pensum.subjects.each do |sub|
-        f.puts "#{sub.code};#{sub.capacity};2" 
+        f.puts "#{sub.code};#{sub.capacity};#{sub.blocks}" 
       end
       f.puts "----------"
       @pensum.subjects.each do |sub|
