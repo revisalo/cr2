@@ -45,26 +45,8 @@ class SectionsController < ApplicationController
   # POST /sections.json
   def create
 
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-      system("echo ++++++++++++++++++++")
-    if params[:id]=="-1"
-     leer
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-     system("echo ++++++++++++++++++++")
-    else
-    
-    @pensum = Pensum.find(params[:id])
-
-    @pensum = Pensum.find(params[:id])
+      @pensum = Pensum.find(params[:id])
+   
     if params[:id]=="1"
       escribir
       leer
@@ -116,17 +98,17 @@ class SectionsController < ApplicationController
       puts "#{counter}: #{line}"
       counter = counter + 1
  
-  file.close
-
+     file.close
    end
- end
+   end
 
 
 
   def escribir
-    @pensum = Pensum.find(@Section.find(params[:id]).pensum_id)
+
     File.open('/home/san/julian.data', 'w') do |f|
     f.puts params
+   end
   end
-  
-end
+end  
+
