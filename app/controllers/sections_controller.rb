@@ -86,6 +86,13 @@ class SectionsController < ApplicationController
 
   def leer
     File.open("output.txt", "r") do |infile|
+
+      Section.all.each do |sec|
+        sec.provisional = 1    
+        sec.save
+          puts "................................."
+          puts "#{sec.subject_id} #{sec.provisional}"
+      end 
       while (line = infile.gets)
           #puts "#{counter}: #{line}"
           datos = line.split(';')
@@ -95,7 +102,9 @@ class SectionsController < ApplicationController
           
           section = Section.where(:subject_id => code, :day => day, :hour => hour).first
           puts "**************************** #{section.subject_id}"
-          section.provisional = "No"
+          section.provisional = 0
+          section.save
+          puts "#{section.provisional}"
       end
     end
   end
