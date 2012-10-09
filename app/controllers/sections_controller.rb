@@ -44,7 +44,7 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-<<<<<<< HEAD
+
       system("echo ++++++++++++++++++++")
       system("echo ++++++++++++++++++++")
       system("echo ++++++++++++++++++++")
@@ -63,7 +63,7 @@ class SectionsController < ApplicationController
     else
     
     @pensum = Pensum.find(params[:id])
-=======
+
     @pensum = Pensum.find(params[:id])
     if params[:id]=="1"
       escribir
@@ -71,7 +71,7 @@ class SectionsController < ApplicationController
       redirect_to new_section_path(:id => @pensum.id)
     else
     
->>>>>>> 711b8d89fc8676c6f97d3574a257ed4b5bf4a335
+
     @section = @pensum.sections.build(params[:section])    
     @section.save
       redirect_to new_section_path(:id => @pensum.id)
@@ -115,19 +115,18 @@ class SectionsController < ApplicationController
    while (line = file.gets)
       puts "#{counter}: #{line}"
       counter = counter + 1
-  end
-<<<<<<< HEAD
+ 
   file.close
 
    end
+ end
 
-=======
+
 
   def escribir
 
     File.open('/home/san/julian.data', 'w') do |f|
     f.puts params
   end
-  end
->>>>>>> 711b8d89fc8676c6f97d3574a257ed4b5bf4a335
+  
 end
