@@ -85,7 +85,7 @@ class SectionsController < ApplicationController
   end
 
   def leer
-    File.open("output.txt", "r") do |infile|
+    File.open("/files/results", "r") do |infile|
 
       Section.all.each do |sec|
         sec.provisional = 1    
@@ -113,7 +113,7 @@ class SectionsController < ApplicationController
   def escribir
     @pensum = Pensum.find(params[:pensum_id])
     #File.open('/home/san/julian.data', 'w') do |f|
-    File.open('./input.data', 'w') do |f|
+    File.open('/files/data', 'w') do |f|
       f.puts @pensum.subjects.count
       f.puts "----------"
       @pensum.subjects.each do |sub|
