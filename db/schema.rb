@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20121006215523) do
     t.string   "name"
     t.integer  "credits"
     t.string   "pensum_id"
+    t.integer  "blocks"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "capacity"

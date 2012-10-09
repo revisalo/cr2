@@ -95,6 +95,7 @@ class SectionsController < ApplicationController
           
           section = Section.where(:subject_id => code, :day => day, :hour => hour).first
           puts "**************************** #{section.subject_id}"
+          section.provisional = "No"
       end
     end
   end

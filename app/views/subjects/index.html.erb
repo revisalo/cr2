@@ -1,4 +1,4 @@
-For the pensum fulanito*********
+
 
 <h1>Listing subjects of a pensum</h1>
 
@@ -8,17 +8,10 @@ For the pensum fulanito*********
     <th>Name</th>
     <th>Credits</th>
     <th>Capacity</th>
+    <th>Number of Blocks</th>
     <th></th>
     <th></th>
     <th></th>
-Code  Name  Credits
-Add subject
-Code
-
-
-Name
-
-
   </tr>
 
 <% @subjects.each do |subject| %>
@@ -27,6 +20,7 @@ Name
     <td><%= subject.name %></td>
     <td><%= subject.credits %></td>
     <td><%= subject.capacity %></td>
+    <td><%= subject.blocks %></td>
     <td><%= link_to 'Show', subject %></td>
     <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
     <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>

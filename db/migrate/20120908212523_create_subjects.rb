@@ -5,6 +5,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.string :name
       t.integer :credits
       t.string :pensum_id
+      t.integer :blocks
 
       t.timestamps
     end
