@@ -5,16 +5,67 @@
       <th>Subject Code </th>
       <th>Day</th>
       <th>Hour</th>
-      <th>Provisional</th>
+      <th>Definitive</th>
            
     </tr>
   
   <% for section in Pensum.find(params[:id]).sections %>
     <tr>
       <td><%= section.subject_id %></td>
-      <td><%= section.day %></td>
-      <td><%= section.hour %></td>
-      <td><%= section.provisional %></td>
+      <%l= section.day %>
+      <% if l==1 %>
+                <td>  <%="Monday" %></td>
+                <% end %>
+                <% if l==2 %>
+                 <td> <%="Tuesday" %></td>
+                <% end %>
+                <% if l==3 %>
+                 <td> <%="Wednesday" %></td>
+                <% end %>
+                <% if l==4 %>
+                 <td> <%="Thursday" %></td>
+                <% end %>
+                <% if l==5 %>
+                 <td> <%="Friday" %></td>
+                <% end %>
+                <% if l==6 %>
+                  <td><%="Saturday" %></td>
+                <% end %>
+
+      <%k= section.hour %>
+      <% if k==1 %>
+                <td>  <%="07:00 - 08:20" %></td>
+                <% end %>
+                <% if k==2 %>
+                 <td> <%="08:30 - 09:50" %></td>
+                <% end %>
+                <% if k==3 %>
+                 <td> <%="10:00 - 11:20" %></td>
+                <% end %>
+                <% if k==4 %>
+                 <td> <%="11:30 - 12:50" %></td>
+                <% end %>
+                <% if k==5 %>
+                 <td> <%="14:00 - 15:20" %></td>
+                <% end %>
+                <% if k==6 %>
+                  <td><%="15:30 - 16:50" %></td>
+                <% end %>
+                <% if k==7 %>
+                  <td><%="17:00 - 18:20" %></td>
+                <% end %>
+                <% if k==8 %>
+                  <td><%="18:30 - 19:50" %></td>
+                <% end %>
+
+
+      <%if section.provisional == 0%>
+      <td><%= "Yes"%></td>
+      <%end%>
+
+<%if section.provisional == 1%>
+      <td><%= "No"%></td>
+      <%end%>
       
       <td><%= link_to 'Show', section %></td>
       <td><%= link_to 'Edit', edit_section_path(section) %></td>
@@ -45,8 +96,9 @@
 <h2>Number of Subjects</h2>
 <%= numM%>
 <h2>Student Subjects Rate</h2>
+ <%if numM!=0 %>
 <%= numE/numM%>
-
+ <% end %>
 
 
 <h2>Schedule</h2>
@@ -94,7 +146,8 @@
               <% end %>
             <% for section in Pensum.find(params[:id]).sections %>
               <%if section.day == i && section.hour == j && section.provisional == 0%>
-              <%=section.subject_id%>
+              
+              <td><%= link_to section.subject_id, section %></td>
               <% end %>
             <% end %>
           </td>
@@ -134,18 +187,18 @@
 
 
   <div class="field">
-    <%= f.label :provisional %><br />
-    <%= f.select :provisional, options_for_select([["Yes", 1], ["No", 0]]) %>
+    <%= f.label :Definitive %><br />
+    <%= f.select :provisional, options_for_select([["Yes", 0], ["No", 1]]) %>
   </div>
 
   
   <div class="actions">
     <%= f.submit %>
-    <%= link_to "back", pensums_path  %>
-  </div>
+   </div>
 <% end %>
 
  <%= button_to("Optimize", {:controller => :sections, :action => :create, :id => -1, :pensum_id => params[:id]})%>
+ <%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"),"http://localhost:3000/subjects/new?id="+params[:id].to_s  )%>
 
 
 

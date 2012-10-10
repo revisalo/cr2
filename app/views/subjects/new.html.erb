@@ -72,10 +72,11 @@
   </div>
   <div class="actions">
     
-    <%= link_to "Horario! ", :controller => :sections, :action => :new, :id => @pensum.id %>
+    <%= link_to(image_tag("http://www.ellipsistech.com/NSS8_files/icon_lesson_timer.gif"), :controller => :sections, :action => :new, :id => @pensum.id )%>
   
 
     <%= f.submit %>
-    <%= link_to "back", pensums_path  %>
+    <%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), pensums_path)%>
+    
   </div>
 <% end %>

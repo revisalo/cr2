@@ -2,12 +2,56 @@
 
 <p>
   <b>Day:</b>
-  <%= @section.day %>
+  <%l= @section.day %>
+  <% if l==1 %>
+                <td>  <%="Monday" %></td>
+                <% end %>
+                <% if l==2 %>
+                 <td> <%="Tuesday" %></td>
+                <% end %>
+                <% if l==3 %>
+                 <td> <%="Wednesday" %></td>
+                <% end %>
+                <% if l==4 %>
+                 <td> <%="Thursday" %></td>
+                <% end %>
+                <% if l==5 %>
+                 <td> <%="Friday" %></td>
+                <% end %>
+                <% if l==6 %>
+                  <td><%="Saturday" %></td>
+                <% end %>
 </p>
 
 <p>
   <b>Hour:</b>
-  <%= @section.hour %>
+
+  <%k= @section.hour %>
+      <% if k==1 %>
+                <td>  <%="07:00 - 08:20" %></td>
+                <% end %>
+                <% if k==2 %>
+                 <td> <%="08:30 - 09:50" %></td>
+                <% end %>
+                <% if k==3 %>
+                 <td> <%="10:00 - 11:20" %></td>
+                <% end %>
+                <% if k==4 %>
+                 <td> <%="11:30 - 12:50" %></td>
+                <% end %>
+                <% if k==5 %>
+                 <td> <%="14:00 - 15:20" %></td>
+                <% end %>
+                <% if k==6 %>
+                  <td><%="15:30 - 16:50" %></td>
+                <% end %>
+                <% if k==7 %>
+                  <td><%="17:00 - 18:20" %></td>
+                <% end %>
+                <% if k==8 %>
+                  <td><%="18:30 - 19:50" %></td>
+                <% end %>
+
 </p>
 
 <p>
@@ -21,11 +65,17 @@
 </p>
 
 <p>
-  <b>Subject:</b>
-  <%= @section.provisional %>
+  <b>Definitive:</b>
+    <%if @section.provisional == 0%>
+      <td><%= "Yes"%></td>
+      <%end%>
+
+<%if @section.provisional == 1%>
+      <td><%= "No"%></td>
+      <%end%>
 </p>
 
 
 
 <%= link_to 'Edit', edit_section_path(@section) %> |
-<%= link_to 'Back', sections_path %>
+<%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), sections_path) %>

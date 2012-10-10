@@ -26,4 +26,4 @@
 
 
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
-<%= link_to 'Back', pensum_path %>
+<%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"),  "new?id="+ @subject.pensum_id.to_s) %>
