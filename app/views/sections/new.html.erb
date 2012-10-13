@@ -147,7 +147,7 @@
             <% for section in Pensum.find(params[:id]).sections %>
               <%if section.day == i && section.hour == j && section.provisional == 0%>
               
-              <td><%= link_to section.subject_id, section %></td>
+              <%= link_to section.subject_id, section %>
               <% end %>
             <% end %>
           </td>
