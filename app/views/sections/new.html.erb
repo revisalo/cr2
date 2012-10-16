@@ -200,5 +200,6 @@
  <%= button_to("Optimize", {:controller => :sections, :action => :create, :id => -1, :pensum_id => params[:id]})%>
  <%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"),"http://localhost:3000/subjects/new?id="+params[:id].to_s  )%>
 
+ <%= button_to("Cargar secciones", {:controller => :sections, :action => :create, :id => -2, :pensum_id => params[:id]})%>
 
 

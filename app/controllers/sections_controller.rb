@@ -49,9 +49,12 @@ class SectionsController < ApplicationController
       system("/bin/bash ~/bash2.sh")
       leer
       redirect_to new_section_path(:id => params[:pensum_id])
+    elsif (params[:id] == "-2")
+      cargar_secciones
+      redirect_to new_section_path(:id => params[:pensum_id])
     else
       @pensum = Pensum.find(params[:id])
-      @section = @pensum.sections.build(params[:section])    
+      @section = @pensum.sections.build(params[:section])
       @section.save
       redirect_to new_section_path(:id => @pensum.id)
     end
@@ -129,6 +132,24 @@ class SectionsController < ApplicationController
         end
       end
       f.puts "----------"
+    end
+  end
+
+  def cargar_secciones
+    File.open("./files/sections_load.csv", "r") do |infile|
+      line = infile.gets
+      while (line = infile.gets)
+        line = line.strip
+          datos = line.split(';')
+          code = datos[0]
+          day = datos[1]
+          hour = datos[2]
+          
+          @pensum = Pensum.find(params[:pensum_id])
+          @section = @pensum.sections.build("{\"day\"=>\"#{day}\",\"hour\"=>\"#{hour}\",\"subject_id\"=>\"#{code}\",\"provisional\"=>\"0\"}")    
+          @section.save
+          puts "**************************** #{section.subject_id} */*/*/*/*/*/*/*/*/*/*/"
+      end
     end
   end
 
