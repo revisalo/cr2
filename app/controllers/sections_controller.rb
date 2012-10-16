@@ -115,6 +115,8 @@ class SectionsController < ApplicationController
 
 
   def escribir
+    puts ("id: ")
+    puts (:pensum_id)
     @pensum = Pensum.find(params[:pensum_id])
     #File.open('/home/san/julian.data', 'w') do |f|
     File.open('./files/data', 'w') do |f|
