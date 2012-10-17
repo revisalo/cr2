@@ -147,8 +147,6 @@
   <option value= i >Unrestricted (<%= i %>)</option>
   </select><br>
   <%= submit_tag 'Optimize'%>
+  <%= hidden_field_tag(:id, params[:id])%>
 <% end %>
-
-
-<%= button_to 'Llamar a un metodo X', try_sections_path%>
 

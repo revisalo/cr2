@@ -13,7 +13,8 @@ class SectionsController < ApplicationController
   def try
       cross = params[:Cross]# rescue nil
       obf = params[:ObFunction]# rescue nil
-      redirect_to new_section_path(:id => "1")
+      pensumium = params[:id]# rescue nil
+      redirect_to new_section_path(:id => pensumium)
   end
 
   # GET /sections/1
