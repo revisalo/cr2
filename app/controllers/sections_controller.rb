@@ -6,9 +6,14 @@ class SectionsController < ApplicationController
     
         respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @sections }
-    
+      format.json { render json: @sections }    
+    end
   end
+
+  def try
+      cross = params[:Cross]# rescue nil
+      obf = params[:ObFunction]# rescue nil
+      redirect_to new_section_path(:id => "1")
   end
 
   # GET /sections/1
@@ -22,8 +27,6 @@ class SectionsController < ApplicationController
      end
    
   end
-
-
   
 
   # GET /sections/new

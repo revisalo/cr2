@@ -160,5 +160,4 @@ describe SectionsController do
       response.should redirect_to(sections_url)
     end
   end
-
 end

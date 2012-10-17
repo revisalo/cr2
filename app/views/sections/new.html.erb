@@ -128,11 +128,11 @@
 
  <%= button_to("Cargar secciones", {:controller => :sections, :action => :create, :id => -2, :pensum_id => params[:id]})%>
 
-<h2>Optimize my Schedule</h2>
-<%= form_tag :action => :index, :id => -1 do %>
+<h2>Optimize my Schedule2</h2>
+<%= form_tag try_sections_path  do %>
   Select an objective<br><select name="ObFunction">
    <option value="1">Optimice the capacity (Max capacity of the pensum) </option>
-   <option value="2">Minimize over capacity (Min number of students without room) </option>
+   <option value="2">Minimize over capacity (Min number of students without room) </optry_sectiontion>
   </select><br>
   Select the maximum number of class at the same time<br><select name="Cross">
   <% i = 1 %>
@@ -144,11 +144,11 @@
     <% end %>
     <% i = i +1%>
   <% end %>
-  <option value= i >Unrestricted <%= i %></option>
+  <option value= i >Unrestricted (<%= i %>)</option>
   </select><br>
   <%= submit_tag 'Optimize'%>
 <% end %>
 
 
-    <!--<% button_to 'Optimize2', :controller => :sections, :action => :index, :id => -1%>-->
+<%= button_to 'Llamar a un metodo X', try_sections_path%>
 
