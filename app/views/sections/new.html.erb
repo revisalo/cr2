@@ -120,6 +120,11 @@
   </div>
 <% end %>
 
+<%= form_tag({:action => :create, :id => -2}, :multipart => true) do %>
+  <%= file_field_tag 'CSV' %>
+  <%= submit_tag("Subir") %>
+<% end %>
+
 
  <%= button_to("Cargar secciones", {:controller => :sections, :action => :create, :id => -2, :pensum_id => params[:id]})%>
 

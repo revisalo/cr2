@@ -138,7 +138,13 @@ class SectionsController < ApplicationController
   end
 
   def cargar_secciones
-    File.open("./files/sections_load.csv", "r") do |infile|
+
+    uploaded_io = params[:CSV]
+    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'w') do |file|
+      file.write(uploaded_io.read)
+    end
+
+    File.open(params[:CSV], "r") do |infile|
       line = infile.gets
       while (line = infile.gets)
         line = line.strip
