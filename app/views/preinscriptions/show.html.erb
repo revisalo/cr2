@@ -22,12 +22,10 @@
     <tr>
       <td><%= preinscription.subjectname %></td>
       <td><%= preinscription.enrolled %>/<%=total%></td>
-      <td><%= link_to 'Show', preinscription %></td>
       <td><%= link_to 'Edit', edit_preinscription_path(preinscription) %></td>
-      <td><%= link_to 'Destroy', preinscription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 </table>
   <% end %>
-  
+
 <%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), "http://localhost:3000/subjects/new?id="+params[:id] )%>

@@ -1,6 +1,5 @@
-<h1>Editing preinscription</h1>
+<h1>Editing preinscription for subject <%=@preinscription.subjectname%> </h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @preinscription %> |
-<%= link_to 'Back', preinscriptions_path %>
+<%= link_to 'Back', :action => :show,:id => @preinscription.pensum_id %>

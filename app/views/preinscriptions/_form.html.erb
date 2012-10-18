@@ -1,4 +1,4 @@
-<%= form_for(@preinscription) do |f| %>
+<%= form_for @preinscription, :url => {:action => :show, :id => @preinscription.pensum_id} do |f| %>
   <% if @preinscription.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@preinscription.errors.count, "error") %> prohibited this preinscription from being saved:</h2>
@@ -10,19 +10,12 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :subjectname %><br />
-    <%= f.text_field :subjectname %>
-  </div>
   <div class="field">
     <%= f.label :enrolled %><br />
     <%= f.number_field :enrolled %>
   </div>
-  <div class="field">
-    <%= f.label :pensum_id %><br />
-    <%= f.text_field :pensum_id %>
-  </div>
+  <%= hidden_field_tag(:subjectname, @preinscription.subjectname)%>
+  <%= hidden_field_tag(:pensum_id, @preinscription.pensum_id)%>
   <div class="actions">
     <%= f.submit %>
   </div>
