@@ -1,28 +1,3 @@
-<h2>Sections</h2>
-   <table>
-    <tr>
-
-      <th>Subject Code </th>
-      <th>Day</th>
-      <th>Hour</th>
-      <th>Provisional</th>
-           
-    </tr>
-  
-  <% for section in Pensum.find(params[:id]).sections %>
-    <tr>
-      <td><%= section.subject_id %></td>
-      <td><%= section.day %></td>
-      <td><%= section.hour %></td>
-      <td><%= section.provisional %></td>
-      
-      <td><%= link_to 'Show', section %></td>
-      <td><%= link_to 'Edit', edit_section_path(section) %></td>
-      <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-  </table>
-
 <h2>Schedule</h2>
   <table>
     <tr>
@@ -77,6 +52,58 @@
     <% end %>
   </table>
 
+
+<h2>Optimize my Schedule</h2>
+<%= form_tag try_sections_path  do %>
+  Select an objective<br><select name="ObFunction">
+   <option value="1">Optimice the capacity (Max capacity of the pensum) </option>
+   <option value="2">Minimize over capacity (Min number of students without room) </optry_sectiontion>
+  </select><br>
+  Select the maximum number of class at the same time<br><select name="Cross">
+  <% i = 1 %>
+  <% for subject in Pensum.find(params[:id]).subjects %>
+    <%if i == 1%>
+      <option value="1">No classes at the same time</option>
+    <%elsif i > 1%>
+      <option value=i> <%= i %> </option>
+    <% end %>
+    <% i = i +1%>
+  <% end %>
+  <option value= i >Unrestricted (<%= i %>)</option>
+  </select><br>
+  <%= submit_tag 'Optimize'%>
+  <%= hidden_field_tag(:id, params[:id])%>
+<% end %>
+
+<hr>
+
+<h2>Sections</h2>
+   <table>
+    <tr>
+
+      <th>Subject Code </th>
+      <th>Day</th>
+      <th>Hour</th>
+      <th>Provisional</th>
+           
+    </tr>
+  
+  <% for section in Pensum.find(params[:id]).sections %>
+    <tr>
+      <td><%= section.subject_id %></td>
+      <td><%= section.day %></td>
+      <td><%= section.hour %></td>
+      <td><%= section.provisional %></td>
+      
+      <td><%= link_to 'Show', section %></td>
+      <td><%= link_to 'Edit', edit_section_path(section) %></td>
+      <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </table>
+
+<hr>
+
 <h2>Add Section</h2>
 <%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
   <% if @section.errors.any? %>
@@ -120,33 +147,13 @@
   </div>
 <% end %>
 
-<%= form_tag({:action => :create, :id => -2}, :multipart => true) do %>
-  <%= file_field_tag 'CSV' %>
-  <%= submit_tag("Subir") %>
+<h3>Massive load</h3>
+<p>Choose the CVS file you want to import</p>
+<p>Un ejemplo está en './files/sections_load.csv'</p>
+<%= form_tag({:action => :create, :id => -2, :pensum_id => params[:id]}, :multipart => true) do %>
+  <%= file_field_tag 'CSV' %><br>
+  <%= submit_tag("Load sections") %>
 <% end %>
 
 
- <%= button_to("Cargar secciones", {:controller => :sections, :action => :create, :id => -2, :pensum_id => params[:id]})%>
-
-<h2>Optimize my Schedule2</h2>
-<%= form_tag try_sections_path  do %>
-  Select an objective<br><select name="ObFunction">
-   <option value="1">Optimice the capacity (Max capacity of the pensum) </option>
-   <option value="2">Minimize over capacity (Min number of students without room) </optry_sectiontion>
-  </select><br>
-  Select the maximum number of class at the same time<br><select name="Cross">
-  <% i = 1 %>
-  <% for subject in Pensum.find(params[:id]).subjects %>
-    <%if i == 1%>
-      <option value="1">No classes at the same time</option>
-    <%elsif i > 1%>
-      <option value=i> <%= i %> </option>
-    <% end %>
-    <% i = i +1%>
-  <% end %>
-  <option value= i >Unrestricted (<%= i %>)</option>
-  </select><br>
-  <%= submit_tag 'Optimize'%>
-  <%= hidden_field_tag(:id, params[:id])%>
-<% end %>
 

@@ -58,6 +58,7 @@ class SectionsController < ApplicationController
       redirect_to new_section_path(:id => params[:pensum_id])
     else
       @pensum = Pensum.find(params[:id])
+      puts params[:section]
       @section = @pensum.sections.build(params[:section])
       @section.save
       redirect_to new_section_path(:id => @pensum.id)
@@ -147,22 +148,27 @@ class SectionsController < ApplicationController
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'w') do |file|
       file.write(uploaded_io.read)
     end
-
-    File.open(params[:CSV], "r") do |infile|
+    File.open("./public/uploads/" + uploaded_io.original_filename, "r") do |infile|
+    #File.open(params[:CSV], "r") do |infile|
+    #File.open('./files/sections_load.csv', "r") do |infile|
       line = infile.gets
       while (line = infile.gets)
         line = line.strip
-          datos = line.split(';')
-          code = datos[0]
-          day = datos[1]
-          hour = datos[2]
+        datos = line.split(';')
+        code = datos[0]
+        day = datos[1]
+        hour = datos[2]
           
-          @pensum = Pensum.find(params[:pensum_id])
-          @section = @pensum.sections.build("{\"day\"=>\"#{day}\",\"hour\"=>\"#{hour}\",\"subject_id\"=>\"#{code}\",\"provisional\"=>\"0\"}")    
-          @section.save
-          puts "**************************** #{section.subject_id} */*/*/*/*/*/*/*/*/*/*/"
+          @pensum = Pensum.find(params[:pensum_id])          
+          # Se valida que la sección a agregar corresponda a una materia existente en  el pensum
+          if Subject.where(:code => code, :pensum_id => params[:pensum_id]).length != 0
+            @section = @pensum.sections.build :day=>day, :hour=>hour, :subject_id=>code, :provisional=>"Si"    
+            @section.save
+          end
       end
     end
+    # Se elimina el archivo despues de usarlo
+    system("rm ./public/uploads/" + uploaded_io.original_filename)
   end
 
 end
