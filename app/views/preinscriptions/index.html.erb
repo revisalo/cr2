@@ -25,3 +25,31 @@
 <br />
 
 <%= link_to 'New Preinscription', new_preinscription_path %>
+
+<br>
+-----------------------------------------------------------------------------------------------
+<p id="notice"><%= notice %></p>
+
+<h2>Select a pensum</h2>
+   <table>
+
+<table>
+  <tr>
+    <th>Magister</th>
+    <th>Start year (Semestre)</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+ <% for pensum in Pensum.all %>
+  <tr>
+    <td><%= Magister.find(pensum.magister_id).code %></td>
+    <td><%= pensum.year %>(<%= pensum.semester %>)</td>
+    <td><%= link_to 'Show Preinscription', :action => :show, :id => pensum.id %></td>    
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), "http://localhost:3000/" )%>

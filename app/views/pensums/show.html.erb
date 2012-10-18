@@ -6,7 +6,7 @@
 </p>
 <p>
   <b>Magister:</b>
-  <%= @pensum.magister_id %>
+  <%= Magister.find(@pensum.magister_id).code %>
 </p>
 <p>
   <b>Semester:</b>

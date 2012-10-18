@@ -1,15 +1,11 @@
 <h1>Pensum</h1>
 <p>
   <b>Magister:</b>
-  <%= @pensum.magister_id %>
-</p>
-<p>
-  <b>Year:</b>
-  <%= @pensum.year %>
+  <%= Magister.find(@pensum.magister_id).code %>
 </p>
 <p>
   <b>Semester:</b>
-  <%= @pensum.semester %>
+  <%= @pensum.year %> - <%= @pensum.semester %>
 </p>
 
 <h2>Subjects</h2>
@@ -71,19 +67,16 @@
     <%= f.text_field :blocks %>
   </div>
   <div class="actions">
-   
-    <h2> </h2>
-    <%= link_to(image_tag("http://www.ellipsistech.com/NSS8_files/icon_lesson_timer.gif"), :controller => :sections, :action => :new, :id => @pensum.id )%>
-    <h2> </h2>
-    <%= link_to "PreInscriptions", "http://localhost:3000/preinscriptions/"+params[:id]%>
-    <h2> </h2>
-    <h2> </h2>
-    <%= f.submit %>
-    <h2> </h2>
-    <%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), pensums_path)%>
-    
+    <%= f.submit %>    
   </div>
 <% end %>
+<h2>Manage the pensum schedule</h2>
+<%= link_to(image_tag("http://www.ellipsistech.com/NSS8_files/icon_lesson_timer.gif"), :controller => :sections, :action => :new, :id => @pensum.id )%>
+
+<h2><%= link_to "Preinscriptions", :controller => :preinscriptions,:action => :show, :id => @pensum.id%></h2>
+
+<br>
+<%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), pensums_path)%>
 
 
 

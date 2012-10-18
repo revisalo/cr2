@@ -13,11 +13,12 @@ class PreinscriptionsController < ApplicationController
   # GET /preinscriptions/1
   # GET /preinscriptions/1.json
   def show
-    @preinscription = Preinscription.find(params[:id])
+    @pensum = Pensum.find(params[:id])
+    @preinscriptions = @pensum.preinscriptions
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @preinscription }
+      format.html # index.html.erb
+      format.json { render json: @preinscriptions }
     end
   end
 
