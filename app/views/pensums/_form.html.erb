@@ -20,8 +20,9 @@
     <%= f.number_field :semester %>
   </div>
   <div class="field">
-    <%= f.label :magister_id %><br />
-    <%= f.text_field :magister_id %>
+    
+    <%= f.label :magister %><br />
+    <%= f.collection_select :magister_id, Magister.all, :code, :code %>
   </div>
   <div class="actions">
     <%= f.submit %>

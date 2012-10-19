@@ -33,9 +33,14 @@
     <%= f.label :semester %><br />
     <%= f.text_field :semester %>
   </div>
+
+
   <div class="field">
+
+    
     <%= f.label :magisterName %><br />
-    <%= f.text_field :magisterName %>
+    <%= f.collection_select :magisterName, Magister.all, :code, :code %>
+   
   </div>
   <div class="actions">
     <%= f.submit %>
