@@ -1,5 +1,7 @@
 Cr2::Application.routes.draw do
 
+  resources :preinscriptions
+
   resources :sections
 
   get "home/index"
@@ -11,6 +13,10 @@ Cr2::Application.routes.draw do
   resources :magisters
 
   resources :folders
+
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -67,7 +73,6 @@ Cr2::Application.routes.draw do
       post :try
     end
   end
-
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,0 +1,27 @@
+<h1>Listing preinscriptions</h1>
+
+<table>
+  <tr>
+    <th>Subjectname</th>
+    <th>Enrolled</th>
+    <th>Pensum</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @preinscriptions.each do |preinscription| %>
+  <tr>
+    <td><%= preinscription.subjectname %></td>
+    <td><%= preinscription.enrolled %></td>
+    <td><%= preinscription.pensum_id %></td>
+    <td><%= link_to 'Show', preinscription %></td>
+    <td><%= link_to 'Edit', edit_preinscription_path(preinscription) %></td>
+    <td><%= link_to 'Destroy', preinscription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Preinscription', new_preinscription_path %>

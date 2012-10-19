@@ -3,6 +3,7 @@
   has_many :subjects
   has_many :folders
   has_many :sections
+  has_many :preinscriptions
   belongs_to :magister
 
 

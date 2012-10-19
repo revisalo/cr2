@@ -1,0 +1,29 @@
+<%= form_for(@preinscription) do |f| %>
+  <% if @preinscription.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@preinscription.errors.count, "error") %> prohibited this preinscription from being saved:</h2>
+
+      <ul>
+      <% @preinscription.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :subjectname %><br />
+    <%= f.text_field :subjectname %>
+  </div>
+  <div class="field">
+    <%= f.label :enrolled %><br />
+    <%= f.number_field :enrolled %>
+  </div>
+  <div class="field">
+    <%= f.label :pensum_id %><br />
+    <%= f.text_field :pensum_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

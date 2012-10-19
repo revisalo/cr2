@@ -1,0 +1,2 @@
+module PreinscriptionsHelper
+end

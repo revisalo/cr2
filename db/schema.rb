@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121006215523) do
+ActiveRecord::Schema.define(:version => 20121019122636) do
 
   create_table "folders", :force => true do |t|
     t.integer  "year"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(:version => 20121006215523) do
     t.integer  "year"
     t.integer  "semester"
     t.string   "magister_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "preinscriptions", :force => true do |t|
+    t.string   "subjectname"
+    t.integer  "enrolled"
+    t.string   "pensum_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
