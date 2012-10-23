@@ -1,7 +1,7 @@
 class CreatePreinscriptions < ActiveRecord::Migration
   def change
     create_table :preinscriptions do |t|
-      t.string :subjectname
+      t.string :subject_id
       t.integer :enrolled
       t.string :pensum_id
 

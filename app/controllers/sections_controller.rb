@@ -11,9 +11,12 @@ class SectionsController < ApplicationController
   end
 
   def try
-      cross = params[:Cross]# rescue nil
-      obf = params[:ObFunction]# rescue nil
-      pensumium = params[:id]# rescue nil
+      pensumium = params[:pensum_id]# pensum
+
+      escribir
+      system("/bin/bash ~/bash2.sh")
+      leer
+
       redirect_to new_section_path(:id => pensumium)
   end
 
@@ -48,12 +51,7 @@ class SectionsController < ApplicationController
   # POST /sections
   # POST /sections.json
   def create
-    if (params[:id]=="-1")
-      escribir
-      system("/bin/bash ~/bash2.sh")
-      leer
-      redirect_to new_section_path(:id => params[:pensum_id])
-    elsif (params[:id] == "-2")
+    if (params[:id] == "-2")
       cargar_secciones
       redirect_to new_section_path(:id => params[:pensum_id])
     else
@@ -120,15 +118,18 @@ class SectionsController < ApplicationController
 
 
   def escribir
+    cross = params[:Cross]# Maximum number of subjects at the same time
+    obf = params[:ObFunction]# 1 capacity, 2 no room
+    
     puts ("id: ")
     puts (:pensum_id)
     @pensum = Pensum.find(params[:pensum_id])
-    #File.open('/home/san/julian.data', 'w') do |f|
     File.open('./files/data', 'w') do |f|
-      f.puts @pensum.subjects.count
+      #f.puts @pensum.subjects.count
+      f.puts "#{@pensum.subjects.count};#{cross};#{obf}" 
       f.puts "----------"
       @pensum.subjects.each do |sub|
-        f.puts "#{sub.code};#{sub.capacity};#{sub.blocks}" 
+        f.puts "#{sub.code};#{sub.capacity};#{sub.blocks};#{sub.preinscription.enrolled}" 
       end
       f.puts "----------"
       @pensum.subjects.each do |sub|

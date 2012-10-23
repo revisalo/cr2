@@ -12,7 +12,7 @@
 
 <% @preinscriptions.each do |preinscription| %>
   <tr>
-    <td><%= preinscription.subjectname %></td>
+    <td><%= Subject.find(preinscription.subject_id).name %></td>
     <td><%= preinscription.enrolled %></td>
     <td><%= preinscription.pensum_id %></td>
     <td><%= link_to 'Show', preinscription %></td>

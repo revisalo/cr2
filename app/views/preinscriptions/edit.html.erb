@@ -1,4 +1,4 @@
-<h1>Editing preinscription for subject <%=@preinscription.subjectname%> </h1>
+<h1>Editing preinscription for subject <%=Subject.find(@preinscription.subject_id).name%> </h1>
 
 <%= render 'form' %>
 

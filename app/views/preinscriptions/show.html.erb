@@ -20,7 +20,7 @@
 
  <% for preinscription in Preinscription.where(:pensum_id=>params[:id]) %>
     <tr>
-      <td><%= preinscription.subjectname %></td>
+      <td><%= Subject.find(preinscription.subject_id).name %></td>
       <td><%= preinscription.enrolled %>/<%=total%></td>
       <td><%= link_to 'Edit', edit_preinscription_path(preinscription) %></td>
     </tr>

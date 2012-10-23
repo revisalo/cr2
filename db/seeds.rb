@@ -28,5 +28,11 @@ Magister.create(code: 'MATI')
 
 Section.create(day: 2, hour: 4, pensum_id: 1, subject_id: "MATE-1", provisional: 0 )
 
+Preinscription.create(subject_id: 1, enrolled: 10, pensum_id: 1)
+
+Preinscription.create(subject_id: 2, enrolled: 20, pensum_id: 1)
+
+Preinscription.create(subject_id: 3, enrolled: 30, pensum_id: 1)
+
 
 #sub1.folders << fd1

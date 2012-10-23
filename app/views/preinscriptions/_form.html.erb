@@ -14,7 +14,7 @@
     <%= f.label :enrolled %><br />
     <%= f.number_field :enrolled %>
   </div>
-  <%= hidden_field_tag(:subjectname, @preinscription.subjectname)%>
+  <%= hidden_field_tag(:subject_id, @preinscription.subject_id)%>
   <%= hidden_field_tag(:pensum_id, @preinscription.pensum_id)%>
   <div class="actions">
     <%= f.submit %>

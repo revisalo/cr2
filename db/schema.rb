@@ -45,11 +45,11 @@ ActiveRecord::Schema.define(:version => 20121019122636) do
   end
 
   create_table "preinscriptions", :force => true do |t|
-    t.string   "subjectname"
+    t.string   "subject_id"
     t.integer  "enrolled"
     t.string   "pensum_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "schedules", :force => true do |t|
