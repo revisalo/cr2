@@ -1,0 +1,129 @@
+
+
+two_one:
+  folder_id: 1
+  subject_id: 1
+
+two:
+  folder_id: 1
+  subject_id: 2
+
+tres:
+  folder_id: 1
+  subject_id: 3
+
+cuatro:
+  folder_id: 1
+  subject_id: 4
+
+cinco:
+  folder_id: 1
+  subject_id: 5
+
+seis:
+  folder_id: 1
+  subject_id: 6
+
+
+  
+siete:
+  folder_id: 2
+  subject_id: 7
+
+
+ocho:
+  folder_id: 2
+  subject_id: 8
+
+  # == Schema Information
+#
+# Table name: subjects
+#
+#  id         :integer          not null, primary key
+#  code       :string(255)
+#  name       :string(255)
+#  credits    :integer
+#  pensum_id  :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+#two:
+ # id: 13
+  #code: 'MATE-'
+  #name: 'Materia '
+  #credits: 3
+  #pensum_id: '1'
+  #created_at: <%= Time.now %>
+  #updated_at: <%= Time.now %>
+
+  # == Schema Information
+#
+# Table name: folders
+#
+#  id         :integer          not null, primary key
+#  year       :integer
+#  code       :string(255)
+#  docid      :integer
+#  name       :string(255)
+#  semester   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+#one:
+ # id: 4
+  #year: 2008
+  #code: '200822561'
+  #docid: 1032439343
+  #name: 'Juan'
+  #semester: 1
+  #created_at: <%= Time.now %>
+  #updated_at: <%= Time.now %>
+
+
+
+# == Schema Information
+#
+# Table name: magisters
+#
+#  id         :integer          not null, primary key
+#  code       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+
+# == Schema Information
+#
+# Table name: pensums
+#
+#  id          :integer          not null, primary key
+#  year        :integer
+#  semester    :integer
+#  magister_id :string(255)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# == Schema Information
+#
+# Table name: sections
+#
+#  id         :integer          not null, primary key
+#  number     :integer
+#  teacher    :string(255)
+#  subject_id :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

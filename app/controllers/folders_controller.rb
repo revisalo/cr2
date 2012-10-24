@@ -106,4 +106,36 @@ class FoldersController < ApplicationController
       format.html  errorMaestria.html.erb
     end
   end
+
+  #metod that recive the data from the prenscription
+  def Addpreinscription
+
+
+    @SubjectsPreins = Array.new
+    @SubjectsId = params[]
+
+    for i in @SubjectsId
+      @SubjectsPreins << Subjects.find(i)
+    end
+
+    for s in @SubjectsPreins 
+      pre = Preinscription.where(:subject_id => s.id).first
+
+      unless pre.nil? 
+        numNuevo = pre.enrolled + 1
+        pre.update_attributes(:enrolled => numNuevo)
+      end
+    end
+  end
+
+
 end
+
+
+
+
+
+
+
+
+

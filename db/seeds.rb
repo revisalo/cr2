@@ -6,21 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Folder.create(code: '200822561', docid: 1015412365, name: 'Juan', semester: 2, year: 2012)
+Folder.create(code: '200822561', docid: 1015412365, name: 'Juan', semester: 1, year: 2008, magisterName: 'MISIS',pensum_id: 1)
 
-Folder.create(code: '200822562', docid: 1015412366, name: 'Manuel', semester: 1, year: 2012)
+Folder.create(code: '200822562', docid: 1015412366, name: 'Manuel', semester: 2, year: 2009,magisterName: 'MATI',pensum_id: 2)
 
-Folder.create(code: '200822563', docid: 1015412367, name: 'Laura', semester: 2, year: 2012)
-
-Subject.create(code: 'MATE-1', credits: 1, name: 'Materia 1', pensum_id: '1', capacity: 50,blocks: 1)
-
-Subject.create(code: 'MATE-2', credits: 1, name: 'Materia 2', pensum_id: '1', capacity: 50, blocks: 3)
-
-Subject.create(code: 'MATE-3', credits: 1, name: 'Materia 3', pensum_id: '1', capacity: 50, blocks: 2)
+Folder.create(code: '200822563', docid: 1015412367, name: 'Laura', semester: 1, year: 2012, magisterName: 'MISIS',pensum_id: 3)
 
 Pensum.create(year: 2008, semester: 1, magister_id: 1)
 
-Pensum.create(year: 2009, semester: 2, magister_id: 2)
+Pensum.create(year: 2009, semester: 2, magister_id: 2 )
+
+Pensum.create(year: 2012, semester: 1, magister_id: 1 )
 
 Magister.create(code: 'MISIS')
 
@@ -34,5 +30,6 @@ Preinscription.create(subject_id: 2, enrolled: 20, pensum_id: 1)
 
 Preinscription.create(subject_id: 3, enrolled: 30, pensum_id: 1)
 
-
-#sub1.folders << fd1
+for i in ["1", "2", "3", "4","5", "6", "7", "8","9", "10", "11", "12"] 
+  Subject.create(code: 'MATE-' + i, credits: 3, name: 'Materia ' + i , pensum_id: '1', capacity: 50,blocks: 1)
+end 

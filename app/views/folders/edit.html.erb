@@ -2,28 +2,6 @@
 
 <%= render 'form' %>
 
-
-
-<br>List all subjects:</br>
-   <table>
-    <tr>
-      <th>Code</th>
-      <th>Name</th>
-      <th>Credits</th>      
-    </tr>
-
-  
-  <% for @subject in Subject.all %>
-    <tr>
-
-      <td><%= @subject.code %></td>
-      <td><%= @subject.name %></td>
-      <td><%= @subject.credits %></td>
-    </tr>
-  <% end %>
-
-  </table>
-
 <% @subjectsOfThePensum = Pensum.where(:id => @folder.pensum_id).first.subjects %>
 
 <%= puts "******$**************$****************$*************"%>
@@ -34,10 +12,52 @@
 <%= f.label :name %><br />
 <%= f.collection_select(:pensum_id, @subjectsOfThePensum, :name, :name) %>
 
- 
+<div class="prueba"> 
+<h1>Preinscription</h1>
+  
+<table>
+  <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Credits</th>   
+      <th>Capacity</th>    
+      <th>Number of blocks</th>
+      <th>Enrolled</th>
+    </tr>
+    
+  <%= form_tag( :method=>"Addpreinscription") %>
+  <% for subj in @folder.subjects %>
+  <% preins = Preinscription.where(:subject_id => subj.id).first %>
+    
+    <tr>
+      <td><%= subj.code %></td>
+      <td><%= subj.name %></td>
+      <td><%= subj.credits %></td>
+      <td><%= subj.capacity %></td>
+      <td><%= subj.blocks %></td>
+
+      <td>
+        <% if preins.nil? %>
+        <%= '0' %>
+        <%else%>
+        <%= preins.enrolled %>
+        <%end%>
+      </td>
+
+      <td><%= check_box_tag "subj_ids[]", subj.id  %> </td>
+    </tr>     
+  <% end %>  
+</table>
+
+<%= submit_tag "Save", class:"btn btn-primary" %>
+</div>
+
+
+
 <div class="actions">
    <%= f.submit %>
    <%= link_to 'Show', @folder %> |
    <%= link_to "back", pensums_path  %>
 </div>
 <% end %>
+

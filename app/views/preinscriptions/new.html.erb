@@ -1,5 +1,29 @@
-<h1>New preinscription</h1>
+<h1>Preinscription</h1>
+  
+<table>
+  <%= form_tag(add_preinscription_path) %>
+  <% for subj in @folder.subjects %>
+  <% preins = Preinscription.where(:subject_id => subj.id).first %>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Credits</th>   
+      <th>Capacity</th>    
+      <th>Number of blocks</th>
+      <th>Enrolled</th>
+    </tr>
+    <tr>
+      <td><%= subj.code %></td>
+      <td><%= subj.name %></td>
+      <td><%= subj.credits %></td>
+      <td><%= subj.capacity %></td>
+      <td><%= subj.blocks %></td>
+      <td><%= preins.enrolled %></td>
+      <td><%= check_box_tag "media_ids[]", m.id  %> </td>
+    </tr>     
+  <% end %>  
+</table>
 
-<%= render 'form' %>
+<%= submit_tag "Save", class:"btn btn-primary" %>
 
-<%= link_to 'Back', preinscriptions_path %>
+<%= link_to 'Back', @folder %>
