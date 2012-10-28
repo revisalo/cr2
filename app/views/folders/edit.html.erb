@@ -11,6 +11,7 @@
 
 <%= f.label :name %><br />
 <%= f.collection_select(:pensum_id, @subjectsOfThePensum, :name, :name) %>
+<%= f.submit " Save Subject", class:"btn btn-primary"%>
 
 <div class="prueba"> 
 <h1>Preinscription</h1>
@@ -25,9 +26,9 @@
       <th>Enrolled</th>
     </tr>
     
-  <%= form_tag( :method=>"Addpreinscription") %>
+  <%= form_tag add_preinscription_path %>
   <% for subj in @folder.subjects %>
-  <% preins = Preinscription.where(:subject_id => subj.id).first %>
+    <% preins = Preinscription.where(:subject_id => subj.id).first %>
     
     <tr>
       <td><%= subj.code %></td>
@@ -46,16 +47,16 @@
 
       <td><%= check_box_tag "subj_ids[]", subj.id  %> </td>
     </tr>     
-  <% end %>  
+  <% end %> 
+
 </table>
 
-<%= submit_tag "Save", class:"btn btn-primary" %>
+<%= submit_tag "alo", class:"btn btn-primary" %>
 </div>
 
 
 
 <div class="actions">
-   <%= f.submit %>
    <%= link_to 'Show', @folder %> |
    <%= link_to "back", pensums_path  %>
 </div>

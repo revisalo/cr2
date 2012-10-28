@@ -107,18 +107,12 @@ class FoldersController < ApplicationController
     end
   end
 
-  #metod that recive the data from the prenscription
-  def Addpreinscription
+  # Metod that recive the data from the prenscription
+  def add_preinscription
 
-
-    @SubjectsPreins = Array.new
-    @SubjectsId = params[]
-
-    for i in @SubjectsId
-      @SubjectsPreins << Subjects.find(i)
-    end
-
-    for s in @SubjectsPreins 
+    subjectsId = Subjects.find(params[:subj_ids])
+  
+    subjectsId.each do |s|
       pre = Preinscription.where(:subject_id => s.id).first
 
       unless pre.nil? 

@@ -22,7 +22,7 @@
   <div class="field">
     
     <%= f.label :magister %><br />
-    <%= f.collection_select :magister_id, Magister.all, :code, :code %>
+    <%= f.collection_select :magister_id, Magister.all, :id, :code %>
   </div>
   <div class="actions">
     <%= f.submit %>
