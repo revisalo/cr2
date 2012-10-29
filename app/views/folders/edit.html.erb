@@ -7,11 +7,18 @@
 <%= puts "******$**************$****************$*************"%>
 <%= puts "#{@subjectsOfThePensum.first.name}"%>
 <h2>Select Seen Subjects</h2>
-<%= form_for @subjectsOfThePensum, :url => {:action => :update, :id => params[:id]} do |f| %>
+<%= form_tag add_folders_path, :url => {:action => :add, :sub => "1"} do %>
+<br><select name="mat">
+  <% for sub in Pensum.find(params[:id]).subjects do %>
+    <option><%=sub.name%></option>
+  <% end %>
+  </select><br>
 
-<%= f.label :name %><br />
-<%= f.collection_select(:pensum_id, @subjectsOfThePensum, :name, :name) %>
-<%= f.submit " Save Subject", class:"btn btn-primary"%>
+  <%= hidden_field_tag(:id, params[:id])%>
+  <%= submit_tag 'Add the subject', class:"btn btn-primary"%>
+<% end %>
+
+
 
 <div class="prueba"> 
 <h1>Preinscription</h1>
@@ -26,7 +33,7 @@
       <th>Enrolled</th>
     </tr>
     
-  <%= form_tag add_preinscription_path %>
+  <%= form_tag increase_folders_path do %>
   <% for subj in @folder.subjects %>
     <% preins = Preinscription.where(:subject_id => subj.id).first %>
     

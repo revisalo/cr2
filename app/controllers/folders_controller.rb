@@ -10,6 +10,25 @@ class FoldersController < ApplicationController
     end
   end
 
+  def add
+    @folder = Folder.find(params[:id])
+    mat = params[:mat]
+    @subject = Subject.where(:name => mat).first
+
+    if(@folder.subjects.where(:id => @subject.id).size == 0)
+      @folder.subjects << @subject
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
+      format.json { render json: @folder }
+    end
+  end 
+
+  def increase
+
+  end
+
   # GET /folders/1
   # GET /folders/1.json
   def show
@@ -71,13 +90,13 @@ class FoldersController < ApplicationController
     @folder = Folder.find(params[:id])
 
     respond_to do |format|
-      if @folder.update_attributes(params[:folder])
-        format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @folder.errors, status: :unprocessable_entity }
-      end
+    if @folder.update_attributes(params[:folder])
+      format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
+      format.json { head :no_content }
+    else
+      format.html { render action: "edit" }
+      format.json { render json: @folder.errors, status: :unprocessable_entity }
+    end
     end
   end
 

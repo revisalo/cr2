@@ -30,10 +30,9 @@
   <div class="field">
     Semester<br />
     <%= f.text_field :semester %>
-  </div>
-  
-  
+  </div>  
   <div class="actions">
     <%= f.submit %>
-  </div>
+  </div>  
+  <%= hidden_field_tag(:sub, "0")%>
 <% end %>

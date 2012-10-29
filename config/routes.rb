@@ -14,11 +14,11 @@ Cr2::Application.routes.draw do
 
   resources :folders
 
-  match '/add_preinscription',       to: 'folder#add_preinscription', via: [:post], 
-                               as: :add_preinscription
+  #match '/add_preinscription',       to: 'folder#add_preinscription', via: [:post], 
+  #                             as: :add_preinscription
 
 
-  # The priority is based upon order of creation:
+  # The priority is based upon ordeoppan gangnam styler of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
@@ -71,6 +71,18 @@ Cr2::Application.routes.draw do
   resources :sections do
     collection do
       post :try
+    end
+  end
+
+  resources :folders do
+    collection do
+      post :add
+    end
+  end
+
+  resources :folders do
+    collection do
+      post :increase
     end
   end
 

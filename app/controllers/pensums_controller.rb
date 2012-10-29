@@ -18,7 +18,8 @@ class PensumsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pensum }
-    end
+    ender
+error: The requested URL returned error: 40
   end
 
   # GET /pensums/new
