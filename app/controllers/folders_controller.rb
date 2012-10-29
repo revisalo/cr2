@@ -127,7 +127,6 @@ class FoldersController < ApplicationController
       unless @Preinscription.nil? 
         numNuevo = @Preinscription.enrolled + 1
         @Preinscription.update_attributes(:enrolled => numNuevo)
-        @Preinscription.save
       end
     end
 
