@@ -140,14 +140,7 @@ class FoldersController < ApplicationController
       end
     end
   end
-
-
 end
-
-
-
-
-
 
 
 

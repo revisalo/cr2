@@ -4,8 +4,6 @@
 
 <% @subjectsOfThePensum = Pensum.where(:id => @folder.pensum_id).first.subjects %>
 
-<%= puts "******$**************$****************$*************"%>
-<%= puts "#{@subjectsOfThePensum.first.name}"%>
 <h2>Select Seen Subjects</h2>
 <%= form_tag add_folders_path, :url => {:action => :add, :sub => "1"} do %>
 <br><select name="mat">
