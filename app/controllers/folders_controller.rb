@@ -124,10 +124,12 @@ class FoldersController < ApplicationController
     subjectsId.each do |s|
       @Preinscription = Preinscription.where(:subject_id => s.id).first
 
-      unless @Preinscription.nil? 
-        numNuevo = @Preinscription.enrolled + 1
-        @Preinscription.update_attributes(:enrolled => numNuevo)
+      if @Preinscription.nil? 
+        Preinscription.create(subject_id: s.id, enrolled: 0, pensum_id: 1)
       end
+
+      numNuevo = @Preinscription.enrolled + 1
+      @Preinscription.update_attributes(:enrolled => numNuevo)
     end
 
     respond_to do |format|

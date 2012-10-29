@@ -2,12 +2,16 @@
 
 <%= render 'form' %>
 
-<% @subjectsOfThePensum = Pensum.where(:id => @folder.pensum_id).first.subjects %>
+<% @subjectsNotSeen = Pensum.find(params[:id]).subjects %>
+
+<% for j in @folder.subjects %>
+<%   @subjectsNotSeen.delete(j) %>
+<% end %> 
 
 <h2>Select Seen Subjects</h2>
 <%= form_tag add_folders_path, :url => {:action => :add, :sub => "1"} do %>
 <br><select name="mat">
-  <% for sub in Pensum.find(params[:id]).subjects do %>
+  <% for sub in @subjectsNotSeen do %>
     <option><%=sub.name%></option>
   <% end %>
   </select><br>
@@ -15,9 +19,6 @@
   <%= hidden_field_tag(:id, params[:id])%>
   <%= submit_tag 'Add the subject', class:"btn btn-primary"%>
 <% end %>
-
-
- <%=  %>
 
 <div class="prueba"> 
 <h1>Preinscription</h1>
@@ -33,7 +34,7 @@
     </tr>
     
   <%= form_tag increase_folders_path do %>
-  <% for subj in Subject.where(:pensum_id => @folder.pensum_id) %>
+  <% for subj in @subjectsNotSeen %>
     <% preins = Preinscription.where(:subject_id => subj.id).first %>
     
     <tr>
