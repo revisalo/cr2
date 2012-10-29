@@ -15,7 +15,7 @@
     <td><%= pensum.year %></td>
     <td><%= pensum.semester %></td>
     <td><%= Magister.find(pensum.magister_id).code %></td>
-    <td><%= link_to 'Show', :controller => :subjects, :action => :new, :id => pensum.id %></td>
+    <td><%= link_to 'Show', :controller => :subjects, :action => :new, :id => pensum.id %></tdpen>
     <td><%= link_to 'Edit', edit_pensum_path(pensum) %></td>
     <td><%= link_to 'Delete', pensum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     

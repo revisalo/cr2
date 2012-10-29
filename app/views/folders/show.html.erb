@@ -14,11 +14,12 @@
 </p>
 <p>
   <b>Year in:</b>
-  <%= @folder.year %>
+  <%= @folder.year %>-<%= @folder.semester %>
 </p>
 <p>
-  <b>Semester:</b>
-  <%= @folder.semester %>
+  <b>Pensum:</b>
+  <%pen = Pensum.where(:id => @folder.pensum_id).first%>
+  <%= link_to Magister.find(pen.magister).code, :controller => :subjects, :action => :new, :id => pen.id %>
 </p>
 
 
