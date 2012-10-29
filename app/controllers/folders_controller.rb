@@ -125,7 +125,7 @@ class FoldersController < ApplicationController
       @Preinscription = Preinscription.where(:subject_id => s.id).first
 
       if @Preinscription.nil? 
-        Preinscription.create(subject_id: s.id, enrolled: 0, pensum_id: 1)
+        @Preinscription = Preinscription.create(subject_id: s.id, enrolled: 0, pensum_id: 1)
       end
 
       numNuevo = @Preinscription.enrolled + 1
