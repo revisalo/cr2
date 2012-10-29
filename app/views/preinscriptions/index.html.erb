@@ -9,6 +9,18 @@
     <th></th>
     <th></th>
   </tr>
+<%@m = Date.current().month %>
+
+<%if @m <= 6 %>
+<%@date = Date.current().year.to_s + '-1' %>
+<%else %>
+<%@date = Date.current().year.to_s + '-2' %>
+<%end %>
+
+<% for j in @preinscriptions%>
+<% if j.date != @date%>
+<%   Preinscriptions.delete(j) %>
+<% end %> 
 
 <% @preinscriptions.each do |preinscription| %>
   <tr>

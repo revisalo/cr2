@@ -120,12 +120,22 @@ class FoldersController < ApplicationController
     @folder = Folder.find(params[:id])
 
     subjectsId = Subject.find(params[:subj_ids])
+
+    @m = Date.current().month
+
+    if @m <= 6
+    @date = Date.current().year.to_s + '-1'
+    else
+    @date = Date.current().year.to_s + '-2'
+    end
   
+    @folder.update_attributes(:preinscription_date => @date)
+
     subjectsId.each do |s|
       @Preinscription = Preinscription.where(:subject_id => s.id).first
 
       if @Preinscription.nil? 
-        @Preinscription = Preinscription.create(subject_id: s.id, enrolled: 0, pensum_id: 1)
+        @Preinscription = Preinscription.create(subject_id: s.id, enrolled: 0, pensum_id: 1, date: @date)
       end
 
       numNuevo = @Preinscription.enrolled + 1

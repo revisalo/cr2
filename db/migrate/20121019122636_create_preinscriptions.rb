@@ -4,6 +4,7 @@ class CreatePreinscriptions < ActiveRecord::Migration
       t.string :subject_id
       t.integer :enrolled
       t.string :pensum_id
+      t.string :date
 
       t.timestamps
     end

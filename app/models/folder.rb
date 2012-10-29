@@ -1,5 +1,5 @@
 class Folder < ActiveRecord::Base
-  attr_accessible :code, :docid, :name, :semester, :year, :pensum_id, :magisterName
+  attr_accessible :code, :docid, :name, :semester, :year, :pensum_id, :magisterName, :preinscription_date
  # has_many :subjects
 #  has_one :pensum
 

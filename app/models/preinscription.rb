@@ -1,5 +1,5 @@
 class Preinscription < ActiveRecord::Base
-  attr_accessible :enrolled, :pensum_id, :subject_id
+  attr_accessible :enrolled, :pensum_id, :subject_id, :date
   belongs_to :subject
   belongs_to :pensum
 

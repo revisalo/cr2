@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(:version => 20121019122636) do
     t.string   "name"
     t.integer  "semester"
     t.integer  "pensum_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "preinscription_date"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "magisterName"
   end
 
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20121019122636) do
     t.string   "subject_id"
     t.integer  "enrolled"
     t.string   "pensum_id"
+    t.string   "date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

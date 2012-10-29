@@ -20,6 +20,7 @@
   <%= submit_tag 'Add the subject', class:"btn btn-primary"%>
 <% end %>
 
+<% if @folder.preinscription_date == nil  %>
 <div class="prueba"> 
 <h1>Preinscription</h1>
   
@@ -62,7 +63,7 @@
 
 <%= submit_tag "I'm ready", class:"btn btn-primary" %>
 </div>
-
+<% end %>
 
 
 <div class="actions">
