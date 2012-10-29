@@ -4,13 +4,11 @@
 
 <% @subjectsOfThePensum = Pensum.where(:id => @folder.pensum_id).first.subjects %>
 
-<%= puts "******$**************$****************$*************"%>
-<%= puts "#{@subjectsOfThePensum.first.name}"%>
 <h2>Select Seen Subjects</h2>
 <%= form_for @subjectsOfThePensum, :url => {:action => :update, :id => params[:id]} do |f| %>
 
 <%= f.label :name %><br />
-<%= f.collection_select(:pensum_id, @subjectsOfThePensum, :name, :name) %>
+<%= f.collection_select(:pensum_id, @subjectsOfThePensum, :id , :name) %>
 <%= f.submit " Save Subject", class:"btn btn-primary"%>
 
 <div class="prueba"> 
@@ -45,13 +43,13 @@
         <%end%>
       </td>
 
-      <td><%= check_box_tag "subj_ids[]", subj.id  %> </td>
+      <td><%= check_box_tag "subj_ids", subj.id  %> </td>
     </tr>     
   <% end %> 
 
 </table>
 
-<%= submit_tag "alo", class:"btn btn-primary" %>
+<%= submit_tag "Save", class:"btn btn-primary" %>
 </div>
 
 

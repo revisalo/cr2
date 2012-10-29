@@ -14,8 +14,7 @@ Cr2::Application.routes.draw do
 
   resources :folders
 
-  match '/add_preinscription',       to: 'folder#add_preinscription', via: [:post], 
-                               as: :add_preinscription
+  match '/add_preinscription', to: 'folder#add_preinscription', via: [:post], as: :add_preinscription
 
 
   # The priority is based upon order of creation:

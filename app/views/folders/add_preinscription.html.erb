@@ -1,0 +1,38 @@
+<h1>Preinscription</h1>
+  
+<table>
+  <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Credits</th>   
+      <th>Capacity</th>    
+      <th>Number of blocks</th>
+      <th>Enrolled</th>
+    </tr>
+    
+  <%= form_tag '/add_preinscription', :method => :post %>
+  <% for subj in @folder.subjects %>
+    <% preins = Preinscription.where(:subject_id => subj.id).first %>
+    
+    <tr>
+      <td><%= subj.code %></td>
+      <td><%= subj.name %></td>
+      <td><%= subj.credits %></td>
+      <td><%= subj.capacity %></td>
+      <td><%= subj.blocks %></td>
+
+      <td>
+        <% if preins.nil? %>
+        <%= '0' %>
+        <%else%>
+        <%= preins.enrolled %>
+        <%end%>
+      </td>
+
+      <td><%= check_box_tag "subj_ids[]", subj.id  %> </td>
+    </tr>     
+  <% end %> 
+
+</table>
+
+<%= submit_tag "Save", class:"btn btn-primary" %>
