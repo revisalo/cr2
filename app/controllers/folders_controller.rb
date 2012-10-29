@@ -25,10 +25,6 @@ class FoldersController < ApplicationController
     end
   end 
 
-  def increase
-
-  end
-
   # GET /folders/1
   # GET /folders/1.json
   def show
@@ -111,13 +107,6 @@ class FoldersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  # DELETE /folders/1
-  # DELETE /folders/1.json
-  def fap
-    redirect_to subjects_url  
-  end
-  helper_method :fap
   
   #Metod that redirects to the view page of the error "errorMaetria"
   def errorMaestria
@@ -127,17 +116,24 @@ class FoldersController < ApplicationController
   end
 
   # Metod that recive the data from the prenscription
-  def add_preinscription
+  def increase
+    @folder = Folder.find(params[:id])
 
-    subjectsId = Subjects.find(params[:subj_ids])
+    subjectsId = Subject.find(params[:subj_ids])
   
     subjectsId.each do |s|
-      pre = Preinscription.where(:subject_id => s.id).first
+      @Preinscription = Preinscription.where(:subject_id => s.id).first
 
-      unless pre.nil? 
-        numNuevo = pre.enrolled + 1
-        pre.update_attributes(:enrolled => numNuevo)
+      unless @Preinscription.nil? 
+        numNuevo = @Preinscription.enrolled + 1
+        @Preinscription.update_attributes(:enrolled => numNuevo)
+        @Preinscription.save
       end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
+      format.json { render json: @folder }
     end
   end
 end

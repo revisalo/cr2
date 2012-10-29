@@ -24,12 +24,8 @@ Magister.create(code: 'MATI')
 
 Section.create(day: 2, hour: 4, pensum_id: 1, subject_id: "MATE-1", provisional: 0 )
 
-Preinscription.create(subject_id: 1, enrolled: 10, pensum_id: 1)
-
-Preinscription.create(subject_id: 2, enrolled: 20, pensum_id: 1)
-
-Preinscription.create(subject_id: 3, enrolled: 30, pensum_id: 1)
-
 for i in ["1", "2", "3", "4","5", "6", "7", "8","9", "10", "11", "12"] 
-  Subject.create(code: 'MATE-' + i, credits: 3, name: 'Materia ' + i , pensum_id: '1', capacity: 50,blocks: 1)
+  	Subject.create(code: 'MATE-' + i, credits: 3, name: 'Materia ' + i , pensum_id: '1', capacity: 50,blocks: 1)
+	
+	Preinscription.create(subject_id: i, enrolled: 30, pensum_id: 1)
 end 

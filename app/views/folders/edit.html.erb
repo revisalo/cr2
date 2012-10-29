@@ -32,7 +32,7 @@
     </tr>
     
   <%= form_tag increase_folders_path do %>
-  <% for subj in @folder.subjects %>
+  <% for subj in Subject.where(:pensum_id => @folder.pensum_id) %>
     <% preins = Preinscription.where(:subject_id => subj.id).first %>
     
     <tr>
@@ -51,12 +51,14 @@
       </td>
 
       <td><%= check_box_tag "subj_ids[]", subj.id  %> </td>
+
+     <%= hidden_field_tag(:id, params[:id])%>
     </tr>     
   <% end %> 
 
 </table>
 
-<%= submit_tag "alo", class:"btn btn-primary" %>
+<%= submit_tag "I'm ready", class:"btn btn-primary" %>
 </div>
 
 
