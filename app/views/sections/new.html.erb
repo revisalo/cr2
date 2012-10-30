@@ -1,3 +1,74 @@
+<a href="javascript:toggle2();"><h2>Show and Add Sections</h2></a>
+<div id='show' hidden>
+   <table>
+    <tr>
+
+      <th>Subject Code </th>
+      <th>Day</th>
+      <th>Hour</th>
+      <th>Provisional</th>
+           
+    </tr>
+  
+  <% for section in Pensum.find(params[:id]).sections %>
+    <tr>
+      <td><%= section.subject_id %></td>
+      <td><%= section.day %></td>
+      <td><%= section.hour %></td>
+      <td><%= section.provisional %></td>
+      
+      <td><%= link_to 'Show', section %></td>
+      <td><%= link_to 'Edit', edit_section_path(section) %></td>
+      <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </table>
+<hr>
+
+
+<%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
+  <% if @section.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@section.errors.count, "error") %> prohibited this section from being saved:</h2>
+
+      <ul>
+      <% @section.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+    <%= f.label :day %><br />
+    
+    <%= f.select :day, options_for_select([["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5],["Saturday", 6] ]) %>
+  </div>      
+  <div class="field">
+    <%= f.label :hour %><br />
+    <%= f.select :hour, options_for_select([["07:00 - 08:20", 1], ["08:30 - 09:50", 2], ["10:00 - 11:20", 3], ["11:30 - 12:50", 4], ["14:00 - 15:20", 5], ["15:30 - 16:50", 6], ["17:00 - 18:30", 7], ["18:30 - 19:50", 8] ]) %>
+
+    <%= f.label :subject_id %><br />
+    <%= f.collection_select :subject_id, Subject.where(:pensum_id => params[:id]), :code, :code %>
+  </div>
+  <div class="field">
+    <%= f.label :provisional %><br />
+    <%= f.select :provisional, options_for_select([["Si", "Si"], ["No", "No"]]) %>
+  </div>         
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<h4>Choose the CVS file you want to import</h4>
+<h6>Un ejemplo está en './files/sections_load.csv'</h6>
+<%= form_tag({:action => :create, :id => -2, :pensum_id => params[:id]}, :multipart => true) do %>
+  <%= file_field_tag 'CSV' %><br>
+  <%= submit_tag("Load sections") %>
+<% end %>
+</div>
+
 <h2>Schedule</h2>
   <table>
     <tr>
@@ -52,12 +123,32 @@
     <% end %>
   </table>
 
+<script>
+  function toggle1()
+  {
+    var ns = document.getElementById("optimice");
+    if (ns.hidden)
+      ns.hidden = ''
+    else
+      ns.hidden = 'hidden'
+  }
 
-<h2>Optimize my Schedule</h2>
+  function toggle2()
+  {
+    var ns2 = document.getElementById("show");
+    if (ns2.hidden)
+      ns2.hidden = ''
+    else
+      ns2.hidden = 'hidden'
+  }
+</script>
+
+<a href="javascript:toggle1();"><h2>Optimize my Schedule</h2></a>
+<div id='optimice' hidden>
 <%= form_tag try_sections_path  do %>
   Select an objective<br><select name="ObFunction">
    <option value="1">Optimice the capacity (Max capacity of the pensum) </option>
-   <option value="2">Minimize over capacity (Min number of students without room) </optry_sectiontion>
+   <option value="2">Minimize over-capacity (Min number of students without room) </option>
   </select><br>
   Select the maximum number of class at the same time<br><select name="Cross">
   <% i = 1 %>
@@ -65,7 +156,7 @@
     <%if i == 1%>
       <option value="1">No classes at the same time</option>
     <%elsif i > 1%>
-      <option value=i> <%= i %> </option>
+      <option value= <%=i%>> <%= i %> </option>
     <% end %>
     <% i = i +1%>
   <% end %>
@@ -74,86 +165,6 @@
   <%= submit_tag 'Optimize'%>
   <%= hidden_field_tag(:pensum_id, params[:id])%>
 <% end %>
+</div>
 
-<hr>
-
-<h2>Sections</h2>
-   <table>
-    <tr>
-
-      <th>Subject Code </th>
-      <th>Day</th>
-      <th>Hour</th>
-      <th>Provisional</th>
-           
-    </tr>
-  
-  <% for section in Pensum.find(params[:id]).sections %>
-    <tr>
-      <td><%= section.subject_id %></td>
-      <td><%= section.day %></td>
-      <td><%= section.hour %></td>
-      <td><%= section.provisional %></td>
-      
-      <td><%= link_to 'Show', section %></td>
-      <td><%= link_to 'Edit', edit_section_path(section) %></td>
-      <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-  </table>
-
-<hr>
-
-<h2>Add Section</h2>
-<%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
-  <% if @section.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@section.errors.count, "error") %> prohibited this section from being saved:</h2>
-
-      <ul>
-      <% @section.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-
-    <%= f.label :day %><br />
-    
-    <%= f.select :day, options_for_select([["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5],["Saturday", 6] ]) %>
-  </div>
-
-
-     
-      
-
-  <div class="field">
-    <%= f.label :hour %><br />
-    <%= f.select :hour, options_for_select([["07:00 - 08:20", 1], ["08:30 - 09:50", 2], ["10:00 - 11:20", 3], ["11:30 - 12:50", 4], ["14:00 - 15:20", 5], ["15:30 - 16:50", 6], ["17:00 - 18:30", 7], ["18:30 - 19:50", 8] ]) %>
-
-    <%= f.label :subject_id %><br />
-    <%= f.collection_select :subject_id, Subject.where(:pensum_id => params[:id]), :code, :code %>
-
-
-  <div class="field">
-    <%= f.label :provisional %><br />
-    <%= f.select :provisional, options_for_select([["Si", "Si"], ["No", "No"]]) %>
-  </div>         
-  <div class="actions">
-    <%= f.submit %>
-    <td><%= link_to 'Back', :controller => :subjects, :action => :new, :id => params[:id] %></td>
-  </div>
-<% end %>
-
-<h3>Massive load</h3>
-<p>Choose the CVS file you want to import</p>
-<p>Un ejemplo está en './files/sections_load.csv'</p>
-<%= form_tag({:action => :create, :id => -2, :pensum_id => params[:id]}, :multipart => true) do %>
-  <%= file_field_tag 'CSV' %><br>
-  <%= submit_tag("Load sections") %>
-<% end %>
-
-
-
+<%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), :controller => :subjects, :action => :new, :id => params[:id])%>

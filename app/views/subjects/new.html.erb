@@ -81,6 +81,13 @@
   <div class="actions">
     <%= f.submit %>    
   </div>
+    <%m = Date.current().month%>
+    <%if m <= 6%>
+      <%= hidden_field_tag(:date, Date.current().year.to_s + '-1')%>
+    <%else%>
+      <%= hidden_field_tag(:date, Date.current().year.to_s + '-2')%>
+    <%end%>
+    <%= hidden_field_tag(:enrolled, "0")%>
 <% end %>
 </div>
 
