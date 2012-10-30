@@ -32,7 +32,19 @@
   <% end %>
   </table>
 
-<h2>Add subject</h2>
+<script>
+  function toggle()
+  {
+    var ns = document.getElementById("newSubject");
+    if (ns.hidden)
+      ns.hidden = ''
+    else
+      ns.hidden = 'hidden'
+  }
+</script>
+
+<a href="javascript:toggle();"><h2>Add subject</h2></a>
+<div id='newSubject' hidden>
 <%= form_for @subject, :url => {:action => :create, :id => @pensum.id} do |f| %>
   <% if @subject.errors.any? %>
     <div id="error_explanation">
@@ -70,6 +82,8 @@
     <%= f.submit %>    
   </div>
 <% end %>
+</div>
+
 <h2>Manage the pensum schedule</h2>
 <%= link_to(image_tag("http://www.ellipsistech.com/NSS8_files/icon_lesson_timer.gif"), :controller => :sections, :action => :new, :id => @pensum.id )%>
 
