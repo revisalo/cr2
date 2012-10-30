@@ -2,7 +2,8 @@
 
 <%= render 'form' %>
 
-<% @subjectsNotSeen = Pensum.find(params[:id]).subjects %>
+<% @folder = Folder.find(params[:id]) %>
+<% @subjectsNotSeen = Pensum.find(@folder.pensum_id).subjects %>
 
 <% for j in @folder.subjects %>
 <%   @subjectsNotSeen.delete(j) %>
@@ -68,7 +69,7 @@
 
 <div class="actions">
    <%= link_to 'Show', @folder %> |
-   <%= link_to "back", pensums_path  %>
+   <%= link_to "back", folders_path  %>
 </div>
 <% end %>
 

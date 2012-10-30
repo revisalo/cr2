@@ -18,7 +18,7 @@ Folder.create(code: '200822561', docid: 1015412365, name: 'Juan', semester: 1, y
 
 Folder.create(code: '200822562', docid: 1015412366, name: 'Manuel', semester: 2, year: 2009,magisterName: 'MATI',pensum_id: 2)
 
-Folder.create(code: '200822563', docid: 1015412367, name: 'Laura', semester: 1, year: 2012, magisterName: 'MISIS',pensum_id: 3)
+Folder.create(code: '200822563', docid: 1015412367, name: 'Laura', semester: 1, year: 2012, magisterName: 'MISIS',pensum_id: 1)
 
 Pensum.create(year: 2008, semester: 1, magister_id: 1)
 
