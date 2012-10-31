@@ -43,7 +43,7 @@
                 <% end %>
               <% end %>
             <% for section in Pensum.find(params[:id]).sections %>
-              <%if section.day == i && section.hour == j %>
+              <%if section.day == i && section.hour == j && section.provisional == 0%>
               <%=section.subject_id%>
               <% end %>
             <% end %>
