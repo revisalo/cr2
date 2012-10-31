@@ -129,7 +129,7 @@ class SectionsController < ApplicationController
       f.puts "#{@pensum.subjects.count};#{cross};#{obf}" 
       f.puts "----------"
       @pensum.subjects.each do |sub|
-        f.puts "#{sub.code};#{sub.capacity};#{sub.blocks};#{sub.preinscription.enrolled}" 
+      f.puts "#{sub.code};#{sub.capacity};#{sub.blocks};#{sub.preinscription.enrolled}" 
       end
       f.puts "----------"
       @pensum.subjects.each do |sub|

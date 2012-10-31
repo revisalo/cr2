@@ -25,7 +25,9 @@ class SubjectsController < ApplicationController
   # GET /subjects/new.json
   def new
     @pensum = Pensum.find(params[:id])
-    @subject = @pensum.subjects.build
+    @subject = @pensum.subjects.build 
+
+    @preinscription = Preinscription.new
 #    @subject = Subject.new
 #    respond_to do |format|
 #      format.html # new.html.erb
