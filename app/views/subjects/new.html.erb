@@ -15,7 +15,7 @@
       <th>Name</th>
       <th>Credits</th>   
       <th>Capacity</th>    
-      <th>Number of blocks</th>    
+      <th>Presential hours</th>    
     </tr>
   
   <% for subject in Pensum.find(params[:id]).subjects %>
@@ -75,7 +75,7 @@
     <%= f.text_field :capacity %>
   </div>
   <div class="field">
-    <%= f.label :blocks %><br />
+    <%= f.label "Presential hours" %><br />
     <%= f.text_field :blocks %>
   </div>
   <div class="actions">

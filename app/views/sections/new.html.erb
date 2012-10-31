@@ -1,4 +1,5 @@
-<h2>Schedule</h2>
+<h1>Manage pensum schedule</h2>
+  <h2>Schedule</h2>
   <table>
     <tr>
       <th>Hour</th>
@@ -52,8 +53,19 @@
     <% end %>
   </table>
 
+<script>
+function togOptimize()
+{
+  var op = document.getElementById("optimize");
+    if (op.hidden)
+      op.hidden = ''
+    else
+      op.hidden = 'hidden'
+}
+</script>
 
-<h2>Optimize my Schedule</h2>
+<a href="javascript:togOptimize();"><h2>Optimize my Schedule</h2></a>
+<div id="optimize" hidden>
 <%= form_tag try_sections_path  do %>
   Select an objective<br><select name="ObFunction">
    <option value="1">Optimice the capacity (Max capacity of the pensum) </option>
@@ -74,26 +86,69 @@
   <%= submit_tag 'Optimize'%>
   <%= hidden_field_tag(:pensum_id, params[:id])%>
 <% end %>
+</div>
 
 <hr>
 
-<h2>Sections</h2>
+<h2>Possible times</h2>
    <table>
     <tr>
 
       <th>Subject Code </th>
       <th>Day</th>
       <th>Hour</th>
-      <th>Provisional</th>
+      <th>Definitive</th>
            
     </tr>
   
   <% for section in Pensum.find(params[:id]).sections %>
     <tr>
       <td><%= section.subject_id %></td>
-      <td><%= section.day %></td>
-      <td><%= section.hour %></td>
-      <td><%= section.provisional %></td>
+      <%  day = ""
+          case section.day
+          when 1
+            day = "Monday"
+          when 2
+            day = "Tuesday"
+          when 3
+            day = "Wednesday"
+          when 4
+            day = "Thursday"
+          when 5
+            day = "Friday"
+          when 6
+            day = "Saturday"
+          end %>
+      <td><%= day %></td>
+
+      <%  hour = ""
+          case section.hour
+          when 1
+            hour = "07:00 - 08:20"
+          when 2
+            hour = "08:30 - 09:50"
+          when 3
+            hour = "10:00 - 11:20"
+          when 4
+            hour = "11:30 - 12:50"
+          when 5
+            hour = "14:00 - 15:20"
+          when 6
+            hour = "15:30 - 16:50"
+          when 7
+            hour = "17:00 - 18:20"
+          when 8
+            hour = "18:30 - 19:50"
+          end
+           %>
+      <td><%= hour %></td>
+
+      <td><%= case section.provisional 
+              when 1 
+                "No"
+              when 0
+                "Yes" 
+              end %></td>
       
       <td><%= link_to 'Show', section %></td>
       <td><%= link_to 'Edit', edit_section_path(section) %></td>
@@ -104,7 +159,19 @@
 
 <hr>
 
-<h2>Add Section</h2>
+<script>
+function togAddSection()
+{
+  var as = document.getElementById("addSection");
+    if (as.hidden)
+      as.hidden = ''
+    else
+      as.hidden = 'hidden'
+}
+</script>
+
+<a href="javascript:togAddSection();"><h2>Add possible time</h2></a>
+<div id="addSection" hidden>
 <%= form_for @section, :url => {:action => :create, :id => Pensum.find(params[:id]).id} do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
@@ -138,8 +205,8 @@
 
 
   <div class="field">
-    <%= f.label :provisional %><br />
-    <%= f.select :provisional, options_for_select([["Si", "Si"], ["No", "No"]]) %>
+    <%= f.label "Definitive" %><br />
+    <%= f.select :provisional, options_for_select([["Yes", "Si"], ["No", "No"]]) %>
   </div>         
   <div class="actions">
     <%= f.submit %>
@@ -147,13 +214,28 @@
   </div>
 <% end %>
 
-<h3>Massive load</h3>
+<script>
+function togMassiveLoad()
+{
+  var ml = document.getElementById("massiveLoad");
+    if (ml.hidden)
+      ml.hidden = ''
+    else
+      ml.hidden = 'hidden'
+}
+</script>
+
+<a href="javascript:togMassiveLoad();"><h3>Massive load</h3></a>
+<div id="massiveLoad" hidden>
 <p>Choose the CVS file you want to import</p>
-<p>Un ejemplo está en './files/sections_load.csv'</p>
+Un ejemplo está en './files/sections_load.csv'
 <%= form_tag({:action => :create, :id => -2, :pensum_id => params[:id]}, :multipart => true) do %>
   <%= file_field_tag 'CSV' %><br>
   <%= submit_tag("Load sections") %>
 <% end %>
+</div>
+
+</div>
 
 
 
