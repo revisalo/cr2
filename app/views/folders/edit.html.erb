@@ -37,7 +37,7 @@
     
   <%= form_tag increase_folders_path do %>
   <% for subj in @subjectsNotSeen %>
-    <% preins = Preinscription.where(:subject_id => subj.id).first %>
+    <% preins = Preinscription.where(:subject_id => subj.code).first %>
     
     <tr>
       <td><%= subj.code %></td>

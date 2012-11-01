@@ -26,13 +26,15 @@ class SubjectsController < ApplicationController
   def new
     @pensum = Pensum.find(params[:id])
     @subject = @pensum.subjects.build 
+    
+   # user.assign_attributes({ :name => 'Josh', :is_admin => true })
+   # @subject = Subject.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @subject }
+      
+     end
 
-    @preinscription = Preinscription.new
-#    @subject = Subject.new
-#    respond_to do |format|
-#      format.html # new.html.erb
-#      format.json { render json: @subject }
-#    end
   end
 
   # GET /subjects/1/edit
@@ -48,6 +50,16 @@ class SubjectsController < ApplicationController
     @subject = @pensum.subjects.build(params[:subject])    
 
     @subject.save
+    ss=@subject.code
+     @m = Date.current().month
+    if @m <= 6
+    @date = Date.current().year.to_s + '-1'
+    else
+    @date = Date.current().year.to_s + '-2'
+    end
+    
+   @Preinscription = Preinscription.create(subject_id: @subject.code, enrolled: 0, pensum_id: @pensum.id, date: @date)
+    
       redirect_to new_subject_path(:id => @pensum.id)
   end
 

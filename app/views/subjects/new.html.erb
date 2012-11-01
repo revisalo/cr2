@@ -8,6 +8,9 @@
   <%= @pensum.year %> - <%= @pensum.semester %>
 </p>
 
+
+
+
 <h2>Subjects</h2>
    <table>
     <tr>
@@ -15,16 +18,28 @@
       <th>Name</th>
       <th>Credits</th>   
       <th>Capacity</th>    
-      <th>Presential hours</th>    
+      <th>Presential hours</th>   
+      <th>Enrolled</th> 
     </tr>
   
   <% for subject in Pensum.find(params[:id]).subjects %>
+  <% pens = Pensum.find(params[:id]) %>
     <tr>
+  
       <td><%= subject.code %></td>
       <td><%= subject.name %></td>
       <td><%= subject.credits %></td>
       <td><%= subject.capacity %></td>
       <td><%= subject.blocks %></td>
+      
+       
+      <% preins = Preinscription.where("pensum_id = ? AND subject_id = ?", subject.pensum_id, subject.code).first %>
+      <%if preins !=nil %>
+      <td><%= preins.enrolled %></td>
+       <%else%>
+      <td> 0 </td>
+    <%end%>
+      <td>
       <td><%= link_to 'Show', subject %></td>
       <td><%= link_to 'Edit', edit_subject_path(subject) %></td>
       <td><%= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -46,6 +61,7 @@
 <a href="javascript:toggle();"><h2>Add subject</h2></a>
 <div id='newSubject' hidden>
 <%= form_for @subject, :url => {:action => :create, :id => @pensum.id} do |f| %>
+
   <% if @subject.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@subject.err@preinscriptioors.count, "error") %> prohibited this subject from being saved:</h2>
@@ -78,6 +94,8 @@
     <%= f.label "Presential hours" %><br />
     <%= f.text_field :blocks %>
   </div>
+  <%= hidden_field_tag(:id, params[:id])%>
+ 
   <div class="actions">
     <%= f.submit %>    
   </div>
@@ -93,8 +111,6 @@
 
 <h2>Manage the pensum schedule</h2>
 <%= link_to(image_tag("http://www.ellipsistech.com/NSS8_files/icon_lesson_timer.gif"), :controller => :sections, :action => :new, :id => @pensum.id )%>
-
-<h2><%= link_to "Preinscriptions", :controller => :preinscriptions,:action => :show, :id => @pensum.id%></h2>
 
 <br>
 <%= link_to(image_tag("http://www.aquiles.com.ve/images/back_icon_blue.gif"), pensums_path)%>

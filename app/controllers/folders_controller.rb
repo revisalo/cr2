@@ -115,7 +115,7 @@ class FoldersController < ApplicationController
     end
   end
 
-  # Metod that recive the data from the prenscription
+  # Metod that recives the data from the prenscription
   def increase
     @folder = Folder.find(params[:id])
 
@@ -132,12 +132,7 @@ class FoldersController < ApplicationController
     @folder.update_attributes(:preinscription_date => @date)
 
     subjectsId.each do |s|
-      @Preinscription = Preinscription.where(:subject_id => s.id).first
-
-      if @Preinscription.nil? 
-        @Preinscription = Preinscription.create(subject_id: s.id, enrolled: 0, pensum_id: 1, date: @date)
-      end
-
+      @Preinscription = Preinscription.where(:subject_id => s.code).first
       numNuevo = @Preinscription.enrolled + 1
       @Preinscription.update_attributes(:enrolled => numNuevo)
     end
