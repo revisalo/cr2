@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBLinExpr</TITLE>
+<META NAME="description" CONTENT="GRBLinExpr">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node189.html">
+<LINK REL="previous" HREF="node171.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node174.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html2864"
+  HREF="node174.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2862"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2856"
+  HREF="node172.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html2865"
+  HREF="node174.html">GRBLinExpr()</A>
+<B> Up:</B> <A NAME="tex2html2863"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html2857"
+  HREF="node172.html">GRBExpr::getValue()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00028000000000000000"></A>
+<A NAME="cppclass:GRBLinExpr"></A>
+<BR>
+GRBLinExpr
+</H2>
+
+<P>
+Gurobi linear expression object.  A linear expression consists of a
+constant term, plus a list of coefficient-variable pairs that capture
+the linear terms.  Linear expressions are used to build constraints.
+They are temporary objects that typically have short lifespans.
+
+<P>
+The <EM>GRBLinExpr</EM> class is a sub-class of the abstract base
+class <A HREF="node171.html#cppclass:GRBExpr">GRBExpr</A>.
+
+<P>
+You generally build linear expressions using overloaded operators.
+For example, if <EM>x</EM> is a <A HREF="node158.html#cppclass:GRBVar">GRBVar</A>
+object, then <EM>x + 1</EM> is a
+<A HREF="#cppclass:GRBLinExpr">GRBLinExpr</A> object.  Expressions
+can be built from constants (e.g., <EM>expr = 0</EM>), variables (e.g.,
+<EM>expr = 1 * x + 2 * y</EM>), or from other expressions (e.g., <EM>  expr2 = 2 * expr1 + x</EM>, or <EM>expr3 = expr1 + 2 * expr2</EM>).
+You can also modify existing expressions (e.g., <EM>expr += x</EM>, or
+<EM>expr2 -= expr1</EM>).
+
+<P>
+Note that it is <EM>much</EM> more efficient to build a large linear
+expression by extending an existing expression (using <EM>+=</EM>
+or <EM>-=</EM>), rather than by repeatedly creating new expressions.  The
+statement <EM>expr = expr + x</EM> creates a new copy of <EM>expr</EM>,
+for example, while <EM>expr += x</EM> just appends a new term.
+
+<P>
+Another option for building expressions is to use the
+<A HREF="node175.html#cppmethod:GRBLinExpr::addTerms">addTerms</A> method, which
+adds an array of new terms at once.  Terms can also be removed from an
+expression, using <A HREF="node187.html#cppmethod:GRBLinExpr::remove">remove</A>.
+
+<P>
+Individual terms in a linear expression can be queried using the
+<A HREF="node180.html#cppmethod:GRBLinExpr::getVar">getVar</A>,
+<A HREF="node178.html#cppmethod:GRBLinExpr::getCoeff">getCoeff</A>, and
+<A HREF="node177.html#cppmethod:GRBLinExpr::getConstant">getConstant</A> methods.
+You can query the number of terms in the expression using the
+<A HREF="node188.html#cppmethod:GRBLinExpr::size">size</A> method.
+
+<P>
+Note that a linear expression may contain multiple terms that involve
+the same variable.  These duplicate terms are merged when creating a
+constraint from an expression, but they may be visible when inspecting
+individual terms in the expression (e.g., when using
+<A HREF="node180.html#cppmethod:GRBLinExpr::getVar">getVar</A>).
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2866"
+  HREF="node174.html">GRBLinExpr()</A>
+<LI><A NAME="tex2html2867"
+  HREF="node175.html">GRBLinExpr::addTerms()</A>
+<LI><A NAME="tex2html2868"
+  HREF="node176.html">GRBLinExpr::clear()</A>
+<LI><A NAME="tex2html2869"
+  HREF="node177.html">GRBLinExpr::getConstant()</A>
+<LI><A NAME="tex2html2870"
+  HREF="node178.html">GRBLinExpr::getCoeff()</A>
+<LI><A NAME="tex2html2871"
+  HREF="node179.html">GRBLinExpr::getValue()</A>
+<LI><A NAME="tex2html2872"
+  HREF="node180.html">GRBLinExpr::getVar()</A>
+<LI><A NAME="tex2html2873"
+  HREF="node181.html">GRBLinExpr::operator=</A>
+<LI><A NAME="tex2html2874"
+  HREF="node182.html">GRBLinExpr::operator+</A>
+<LI><A NAME="tex2html2875"
+  HREF="node183.html">GRBLinExpr::operator-</A>
+<LI><A NAME="tex2html2876"
+  HREF="node184.html">GRBLinExpr::operator+=</A>
+<LI><A NAME="tex2html2877"
+  HREF="node185.html">GRBLinExpr::operator-=</A>
+<LI><A NAME="tex2html2878"
+  HREF="node186.html">GRBLinExpr::operator*=</A>
+<LI><A NAME="tex2html2879"
+  HREF="node187.html">GRBLinExpr::remove()</A>
+<LI><A NAME="tex2html2880"
+  HREF="node188.html">GRBLinExpr::size()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2864"
+  HREF="node174.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2862"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2856"
+  HREF="node172.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html2865"
+  HREF="node174.html">GRBLinExpr()</A>
+<B> Up:</B> <A NAME="tex2html2863"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html2857"
+  HREF="node172.html">GRBExpr::getValue()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

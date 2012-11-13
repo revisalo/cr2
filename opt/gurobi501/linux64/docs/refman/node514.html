@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Constants</TITLE>
+<META NAME="description" CONTENT="Constants">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node515.html">
+<LINK REL="previous" HREF="node513.html">
+<LINK REL="up" HREF="node513.html">
+<LINK REL="next" HREF="node515.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html6782"
+  HREF="node515.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6780"
+  HREF="node513.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6774"
+  HREF="node513.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6783"
+  HREF="node515.html">GRB.CharAttr</A>
+<B> Up:</B> <A NAME="tex2html6781"
+  HREF="node513.html">GRB</A>
+<B> Previous:</B> <A NAME="tex2html6775"
+  HREF="node513.html">GRB</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION000415100000000000000"></A>
+<A NAME="dotnetconstants"></A>
+<BR>
+Constants
+</H3>
+
+<P>
+The following list contains the set of constants needed by the Gurobi
+.NET interface.  You would refer to them using a <EM>GRB.</EM> prefix
+(e.g., <EM>GRB.OPTIMAL</EM>).
+
+<P>
+<PRE>
+  // Model status codes (after call to optimize())
+
+  public class Status
+  {
+
+    public static int LOADED = 1;
+    public static int OPTIMAL = 2;
+    public static int INFEASIBLE = 3;
+    public static int INF_OR_UNBD = 4;
+    public static int UNBOUNDED = 5;
+    public static int CUTOFF = 6;
+    public static int ITERATION_LIMIT = 7;
+    public static int NODE_LIMIT = 8;
+    public static int TIME_LIMIT = 9;
+    public static int SOLUTION_LIMIT = 10;
+    public static int INTERRUPTED = 11;
+    public static int NUMERIC = 12;
+
+  }
+
+  // Basis status info 
+
+  public static int BASIC          = 0;
+  public static int NONBASIC_LOWER = -1;
+  public static int NONBASIC_UPPER = -2;
+  public static int SUPERBASIC     = -3;
+
+  // Constraint senses
+ 
+  public static char LESS_EQUAL    = '&lt;';
+  public static char GREATER_EQUAL = '&gt;';
+  public static char EQUAL         = '=';
+
+  // Variable types 
+
+  public static char CONTINUOUS   = 'C';
+  public static char BINARY       = 'B';
+  public static char INTEGER      = 'I';
+  public static char SEMICONT     = 'S';
+  public static char SEMIINT      = 'N';
+
+  // SOS types 
+
+  public static int SOS_TYPE1      = 1;
+  public static int SOS_TYPE2      = 2;
+
+  // Numeric constants 
+
+  public static double INFINITY    = 1e100;
+  public static double UNDEFINED   = 1e101;
+
+  // Limits
+
+  public static int MAX_STRLEN  = 512;
+
+  // Callback constants
+
+  public class Callback
+  {
+    public static int POLLING       =     0;
+    public static int PRESOLVE      =     1;
+    public static int SIMPLEX       =     2;
+    public static int MIP           =     3;
+    public static int MIPSOL        =     4;
+    public static int MIPNODE       =     5;
+    public static int MESSAGE       =     6;
+    public static int BARRIER       =     7;
+
+    public static int PRE_COLDEL      = 1000;
+    public static int PRE_ROWDEL      = 1001;
+    public static int PRE_SENCHG      = 1002;
+    public static int PRE_BNDCHG      = 1003;
+    public static int PRE_COECHG      = 1004;
+    public static int SPX_ITRCNT      = 2000;
+    public static int SPX_OBJVAL      = 2001;
+    public static int SPX_PRIMINF     = 2002;
+    public static int SPX_DUALINF     = 2003;
+    public static int SPX_ISPERT      = 2004;
+    public static int MIP_OBJBST      = 3000;
+    public static int MIP_OBJBND      = 3001;
+    public static int MIP_NODCNT      = 3002;
+    public static int MIP_SOLCNT      = 3003;
+    public static int MIP_CUTCNT      = 3004;
+    public static int MIP_NODLFT      = 3005;
+    public static int MIP_ITRCNT      = 3006;
+    public static int MIPSOL_SOL      = 4001;
+    public static int MIPSOL_OBJ      = 4002;
+    public static int MIPSOL_OBJBST   = 4003;
+    public static int MIPSOL_OBJBND   = 4004;
+    public static int MIPSOL_NODCNT   = 4005;
+    public static int MIPSOL_SOLCNT   = 4006;
+    public static int MIPNODE_STATUS  = 5001;
+    public static int MIPNODE_REL     = 5002;
+    public static int MIPNODE_OBJBST  = 5003;
+    public static int MIPNODE_OBJBND  = 5004;
+    public static int MIPNODE_NODCNT  = 5005;
+    public static int MIPNODE_SOLCNT  = 5006;
+    public static int BARRIER_ITRCNT  = 7001;
+    public static int BARRIER_PRIMOBJ = 7002;
+    public static int BARRIER_DUALOBJ = 7003;
+    public static int BARRIER_PRIMINF = 7004;
+    public static int BARRIER_DUALINF = 7005;
+    public static int BARRIER_COMPL   = 7006;
+    public static int MSG_STRING      = 6001;
+    public static int RUNTIME         = 6002;
+  }
+
+  // Errors
+
+  public class Error
+  {
+    public static int OUT_OF_MEMORY            = 10001;
+    public static int NULL_ARGUMENT            = 10002;
+    public static int INVALID_ARGUMENT         = 10003;
+    public static int UNKNOWN_ATTRIBUTE        = 10004;
+    public static int DATA_NOT_AVAILABLE       = 10005;
+    public static int INDEX_OUT_OF_RANGE       = 10006;
+    public static int UNKNOWN_PARAMETER        = 10007;
+    public static int VALUE_OUT_OF_RANGE       = 10008;
+    public static int NO_LICENSE               = 10009;
+    public static int SIZE_LIMIT_EXCEEDED      = 10010;
+    public static int CALLBACK                 = 10011;
+    public static int FILE_READ                = 10012;
+    public static int FILE_WRITE               = 10013;
+    public static int NUMERIC                  = 10014;
+    public static int IIS_NOT_INFEASIBLE       = 10015;
+    public static int NOT_FOR_MIP              = 10016;
+    public static int OPTIMIZATION_IN_PROGRESS = 10017;
+    public static int DUPLICATES               = 10018;
+    public static int NODEFILE                 = 10019;
+    public static int NOT_IN_MODEL             = 20001;
+    public static int FAILED_TO_CREATE_MODEL   = 20002;
+    public static int INTERNAL                 = 20003;
+  }
+
+  public static int LPMETHOD_PRIMAL  = 0;
+  public static int LPMETHOD_DUAL    = 1;
+  public static int LPMETHOD_BARRIER = 2;
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html6782"
+  HREF="node515.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6780"
+  HREF="node513.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6774"
+  HREF="node513.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6783"
+  HREF="node515.html">GRB.CharAttr</A>
+<B> Up:</B> <A NAME="tex2html6781"
+  HREF="node513.html">GRB</A>
+<B> Previous:</B> <A NAME="tex2html6775"
+  HREF="node513.html">GRB</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

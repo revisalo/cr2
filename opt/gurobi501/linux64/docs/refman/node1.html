@@ -1,0 +1,642 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C Reference Manual</TITLE>
+<META NAME="description" CONTENT="C Reference Manual">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node105.html">
+<LINK REL="previous" HREF="refman.html">
+<LINK REL="up" HREF="refman.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html782"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html780"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html774"
+  HREF="refman.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html783"
+  HREF="node2.html">Environment Creation and Destruction</A>
+<B> Up:</B> <A NAME="tex2html781"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html775"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00010000000000000000"></A>
+<A NAME="sec:C"></A>
+<BR>
+C Reference Manual
+</H1>
+
+<P>
+This section documents the Gurobi C interface.  This manual begins
+with a quick overview of the functions in the interface, and continues
+with descriptions of all of the available interface routines.
+
+<P>
+If you are new to the Gurobi Optimizer, we suggest that you start with
+the
+<A NAME="tex2html2"
+  HREF="../quickstart/quickstart.html">Quick Start Guide</A>
+or the
+<A NAME="tex2html3"
+  HREF="../examples/examples.html">Example Tour</A>.
+These
+documents provide concrete examples of how to use the routines
+described here.
+
+<P>
+<B>Environments</B>
+
+<P>
+The first step in using the Gurobi C optimizer is to create an
+environment, using the <A HREF="node3.html#routine:GRBloadenv">GRBloadenv</A>
+call.  The environment acts as a container for all data associated
+with a set of optimization runs.  You will generally only need one
+environment in your program, even if you wish to work with multiple
+optimization models.  Once you are done with an environment, you
+should call <A HREF="node4.html#routine:GRBfreeenv">GRBfreeenv</A> to release
+the associated resources.
+
+<P>
+<B>Models</B>
+
+<P>
+You can create one or more optimization models within an environment.
+A model consists of a set of variables, a linear or quadratic
+objective function on those variables, and a set of constraints.  Each
+variable has an associated lower bound, upper bound, type (continuous,
+binary, integer, semi-continuous, or semi-integer), and linear
+objective coefficient.  Each linear constraint has an associated sense
+(less-than-or-equal, greater-than-or-equal, or equal), and right-hand
+side value.
+
+<P>
+An optimization model may be specified all at once, through the
+<A HREF="node8.html#routine:GRBloadmodel">GRBloadmodel</A> routine, or built
+incrementally, by first calling
+<A HREF="node9.html#routine:GRBnewmodel">GRBnewmodel</A> and then calling
+<A HREF="node19.html#routine:GRBaddvars">GRBaddvars</A> to add variables and
+<A HREF="node11.html#routine:GRBaddconstr">GRBaddconstr</A> or
+<A HREF="node13.html#routine:GRBaddqconstr">GRBaddqconstr</A> to add
+constraints. Models are dynamic entities; you can always add or delete
+variables or constraints.
+
+<P>
+Specific variables and constraints are referred to throughout the
+Gurobi C interface using their indices.  Variable/constraint indices
+are assigned as variables/constraints are added to the model, in a
+contiguous fashion.  In adherence to C language conventions, indices
+all start at 0.
+
+<P>
+We often refer to the <EM>class</EM> of an optimization model.  A model
+with a linear objective function, linear constraints, and continuous
+variables is a <EM>Linear Program (LP)</EM>.  If the objective is
+quadratic, the model is a <EM>Quadratic Program (QP)</EM>.  If any of the
+constraints are quadratic, the model is a
+<EM>Quadratically-Constrained Program (QCP)</EM>.
+We'll sometimes also discuss a special case of QCP,
+the
+<EM>Second-Order Cone Program (SOCP)</EM>.  If the model contains any
+integer variables, semi-continuous variables, semi-integer variables,
+or Special Ordered Set (SOS) constraints, the model is a
+<EM>Mixed Integer Program (MIP)</EM>.  We'll also sometimes discuss
+special cases of MIP,
+including
+<EM>Mixed Integer Linear Programs (MILP)</EM>,
+<EM>Mixed Integer Quadratic Programs (MIQP)</EM>,
+<EM>Mixed Integer Quadratically-Constrained Programs (MIQCP)</EM>,
+and
+<EM>Mixed Integer Second-Order Cone Programs (MISOCP)</EM>.
+The Gurobi Optimizer handles all of these model classes.
+
+<P>
+<B>Solving a Model</B>
+
+<P>
+Once you have built a model, you can call
+<A HREF="node29.html#routine:GRBoptimize">GRBoptimize</A> to compute a solution.
+By default, <EM>GRBoptimize()</EM> will use the concurrent optimizer
+to solve LP models, the barrier algorithm to solve QP and QCP models,
+and the branch-and-cut algorithm to solve
+mixed integer models.  The solution is stored as a set of
+<EM>attributes</EM> of the model.  The C interface contains an extensive
+set of routines for querying these attributes.
+
+<P>
+The Gurobi algorithms keep careful track of the state of the model,
+so calls to <EM>GRBoptimize()</EM> will only perform further
+optimization if relevant data has changed since the model was last
+optimized.  If you would like to discard previously computed solution
+information and restart the optimization from scratch without changing
+the model, you can call
+<A HREF="node33.html#routine:GRBresetmodel">GRBresetmodel</A>.
+
+<P>
+After a MIP model has been solved, you can call
+<A HREF="node32.html#routine:GRBfixedmodel">GRBfixedmodel</A> to compute the
+associated <EM>fixed</EM> model.  This model is identical to the input
+model, except that all integer variables are fixed to their values in
+the MIP solution.  In some applications, it is useful to compute
+information on this continuous version of the MIP model (e.g., dual
+variables, sensitivity information, etc.).
+
+<P>
+<B>Infeasible Models</B>
+
+<P>
+You have a few options if a model is found to be infeasible.  You can
+try to diagnose the cause of the infeasibility, attempt to repair the
+infeasibility, or both.  To obtain information that can be useful for
+diagnosing the cause of an infeasibility, call
+<A HREF="node30.html#routine:GRBcomputeIIS">GRBcomputeIIS</A> to compute an
+Irreducible Inconsistent Subsystem (IIS).  This routine can be used
+for both continuous and MIP models, but you should be aware that the
+MIP version can be quite expensive.  This routine populates a set of
+IIS attributes.
+
+<P>
+To attempt to repair an infeasibility, call
+<A HREF="node31.html#routine:GRBfeasrelax">GRBfeasrelax</A> to compute a
+feasibility relaxation for the model.  This relaxation allows you to
+find a solution that minimizes the magnitude of the constraint
+violation.
+
+<P>
+<B>Querying and Modifying Attributes</B>
+
+<P>
+Most of the information associated with a Gurobi model is stored in a
+set of attributes.  Some attributes are associated with the variables
+of the model, some with the constraints of the model, and some with
+the model itself.  To give a simple example, solving an optimization
+model causes the <EM>X</EM> variable attribute to be populated.
+Attributes such as <EM>X</EM> that are computed by the Gurobi optimizer
+cannot be modified directly by the user, while others, such as the
+variable lower bound array (the <EM>LB</EM> attribute) can.
+
+<P>
+The Gurobi C interface contains an extensive set of routines for
+querying or modifying attribute values.  The exact routine to use for
+a particular attribute depends on the type of the attribute.  As
+mentioned earlier, attributes can be either variable attributes,
+constraint attributes, or model attributes.  Variable and constraint
+attributes are arrays, and use a set of array attribute routines.
+Model attributes are scalars, and use a set of scalar routines.
+Attribute values can additionally be of type <EM>char</EM>,
+<EM>int</EM>, <EM>double</EM>, or <EM>string</EM> (really <EM>char *</EM>).
+
+<P>
+Scalar model attributes are accessed through a set of
+<EM>GRBget*attr()</EM> routines (e.g.,
+<A HREF="node50.html#routine:GRBgetintattr">GRBgetintattr</A>).  In addition,
+those model attributes that can be set directly by the user (e.g., the
+objective sense) may be modified through the <EM>GRBset*attr()</EM>
+routines (e.g.,
+<A HREF="node59.html#routine:GRBsetdblattr">GRBsetdblattr</A>).
+
+<P>
+Array attributes are accessed through three sets of routines.  The
+first set, the <EM>GRBget*attrarray()</EM> routines (e.g.,
+<A HREF="node68.html#routine:GRBgetcharattrarray">GRBgetcharattrarray</A>)
+return a contiguous sub-array of the attribute array, specified using
+the index of the first member and the length of the desired sub-array.
+The second set, the <EM>GRBget*attrelement()</EM> routines (e.g.,
+<A HREF="node66.html#routine:GRBgetcharattrelement">GRBgetcharattrelement</A>)
+return a single entry from the attribute array.  Finally, the
+<EM>GRBget*attrlist()</EM> routines (e.g.,
+<A HREF="node64.html#routine:GRBgetdblattrlist">GRBgetdblattrlist</A>) retrieve
+attribute values for a list of indices.
+
+<P>
+Array attributes that can be set by the user are modified through the
+<EM>GRBset*attrarray()</EM>, <EM>GRBset*attrelement</EM>, and
+<EM>GRBset*attrlist()</EM> routines.
+
+<P>
+The full list of Gurobi attributes can be found in the
+<A HREF="node652.html#sec:Attributes">Attributes</A> section.
+
+<P>
+<B>Additional Model Modification Information</B>
+
+<P>
+Most modifications to an existing model are done through the attribute
+interface (e.g., changes to variable bounds, constraint right-hand
+sides, etc.).  The main exceptions are modifications to the constraint
+matrix and to the quadratic portion of the objective function.
+
+<P>
+The constraint matrix can be modified in a few ways.  The first is to
+call <A HREF="node20.html#routine:GRBchgcoeffs">GRBchgcoeffs</A> to change
+individual matrix coefficients.  This routine can be used to modify
+the value of an existing non-zero, to set an existing non-zero to
+zero, or to create a new non-zero.  The constraint matrix is also
+modified when you remove constraints (through
+<A HREF="node21.html#routine:GRBdelconstrs">GRBdelconstrs</A>) or variables
+(through <A HREF="node25.html#routine:GRBdelvars">GRBdelvars</A>).  The non-zero
+values associated with the deleted constraints or variables are
+removed along with the constraints or variables themselves.
+
+<P>
+Quadratic objective terms are added to the objective function using the
+<A HREF="node14.html#routine:GRBaddqpterms">GRBaddqpterms</A> routine.  You can
+add a list of quadratic terms in one call, or you can add terms
+incrementally through multiple calls.  The
+<A HREF="node22.html#routine:GRBdelq">GRBdelq</A> routine allows you to delete
+all quadratic terms from the model.  Note that quadratic models will
+typically have both quadratic and linear terms.  Linear terms are
+entered and modified through the <EM>Obj</EM> attribute, in the same
+way that they are handled for models with purely linear objective
+functions.
+
+<P>
+<B>Lazy Updates</B>
+
+<P>
+One very important item to note about model modifications in the
+Gurobi optimizer is that they are performed in a <EM>lazy</EM> fashion,
+meaning that they don't actually affect the model until the next call
+to <A HREF="node29.html#routine:GRBoptimize">GRBoptimize</A> or
+<A HREF="node26.html#routine:GRBupdatemodel">GRBupdatemodel</A>.  This approach
+provides the advantage that the model remains unchanged while you are
+in the process of making multiple modifications.  The downside, of
+course, is that you have to remember to call <EM>GRBupdatemodel()</EM>
+in order to see the effect of your changes.
+
+<P>
+<B>Managing Parameters</B>
+
+<P>
+The Gurobi optimizer provides a set of parameters to allow you to
+control many of the details of the optimization process.  Factors like
+feasibility and optimality tolerances, choices of algorithms,
+strategies for exploring the MIP search tree, etc., can be controlled
+by modifying Gurobi parameters before beginning the optimization.
+Parameters are set using the <EM>GRBset*param()</EM> routines (e.g.,
+<A HREF="node85.html#routine:GRBsetintparam">GRBsetintparam</A>).  Current
+values can be retrieved with the <EM>GRBget*param()</EM> routines
+(e.g., <A HREF="node81.html#routine:GRBgetdblparam">GRBgetdblparam</A>).
+Parameters can be of type <EM>int</EM>, <EM>double</EM>, or <EM>char
+  *</EM> (string).  You can also read a set of parameter settings from a
+file using <A HREF="node90.html#routine:GRBreadparams">GRBreadparams</A>, or
+write the set of changed parameters using
+<A HREF="node91.html#routine:GRBwriteparams">GRBwriteparams</A>.
+
+<P>
+One thing we should note is that each model gets its own copy of the
+environment when it is created.  Parameter changes to the original
+environment therefore have no effect on existing models.  Use
+<A HREF="node38.html#routine:GRBgetenv">GRBgetenv</A> to retrieve the
+environment associated with a particular model if you want to change a
+parameter for that model.
+
+<P>
+<B>Monitoring Progress - Logging and Callbacks</B>
+
+<P>
+Progress of the optimization can be monitored through Gurobi logging.
+By default, Gurobi will send output to the screen.  A few simple
+controls are available for modifying the default logging behavior.  If
+you would like to direct output to a file as well as to the screen,
+specify the log file name in
+<A HREF="node3.html#routine:GRBloadenv">GRBloadenv</A> when you create your
+environment.  You can modify the <EM>LogFile</EM> parameter if you
+wish to redirect the log to a different file after creating the
+environment.  The frequency of logging output can be controlled with
+the <EM>DisplayInterval</EM> parameter, and logging can be turned off
+entirely with the <EM>OutputFlag</EM> parameter.  A detailed
+description of the Gurobi log file can be found in the
+<A HREF="node754.html#sec:Logging">Logging</A> section.
+
+<P>
+More detailed progress monitoring can be done through the Gurobi
+callback function.  The
+<A HREF="node94.html#routine:GRBsetcallbackfunc">GRBsetcallbackfunc</A>
+routine allows you to install a function that the Gurobi optimizer
+will call regularly during the optimization process.  You can call
+<A HREF="node96.html#routine:GRBcbget">GRBcbget</A> from within the callback
+to obtain additional information about the state of the optimization.
+
+<P>
+<B>Modifying Solver Behavior - Callbacks</B>
+
+<P>
+Callbacks can also be used to modify the behavior of the Gurobi
+optimizer.  If you call routine
+<A HREF="node102.html#routine:GRBterminate">GRBterminate</A> from within a
+callback, for example, the optimizer will terminate at the earliest
+convenient point.  Routine
+<A HREF="node101.html#routine:GRBcbsolution">GRBcbsolution</A> allows you to
+inject a feasible solution (or partial solution) during the solution
+of a MIP model.  Routines <A HREF="node99.html#routine:GRBcbcut">GRBcbcut</A>
+and <A HREF="node100.html#routine:GRBcblazy">GRBcblazy</A>
+allow you to add <EM>cutting planes</EM> and <EM>lazy constraints</EM>
+during a MIP optimization, respectively.
+
+<P>
+<B>Error Handling</B>
+
+<P>
+Most of the Gurobi C library routines return an integer error code.  A
+zero return value indicates that the routine completed successfully,
+while a non-zero value indicates that an error occurred.  The list of
+possible error return codes can be found in the <A HREF="node742.html#sec:ErrorCodes">Error
+  Codes</A> section.
+
+<P>
+When an error occurs, additional information on the error can be
+obtained by calling
+<A HREF="node104.html#routine:GRBgeterrormsg">GRBgeterrormsg</A>.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html784"
+  HREF="node2.html">Environment Creation and Destruction</A>
+<UL>
+<LI><A NAME="tex2html785"
+  HREF="node3.html">GRBloadenv</A>
+<LI><A NAME="tex2html786"
+  HREF="node4.html">GRBfreeenv</A>
+<LI><A NAME="tex2html787"
+  HREF="node5.html">GRBgetconcurrentenv</A>
+<LI><A NAME="tex2html788"
+  HREF="node6.html">GRBdiscardconcurrentenvs</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html789"
+  HREF="node7.html">Model Creation and Modification</A>
+<UL>
+<LI><A NAME="tex2html790"
+  HREF="node8.html">GRBloadmodel</A>
+<LI><A NAME="tex2html791"
+  HREF="node9.html">GRBnewmodel</A>
+<LI><A NAME="tex2html792"
+  HREF="node10.html">GRBcopymodel</A>
+<LI><A NAME="tex2html793"
+  HREF="node11.html">GRBaddconstr</A>
+<LI><A NAME="tex2html794"
+  HREF="node12.html">GRBaddconstrs</A>
+<LI><A NAME="tex2html795"
+  HREF="node13.html">GRBaddqconstr</A>
+<LI><A NAME="tex2html796"
+  HREF="node14.html">GRBaddqpterms</A>
+<LI><A NAME="tex2html797"
+  HREF="node15.html">GRBaddrangeconstr</A>
+<LI><A NAME="tex2html798"
+  HREF="node16.html">GRBaddrangeconstrs</A>
+<LI><A NAME="tex2html799"
+  HREF="node17.html">GRBaddsos</A>
+<LI><A NAME="tex2html800"
+  HREF="node18.html">GRBaddvar</A>
+<LI><A NAME="tex2html801"
+  HREF="node19.html">GRBaddvars</A>
+<LI><A NAME="tex2html802"
+  HREF="node20.html">GRBchgcoeffs</A>
+<LI><A NAME="tex2html803"
+  HREF="node21.html">GRBdelconstrs</A>
+<LI><A NAME="tex2html804"
+  HREF="node22.html">GRBdelq</A>
+<LI><A NAME="tex2html805"
+  HREF="node23.html">GRBdelqconstrs</A>
+<LI><A NAME="tex2html806"
+  HREF="node24.html">GRBdelsos</A>
+<LI><A NAME="tex2html807"
+  HREF="node25.html">GRBdelvars</A>
+<LI><A NAME="tex2html808"
+  HREF="node26.html">GRBupdatemodel</A>
+<LI><A NAME="tex2html809"
+  HREF="node27.html">GRBfreemodel</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html810"
+  HREF="node28.html">Model Solution</A>
+<UL>
+<LI><A NAME="tex2html811"
+  HREF="node29.html">GRBoptimize</A>
+<LI><A NAME="tex2html812"
+  HREF="node30.html">GRBcomputeIIS</A>
+<LI><A NAME="tex2html813"
+  HREF="node31.html">GRBfeasrelax</A>
+<LI><A NAME="tex2html814"
+  HREF="node32.html">GRBfixedmodel</A>
+<LI><A NAME="tex2html815"
+  HREF="node33.html">GRBresetmodel</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html816"
+  HREF="node34.html">Model Queries</A>
+<UL>
+<LI><A NAME="tex2html817"
+  HREF="node35.html">GRBgetcoeff</A>
+<LI><A NAME="tex2html818"
+  HREF="node36.html">GRBgetconstrbyname</A>
+<LI><A NAME="tex2html819"
+  HREF="node37.html">GRBgetconstrs</A>
+<LI><A NAME="tex2html820"
+  HREF="node38.html">GRBgetenv</A>
+<LI><A NAME="tex2html821"
+  HREF="node39.html">GRBgetq</A>
+<LI><A NAME="tex2html822"
+  HREF="node40.html">GRBgetqconstr</A>
+<LI><A NAME="tex2html823"
+  HREF="node41.html">GRBgetsos</A>
+<LI><A NAME="tex2html824"
+  HREF="node42.html">GRBgetvarbyname</A>
+<LI><A NAME="tex2html825"
+  HREF="node43.html">GRBgetvars</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html826"
+  HREF="node44.html">Input/Output</A>
+<UL>
+<LI><A NAME="tex2html827"
+  HREF="node45.html">GRBreadmodel</A>
+<LI><A NAME="tex2html828"
+  HREF="node46.html">GRBread</A>
+<LI><A NAME="tex2html829"
+  HREF="node47.html">GRBwrite</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html830"
+  HREF="node48.html">Attribute Management</A>
+<UL>
+<LI><A NAME="tex2html831"
+  HREF="node49.html">GRBgetattrinfo</A>
+<LI><A NAME="tex2html832"
+  HREF="node50.html">GRBgetintattr</A>
+<LI><A NAME="tex2html833"
+  HREF="node51.html">GRBsetintattr</A>
+<LI><A NAME="tex2html834"
+  HREF="node52.html">GRBgetintattrelement</A>
+<LI><A NAME="tex2html835"
+  HREF="node53.html">GRBsetintattrelement</A>
+<LI><A NAME="tex2html836"
+  HREF="node54.html">GRBgetintattrarray</A>
+<LI><A NAME="tex2html837"
+  HREF="node55.html">GRBsetintattrarray</A>
+<LI><A NAME="tex2html838"
+  HREF="node56.html">GRBgetintattrlist</A>
+<LI><A NAME="tex2html839"
+  HREF="node57.html">GRBsetintattrlist</A>
+<LI><A NAME="tex2html840"
+  HREF="node58.html">GRBgetdblattr</A>
+<LI><A NAME="tex2html841"
+  HREF="node59.html">GRBsetdblattr</A>
+<LI><A NAME="tex2html842"
+  HREF="node60.html">GRBgetdblattrelement</A>
+<LI><A NAME="tex2html843"
+  HREF="node61.html">GRBsetdblattrelement</A>
+<LI><A NAME="tex2html844"
+  HREF="node62.html">GRBgetdblattrarray</A>
+<LI><A NAME="tex2html845"
+  HREF="node63.html">GRBsetdblattrarray</A>
+<LI><A NAME="tex2html846"
+  HREF="node64.html">GRBgetdblattrlist</A>
+<LI><A NAME="tex2html847"
+  HREF="node65.html">GRBsetdblattrlist</A>
+<LI><A NAME="tex2html848"
+  HREF="node66.html">GRBgetcharattrelement</A>
+<LI><A NAME="tex2html849"
+  HREF="node67.html">GRBsetcharattrelement</A>
+<LI><A NAME="tex2html850"
+  HREF="node68.html">GRBgetcharattrarray</A>
+<LI><A NAME="tex2html851"
+  HREF="node69.html">GRBsetcharattrarray</A>
+<LI><A NAME="tex2html852"
+  HREF="node70.html">GRBgetcharattrlist</A>
+<LI><A NAME="tex2html853"
+  HREF="node71.html">GRBsetcharattrlist</A>
+<LI><A NAME="tex2html854"
+  HREF="node72.html">GRBgetstrattr</A>
+<LI><A NAME="tex2html855"
+  HREF="node73.html">GRBsetstrattr</A>
+<LI><A NAME="tex2html856"
+  HREF="node74.html">GRBgetstrattrelement</A>
+<LI><A NAME="tex2html857"
+  HREF="node75.html">GRBsetstrattrelement</A>
+<LI><A NAME="tex2html858"
+  HREF="node76.html">GRBgetstrattrarray</A>
+<LI><A NAME="tex2html859"
+  HREF="node77.html">GRBsetstrattrarray</A>
+<LI><A NAME="tex2html860"
+  HREF="node78.html">GRBgetstrattrlist</A>
+<LI><A NAME="tex2html861"
+  HREF="node79.html">GRBsetstrattrlist</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html862"
+  HREF="node80.html">Parameter Management</A>
+<UL>
+<LI><A NAME="tex2html863"
+  HREF="node81.html">GRBgetdblparam</A>
+<LI><A NAME="tex2html864"
+  HREF="node82.html">GRBgetintparam</A>
+<LI><A NAME="tex2html865"
+  HREF="node83.html">GRBgetstrparam</A>
+<LI><A NAME="tex2html866"
+  HREF="node84.html">GRBsetdblparam</A>
+<LI><A NAME="tex2html867"
+  HREF="node85.html">GRBsetintparam</A>
+<LI><A NAME="tex2html868"
+  HREF="node86.html">GRBsetstrparam</A>
+<LI><A NAME="tex2html869"
+  HREF="node87.html">GRBgetdblparaminfo</A>
+<LI><A NAME="tex2html870"
+  HREF="node88.html">GRBgetintparaminfo</A>
+<LI><A NAME="tex2html871"
+  HREF="node89.html">GRBgetstrparaminfo</A>
+<LI><A NAME="tex2html872"
+  HREF="node90.html">GRBreadparams</A>
+<LI><A NAME="tex2html873"
+  HREF="node91.html">GRBwriteparams</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html874"
+  HREF="node92.html">Monitoring Progress - Logging and Callbacks</A>
+<UL>
+<LI><A NAME="tex2html875"
+  HREF="node93.html">GRBmsg</A>
+<LI><A NAME="tex2html876"
+  HREF="node94.html">GRBsetcallbackfunc</A>
+<LI><A NAME="tex2html877"
+  HREF="node95.html">GRBgetcallbackfunc</A>
+<LI><A NAME="tex2html878"
+  HREF="node96.html">GRBcbget</A>
+<LI><A NAME="tex2html879"
+  HREF="node97.html">GRBversion</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html880"
+  HREF="node98.html">Modifying Solver Behavior - Callbacks</A>
+<UL>
+<LI><A NAME="tex2html881"
+  HREF="node99.html">GRBcbcut</A>
+<LI><A NAME="tex2html882"
+  HREF="node100.html">GRBcblazy</A>
+<LI><A NAME="tex2html883"
+  HREF="node101.html">GRBcbsolution</A>
+<LI><A NAME="tex2html884"
+  HREF="node102.html">GRBterminate</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html885"
+  HREF="node103.html">Error Handling</A>
+<UL>
+<LI><A NAME="tex2html886"
+  HREF="node104.html">GRBgeterrormsg</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html782"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html780"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html774"
+  HREF="refman.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html783"
+  HREF="node2.html">Environment Creation and Destruction</A>
+<B> Up:</B> <A NAME="tex2html781"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html775"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

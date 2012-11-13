@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Model.cbCut()</TITLE>
+<META NAME="description" CONTENT="Model.cbCut()">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node569.html">
+<LINK REL="previous" HREF="node567.html">
+<LINK REL="up" HREF="node534.html">
+<LINK REL="next" HREF="node569.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7504"
+  HREF="node569.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7502"
+  HREF="node534.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7496"
+  HREF="node567.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7505"
+  HREF="node569.html">Model.cbGet()</A>
+<B> Up:</B> <A NAME="tex2html7503"
+  HREF="node534.html">Model</A>
+<B> Previous:</B> <A NAME="tex2html7497"
+  HREF="node567.html">Model.printStats()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION000523400000000000000"></A>
+<A NAME="pythonmethod:Model.cbCut"></A>
+<BR>
+Model.cbCut()
+</H3>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">cbCut</SPAN></FONT></BIG> ( lhs, sense, rhs )
+
+
+<P>
+Add a new cutting plane to a MIP model from within a callback function.
+Note that this method can only be invoked when the
+<EM>where</EM> value on the callback function is equal to
+<EM>GRB.Callback.MIPNODE</EM> (see the
+<A HREF="node741.html#sec:CallbackCodes">Callback Codes</A> section
+for more information).
+
+<P>
+Cutting planes can be added at any node of the branch-and-cut tree.
+However, they should be added sparingly, since they increase the size
+of the relaxation model that is solved at each node and can
+significantly degrade node processing speed.
+
+<P>
+Cutting planes are typically used to cut off the current relaxation
+solution.  To retrieve the relaxation solution at the current node,
+you should first call
+<A HREF="node570.html#pythonmethod:Model.cbGetNodeRel">cbGetNodeRel</A>.
+
+<P>
+When adding your own cuts, you must set parameter <EM>PreCrush</EM>
+to value 1.  This setting shuts off a few presolve reductions that
+sometimes prevent cuts on the original model from being applied to the
+presolved model.
+
+<P>
+One very important note: you should only add cuts that are implied by
+the constraints in your model.  If you cut off an integer solution
+that is feasible according to the original model constraints, <EM>you
+  are likely to obtain an incorrect solution to your MIP problem</EM>.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">lhs</SPAN>: Left-hand side for new cut.  Can be a
+  constant, a <A HREF="node584.html#pythonclass:Var">Var</A>, or a
+  <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A>.
+
+<P>
+ <SPAN  CLASS="textbf">sense</SPAN>: Sense for new cut (GRB.LESS_EQUAL,
+  GRB.EQUAL, or GRB.GREATER_EQUAL).
+
+<P>
+ <SPAN  CLASS="textbf">rhs</SPAN>: Right-hand side for new cut.  Can be a
+  constant, a <A HREF="node584.html#pythonclass:Var">Var</A>, or a
+  <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A>.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Example usage:</SPAN></BIG>
+<PRE>
+  def mycallback(model, where):
+    if where == GRB.Callback.MIPNODE:
+      status = model.cbGet(GRB.Callback.MIPNODE_STATUS)
+      if status == GRB.OPTIMAL:
+        rel = model.cbGetNodeRel([model._vars[0], model._vars[1]])
+        if rel[0] + rel[1] &gt; 1.1:
+          model.cbCut(model._vars[0] + model._vars[1] &lt;= 1)
+
+  model._vars = model.getVars()
+  model.optimize(mycallback)
+</PRE>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7504"
+  HREF="node569.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7502"
+  HREF="node534.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7496"
+  HREF="node567.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7505"
+  HREF="node569.html">Model.cbGet()</A>
+<B> Up:</B> <A NAME="tex2html7503"
+  HREF="node534.html">Model</A>
+<B> Previous:</B> <A NAME="tex2html7497"
+  HREF="node567.html">Model.printStats()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

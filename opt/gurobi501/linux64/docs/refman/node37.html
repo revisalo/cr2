@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBgetconstrs</TITLE>
+<META NAME="description" CONTENT="GRBgetconstrs">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html1277"
+  HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1275"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1269"
+  HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1278"
+  HREF="node38.html">GRBgetenv</A>
+<B> Up:</B> <A NAME="tex2html1276"
+  HREF="node34.html">Model Queries</A>
+<B> Previous:</B> <A NAME="tex2html1270"
+  HREF="node36.html">GRBgetconstrbyname</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00014300000000000000"></A>
+<A NAME="routine:GRBgetconstrs"></A>
+<BR>
+GRBgetconstrs
+</H3>
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT"><BIG CLASS="LARGE"><FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">GRBgetconstrs</SPAN></FONT></BIG> (</TD>
+<TD ALIGN="LEFT">GRBmodel</TD>
+<TD ALIGN="LEFT">*model,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">*numnzP,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">*cbeg,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">*cind,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">*cval,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">start,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">len )</TD>
+</TR>
+</TABLE>
+
+<P>
+Retrieve the non-zeros for a set of constraints from the constraint
+matrix.  Typical usage is to call this routine twice.  In the first
+call, you specify the requested set of constraints, with NULL values
+for <EM>cbeg</EM>, <EM>cind</EM>, and <EM>cval</EM>.  The routine returns
+the number of non-zero values for the specified constraint range in
+<EM>numnzP</EM>.  That allows you to make certain that <EM>cind</EM> and
+<EM>cval</EM> are of sufficient size to hold the result of the second
+call.
+
+<P>
+
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Return value:</SPAN></BIG>
+
+<P>
+A non-zero return value indicates that a problem occurred while retrieving the constraint coefficients.
+Refer to the <A HREF="node742.html#sec:ErrorCodes">Error Code</A> table for a
+list of possible return values.  Details on the error can be obtained
+by calling <A HREF="node104.html#routine:GRBgeterrormsg">GRBgeterrormsg</A>.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">model</SPAN>: The model from which the constraints should be retrieved.
+
+<P>
+ <SPAN  CLASS="textbf">numnzP</SPAN>: The number of non-zero values retrieved.
+
+<P>
+ <SPAN  CLASS="textbf">cbeg</SPAN>: Constraint matrix non-zero values are returned in
+  Compressed Sparse Row (CSR) format.  Each constraint in the
+  constraint matrix is represented as a list of index-value pairs,
+  where each index entry provides the variable index for a non-zero
+  coefficient, and each value entry provides the corresponding
+  non-zero value.  Each constraint has an associated <EM>cbeg</EM>
+  value, indicating the start position of the non-zeros for that
+  constraint in the <EM>cind</EM> and <EM>cval</EM> arrays.  The
+  non-zeros for constraint <EM>i</EM> immediately follow those for
+  constraint <EM>i-1</EM> in <EM>cind</EM> and <EM>cval</EM>.  Thus, <EM>    cbeg[i]</EM> indicates both the index of the first non-zero in
+  constraint <EM>i</EM> and the end of the non-zeros for constraint
+  <EM>i-1</EM>.  For example, consider the case where <EM>cbeg[2] =
+    10</EM> and <EM>cbeg[3] = 12</EM>.  This would indicate that
+  constraint 2 has two non-zero values associated with it.  Their
+  variable indices can be found in <EM>cind[10]</EM> and <EM>    cind[11]</EM>, and the numerical values for those non-zeros can be
+  found in <EM>cval[10]</EM> and <EM>cval[11]</EM>.
+
+<P>
+ <SPAN  CLASS="textbf">cind</SPAN>: Variable indices associated with non-zero values.
+  See the description of the <EM>cbeg</EM> argument for more information.
+
+<P>
+ <SPAN  CLASS="textbf">cval</SPAN>: Numerical values associated with constraint matrix non-zeros.
+  See the description of the <EM>cbeg</EM> argument for more information.
+
+<P>
+ <SPAN  CLASS="textbf">start</SPAN>: The index of the first constraint to retrieve.
+
+<P>
+ <SPAN  CLASS="textbf">len</SPAN>: The number of constraints to retrieve.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1277"
+  HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1275"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1269"
+  HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1278"
+  HREF="node38.html">GRBgetenv</A>
+<B> Up:</B> <A NAME="tex2html1276"
+  HREF="node34.html">Model Queries</A>
+<B> Previous:</B> <A NAME="tex2html1270"
+  HREF="node36.html">GRBgetconstrbyname</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

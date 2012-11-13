@@ -1,0 +1,848 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Attributes</TITLE>
+<META NAME="description" CONTENT="Attributes">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node653.html">
+<LINK REL="previous" HREF="node651.html">
+<LINK REL="up" HREF="refman.html">
+<LINK REL="next" HREF="node653.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html8376"
+  HREF="node653.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8374"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8368"
+  HREF="node651.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8377"
+  HREF="node653.html">Parameters</A>
+<B> Up:</B> <A NAME="tex2html8375"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8369"
+  HREF="node651.html">R Reference Manual</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00080000000000000000"></A>
+<A NAME="sec:Attributes"></A>
+<BR>
+Attributes
+</H1>
+
+<P>
+The primary mechanism for querying and modifying properties of a
+Gurobi model is through the attribute interface.  A variety of
+different attributes are available.  Some are only populated at
+certain times (e.g., those related to the solution of a model), while
+others are available at all times (e.g., the number of variables in
+the model).  Attributes can be associated with variables (e.g.,
+lower bounds), constraints (e.g., the right-hand side), SOSs
+(e.g., IIS membership), or with the model as a whole (e.g., the
+objective value for the current solution).
+
+<P>
+The same attributes exist in all of the Gurobi APIs, but the
+approaches used to query and modify them, and the means by which you
+refer to them vary.  Consider the <EM>LB</EM> attribute, which captures
+the lower bound on a variable.  You would refer to this attribute as
+follows in the different Gurobi APIs:
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Language</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute</SPAN></TH>
+</TR>
+<TR><TD ALIGN="LEFT">C</TD>
+<TD ALIGN="LEFT">GRB_DBL_ATTR_LB</TD>
+</TR>
+<TR><TD ALIGN="LEFT">C++</TD>
+<TD ALIGN="LEFT">GRB_DoubleAttr_LB</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Java</TD>
+<TD ALIGN="LEFT">GRB.DoubleAttr.LB</TD>
+</TR>
+<TR><TD ALIGN="LEFT">.NET</TD>
+<TD ALIGN="LEFT">GRB.DoubleAttr.LB</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Python</TD>
+<TD ALIGN="LEFT">GRB.Attr.LB, or just var.lb</TD>
+</TR>
+</TABLE>
+
+<P>
+To query the value of this attribute in the different API's, you would
+do the following:
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Language</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute Query Example</SPAN></TH>
+</TR>
+<TR><TD ALIGN="LEFT">C</TD>
+<TD ALIGN="LEFT"><A HREF="node60.html#routine:GRBgetdblattrelement">GRBgetdblattrelement</A>(model, GRB_DBL_ATTR_LB, var_index);</TD>
+</TR>
+<TR><TD ALIGN="LEFT">C++</TD>
+<TD ALIGN="LEFT"><A HREF="node159.html#cppmethod:GRBVar::get">var.get</A>(GRB_DoubleAttr_LB)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Java</TD>
+<TD ALIGN="LEFT"><A HREF="node305.html#javamethod:GRBVar.get">var.get</A>(GRB.DoubleAttr.LB)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">.NET</TD>
+<TD ALIGN="LEFT"><A HREF="node437.html#dotnetmethod:GRBVar.Get">var.Get</A>(GRB.DoubleAttr.LB)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Python</TD>
+<TD ALIGN="LEFT"><A HREF="node585.html#pythonmethod:Var.getAttr">var.getAttr</A>(GRB.Attr.LB), or just var.lb</TD>
+</TR>
+</TABLE>
+
+<P>
+Attributes are referred to using a set of <EM>enum</EM> types in C++,
+Java, and .NET (one enum for double-valued attributes, one for
+int-valued attributes, etc.).  In C and Python, the names listed above
+are simply constants that take string values.  For example, <EM>  GRB_DBL_ATTR_LB</EM> is defined in the C layer as:
+<PRE>
+#define GRB_DBL_ATTR_LB "LB"
+</PRE>
+In C and Python, you have the option of using the strings directly
+when calling attribute methods.  If you wish to do so, note that
+character case and underscores are ignored.  Thus, <EM>MIN_COEFF</EM>
+and <EM>MinCoeff</EM> are equivalent.
+
+<P>
+One important point to note about attributes modification is that it
+is done in a <EM>lazy</EM> fashion.  Modifications don't actually
+affect the model until the next request to either update or optimize
+the model (<A HREF="node26.html#routine:GRBupdatemodel">GRBupdatemodel</A> or
+<A HREF="node29.html#routine:GRBoptimize">GRBoptimize</A> in C).
+
+<P>
+The following tables list the full set of Gurobi attributes.  The
+attributes have been grouped by type: model attributes take scalar
+values, while variable, constraint, and SOS attributes contain one
+entry per variable, constraint, or SOS in the model.  The APIs provide
+methods to query attribute values for individual constraints or
+variables, or to query their values for arrays of constraints or
+variables.  Array queries are generally more efficient.
+
+<P>
+Note that the attributes that provide solution quality information
+have been split off into a separate table at the end of this section.
+These attributes are also associated with the model as a whole.
+
+<P>
+Some solution attributes require information that is only computed by
+certain Gurobi algorithms.  The tables below note such cases.  For
+example, the <EM>VBasis</EM> and <EM>CBasis</EM> attributes can only be
+queried when a simplex basis is available (a basis is available when a
+continuous model has been solved using primal simplex, dual simplex,
+or barrier with crossover).  Sensitivity information
+(<EM>SAObjLow</EM>, <EM>SAObjUp</EM>, etc.)  is also only available
+for basic solutions.
+
+<P>
+<SPAN  CLASS="textbf">Model attributes:</SPAN>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute name</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Settable?</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumConstrs</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumVars</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of variables.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumSOS</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of SOS constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumQConstrs</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of quadratic constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumNZs</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of non-zero coefficients in the constraint matrix.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumQNZs</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of non-zero quadratic objective terms.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumQCNZs</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of non-zero terms in quadratic constraints (includes both the linear and the quadratic terms).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumIntVars</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of integer variables (including binary variables).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NumBinVars</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of binary variables.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ModelName</SPAN></TH>
+<TD ALIGN="LEFT">string</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Model name.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ModelSense</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Model sense (+1 for minimize, -1 for maximize).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ObjCon</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Constant offset for objective function.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ObjVal</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Objective value for current solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ObjBound</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Best available bound on solution (lower bound for minimization, upper bound for maximization).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Runtime</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Runtime (in seconds) for most recent optimization. Note that all
+                                      times in the Gurobi Optimizer are wall-clock times.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Status</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Current status of model (status values
+                                     are described in the
+                                     <A HREF="node740.html#sec:StatusCodes">Status Code</A>
+                                     section).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SolCount</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of solutions found.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IterCount</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of simplex iterations performed in most recent optimization.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BarIterCount</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of barrier iterations performed in most recent optimization.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NodeCount</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Number of branch-and-cut nodes explored in most recent optimization.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IsMIP</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Indicates whether the model has any discrete elements.  Discrete elements include binary, integer, semi-continuous, and semi-integer variables, and SOS constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IsQP</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Indicates whether the model is a quadratic programming problem. Note that a model with both a quadratic objective and quadratic constraints is classified as a QCP, not a QP.  Thus, IsQP is 0 for such a model.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IsQCP</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Indicates whether the model has quadratic constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IISMinimal</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Indicates whether the current IIS is minimal (this will only be 0 if the IIS computation was stopped early).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MaxCoeff</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Maximum constraint matrix coefficient (in absolute value).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MinCoeff</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Minimum (non-zero) constraint matrix coefficient (in absolute value).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MaxBound</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Maximum finite variable bound.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MinBound</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Minimum (non-zero) variable bound.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MaxObjCoeff</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Maximum linear objective coefficient (in absolute value).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MinObjCoeff</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Minimum (non-zero) linear objective coefficient (in absolute value).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MaxRHS</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Maximum constraint right-hand side (in absolute value).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">MinRHS</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Minimum (non-zero) constraint right-hand side (in absolute value).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Kappa</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Estimated condition number of current LP basis matrix. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">KappaExact</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Exact condition number of current LP basis matrix. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">FarkasProof</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Magnitude of infeasibility violation in Farkas infeasibility proof (for infeasible linear models only).  A Farkas infeasibility proof identifies a new constraint, obtained by taking a linear combination of the constraints in the model, that can never be satisfied (The linear combination is available in the <EM>FarkasDual</EM> attribute).  This attribute indicates the magnitude of the violation of this aggregated constraint.  Only available when parameter <EM>InfUnbdInfo</EM> is set to 1.</TD>
+</TR>
+</TABLE>
+
+<P>
+<SPAN  CLASS="textbf">Variable attributes:</SPAN>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute name</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Settable?</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">LB</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Variable lower bound. Note that any value less than -1e20 is treated as infinite.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">UB</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Variable upper bound. Note that any value greater than 1e20 is treated as infinite.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Obj</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Variable linear objective coefficient.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">VType</SPAN></TH>
+<TD ALIGN="LEFT">char</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Variable type ('C' for continuous, 'B' for binary, 'I' for integer, 'S' for semi-continuous, or 'N' for semi-integer). Binary variables must be either 0 or 1.  Integer variables can take any integer value between the specified lower and upper bounds.  Semi-continuous variables can take any value between the specified lower and upper bounds, or a value of zero.  Semi-integer variables can take any integer value between the specified lower and upper bounds, or a value of zero.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">VarName</SPAN></TH>
+<TD ALIGN="LEFT">string</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Variable name.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">X</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The variable value in the current solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Xn</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The variable value in a sub-optimal MIP solution.  Use parameter <EM>SolutionNumber</EM> to indicate which alternate solution to retrieve.  Solutions are sorted in order of worsening objective value.  Thus, when <EM>SolutionNumber</EM> is 1, <EM>Xn</EM> returns the second-best solution found.  When <EM>SolutionNumber</EM> is equal to its default value of 0, querying attribute <EM>Xn</EM> is equivalent to querying attribute <EM>X</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">RC</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The reduced cost in the current solution. Only available for continuous models.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Start</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">The current MIP start vector.  The MIP solver will attempt to build an initial solution from this vector when it is available.  Note that the start can be partially populated -- the MIP solver will attempt to fill in values for missing start values.  If you wish to leave the start value for a variable undefined, you can either avoid setting the <EM>Start</EM> attribute for that variable, or you can set it to a special <EM>undefined</EM> value (<EM>GRB_UNDEFINED</EM> in C and C++, or <EM>GRB.UNDEFINED</EM> in Java, .NET, and Python).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BranchPriority</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Variable branching priority.  The value of this attribute is used as the primary criteria for selecting a fractional variable for branching during the MIP search.  Variables with larger values always take priority over those with smaller values.  Ties are broken using the standard branch variable selection criteria.  The default variable branch priority value is zero.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">VBasis</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">The status of a given variable in the current basis.  Possible values are 0 (basic), -1 (non-basic at lower bound), -2 (non-basic at upper bound), and -3 (super-basic).  Note that, if you wish to specify an advanced starting basis, you must set basis status information for all constraints and variables in the model. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">PStart</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">The current simplex start vector.  If you set <EM>PStart</EM> values for every variable in the model and <EM>DStart</EM> values for every constraint, then simplex will use those values to compute a warm start basis.  If you'd like to retract a previously specified start, set any <EM>PStart</EM> value to <EM>GRB_UNDEFINED</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IISLB</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">For an infeasible model, indicates whether the lower bound participates in the computed Irreducible Inconsistent Subsystem (IIS).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IISUB</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">For an infeasible model, indicates whether the upper bound participates in the computed Irreducible Inconsistent Subsystem (IIS).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SAObjLow</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Objective coefficient sensitivity information: smallest objective value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SAObjUp</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Objective coefficient sensitivity information: largest objective value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SALBLow</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Lower bound sensitivity information: smallest lower bound value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SALBUp</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Lower bound sensitivity information: largest lower bound value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SAUBLow</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Upper bound sensitivity information: smallest upper bound value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SAUBUp</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Upper bound sensitivity information: largest upper bound value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">UnbdRay</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Unbounded ray (for unbounded linear models only).  Provides a vector that, when added to any feasible solution, yields a new solution that is also feasible but improves the objective.  Only available when parameter <EM>InfUnbdInfo</EM> is set to 1.</TD>
+</TR>
+</TABLE>
+
+<P>
+<SPAN  CLASS="textbf">Constraint attributes:</SPAN>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute name</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Settable?</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Sense</SPAN></TH>
+<TD ALIGN="LEFT">char</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Constraint sense ('&lt;', '&gt;', or '=').</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">RHS</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Constraint right-hand side.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrName</SPAN></TH>
+<TD ALIGN="LEFT">string</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Constraint name.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Pi</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The constraint dual value in the current solution (also known as the <EM>shadow price</EM>). Only available for continuous models.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Slack</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The constraint slack in the current solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">CBasis</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">The status of a given constraint in the current basis.  Possible values are 0 (basic) or -1 (non-basic). Note that, if you wish to specify an advanced starting basis, you must set basis status information for all constraints and variables in the model. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DStart</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">The current simplex start vector.  If you set <EM>PStart</EM> values for every variable in the model and <EM>DStart</EM> values for every constraint, then simplex will use those values to compute a warm-start basis.  If you'd like to retract a previously specified start, set any <EM>DStart</EM> value to <EM>GRB_UNDEFINED</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IISConstr</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">For an infeasible model, indicates whether the constraint participates in the computed Irreducible Inconsistent Subsystem (IIS).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SARHSLow</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Right-hand-side sensitivity information: smallest right-hand-side value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SARHSUp</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Right-hand-side sensitivity information: largest right-hand-side value at which the current optimal basis would remain optimal. Only available for basic solutions.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">FarkasDual</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Farkas infeasibility proof (for infeasible linear models only).  Provides a dual unbounded vector.  Adding this vector into any feasible solution to the dual model yields a new solution that is also feasible but improves the dual objective.  Only available when parameter <EM>InfUnbdInfo</EM> is set to 1.</TD>
+</TR>
+</TABLE>
+
+<P>
+<SPAN  CLASS="textbf">SOS attributes:</SPAN>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute name</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Settable?</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IISSOS</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">For an infeasible model, indicates whether the SOS constraint participates in the computed Irreducible Inconsistent Subsystem (IIS).</TD>
+</TR>
+</TABLE>
+
+<P>
+<SPAN  CLASS="textbf">Quadratic constraint attributes:</SPAN>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute name</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Settable?</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">QCSense</SPAN></TH>
+<TD ALIGN="LEFT">char</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Quadratic constraint sense ('&lt;', '&gt;', or '=').</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">QCRHS</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Quadratic constraint right-hand side.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">QCName</SPAN></TH>
+<TD ALIGN="LEFT">string</TD>
+<TD ALIGN="LEFT">Yes</TD>
+<TD ALIGN="LEFT">Quadratic constraint name.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">QCPi</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The constraint dual value in the current solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">QCSlack</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">The constraint slack in the current solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IISQConstr</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">For an infeasible model, indicates whether the quadratic constraint participates in the computed Irreducible Inconsistent Subsystem (IIS).</TD>
+</TR>
+</TABLE>
+
+<P>
+<SPAN  CLASS="textbf">Solution quality attributes:</SPAN>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute name</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Attribute type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Settable?</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Model type</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BoundVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">All</TD>
+<TD ALIGN="LEFT">Maximum (unscaled) bound violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BoundSVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (scaled) bound violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BoundVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">All</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (unscaled) bound violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BoundSVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (scaled) bound violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BoundVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">All</TD>
+<TD ALIGN="LEFT">Sum of (unscaled) bound violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">BoundSVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (scaled) bound violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">All</TD>
+<TD ALIGN="LEFT">Maximum (unscaled) constraint violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrSVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (scaled) constraint violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">All</TD>
+<TD ALIGN="LEFT">Index of constraint with the largest (unscaled) violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrSVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of constraint with  the largest (scaled) violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">All</TD>
+<TD ALIGN="LEFT">Sum of (unscaled) constraint violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrSVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (scaled) constraint violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrResidual</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (unscaled) primal constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrSResidual</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (scaled) primal constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrResidualIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (unscaled) primal constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrSResidualIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (scaled) primal constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrResidualSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (unscaled) primal constraint errors.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ConstrSResidualSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (scaled) primal constraint errors.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (unscaled) reduced cost violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualSVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (scaled) reduced cost violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (unscaled) reduced cost violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualSVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (scaled) reduced cost violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (unscaled) reduced cost violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualSVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (scaled) reduced cost violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualResidual</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (unscaled) dual constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualSResidual</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Maximum (scaled) dual constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualResidualIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (unscaled) dual constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualSResidualIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest (scaled) dual constraint error.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualResidualSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (unscaled) dual constraint errors.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DualSResidualSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of (scaled) dual constraint errors.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ComplVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">In an optimal solution, the product of the value of a variable and its reduced cost must be zero.  This isn't always strictly true for interior point solutions.  This attribute returns the maximum complementarity violation for any variable.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ComplVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Index of variable with the largest complementarity violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ComplVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">Continuous</TD>
+<TD ALIGN="LEFT">Sum of complementarity violations.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IntVio</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">MIP</TD>
+<TD ALIGN="LEFT">A MIP solver won't always assign strictly integral values to integer variables.  This attribute returns the largest distance between the computed value of any integer variable and the nearest integer.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IntVioIndex</SPAN></TH>
+<TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">MIP</TD>
+<TD ALIGN="LEFT">Index of variable with the largest integrality violation.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IntVioSum</SPAN></TH>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">No</TD>
+<TD ALIGN="LEFT">MIP</TD>
+<TD ALIGN="LEFT">Sum of integrality violations.</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html8376"
+  HREF="node653.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8374"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8368"
+  HREF="node651.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8377"
+  HREF="node653.html">Parameters</A>
+<B> Up:</B> <A NAME="tex2html8375"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8369"
+  HREF="node651.html">R Reference Manual</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Gurobi Optimization</title>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<style type="text/css">
+	body {
+		background-color: #E7E9EB;
+		padding: 20px 40px;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size:11pt;
+		line-height:20px;
+		margin:0px;
+	}
+	img {
+		border: none;
+	}
+	h2 {
+		margin: 36px 0 8px;
+	}
+	.menu {
+		padding-bottom: 40px;
+	}
+	.menu td {
+		padding-right: 30px;
+		font-size: 14pt;
+		font-weight: bold;
+	}
+	.menu a {
+		text-decoration: none;
+		color: #292929;
+	}
+	.menu a:hover {
+		color: #909090;
+	}
+	.platforms {
+		border-collapse: collapse;
+	}
+	.platforms td, .platforms th {
+		font-size: 10pt;
+		border: solid 1px black;
+		padding: 4px 8px;
+		text-align: left;
+	}
+	</style>
+</head>
+<body>
+<table class='menu'>
+	<tr>
+		<td><a href="http://www.gurobi.com"><img style='width:211px' src="docs/logo.png" alt="Gurobi Optimization" title="Gurobi Optimization" /></a></td>
+		<td><a href="http://www.gurobi.com">gurobi.com</a></td>
+		<td><a href="docs/refman/refman.html">Reference Manual</a></td>
+		<td><a href="mailto:support@gurobi.com">Customer Support</a></td>
+	</tr>
+</table>
+<h1>
+	WELCOME
+</h1>
+<p>
+	You have successfully installed version 5.0 of the Gurobi Optimizer.
+</p>
+<p>
+	You'll find instructions for setting up your Gurobi license in this document, as well as a list of supported platforms, and Release Notes and guidelines for converting existing Gurobi code to run with this new version. Once you have finished browsing this document, you should refer to the <a href="docs/quickstart/quickstart.html">Quick Start Guide</a>, the <a href="docs/examples/examples.html">Example Tour</a>, or the <a href="docs/refman/refman.html">Reference Manual</a> to get started using the Gurobi Optimizer.
+</p>
+<h2>
+	Obtaining Your License
+</h2>
+<p>
+	To obtain a Gurobi 5.0 license, you will need to visit the <a href="http://gurobi.com/download/licenses" target="_blank"> Licenses</a> page on the Gurobi website. If you are a commercial user under maintenance, you should see your Gurobi 5.0 license under <a href="http://gurobi.com/download/licenses/current">Current</a>.  If you would like to request a free trial or free academic license, you should request a new license from the <a href="http://gurobi.com/download/licenses/free-trial">Free Trial</a> or <a href="http://gurobi.com/download/licenses/free-academic">Free Academic</a> menu items. Once you have a license on the Gurobi web site, you will need to follow the instructions for obtaining and installing a license in the <a href="docs/quickstart/quickstart.html">Quick Start Guide</a>.
+</p>
+<h2>
+	Supported Platforms for Version 5.0
+</h2>
+<p>
+	The following table lists the supported platforms for version 5.0:
+</p>
+<table class='platforms'>
+	<tr>
+		<th>Platform</th>
+		<th>Operating System</th>
+		<th>Compiler</th>
+		<th>Notes</th>
+	</tr>
+	<tr>
+		<td rowspan="2">Windows&reg; 32-bit (win32)</td>
+		<td>Windows XP&reg;, Windows Vista&reg;, Windows 7, Windows Server 2008&reg;</td>
+		<td>Visual Studio&reg; 2008</td>
+		<td>Use gurobi_c++md2008.lib (e.g.) for C++</td>
+	</tr>
+	<tr>
+		<td>Windows XP&reg;, Windows Vista&reg;, Windows 7, Windows Server 2008&reg;</td>
+		<td>Visual Studio&reg; 2010</td>
+		<td>Use gurobi_c++md2010.lib (e.g.) for C++</td>
+	</tr>
+	<tr>
+		<td rowspan="2">Windows 64-bit (win64)</td>
+		<td>Windows XP, Windows Vista, Windows 7, Windows Server 2008</td>
+		<td>Visual Studio 2008</td>
+		<td>Use gurobi_c++md2008.lib (e.g.) for C++</td>
+	</tr>
+	<tr>
+		<td>Windows XP, Windows Vista, Windows 7, Windows Server 2008</td>
+		<td>Visual Studio 2010</td>
+		<td>Use gurobi_c++md2010.lib (e.g.) for C++</td>
+	</tr>
+	<tr>
+		<td rowspan="3">Linux&reg; 32-bit (linux32) (see note below)</td>
+		<td>Red Hat&reg; Enterprise Linux 5.3-5.8, 6.0-6.2</td>
+		<td>GCC 4.1/4.4</td>
+		<td>Use libgurobi_g++4.1.a for C++ in RHEL 5</td>
+	</tr>
+	<tr>
+		<td>SUSE&reg; Enterprise Linux 11</td>
+		<td>GCC 4.3/4.4</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Ubuntu&reg; 8.04, 10.04, 11.04, 11.10, 12.04</td>
+		<td>GCC 4.2/4.3/4.4/4.6</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td rowspan="3">Linux 64-bit (linux64)</td>
+		<td>Red Hat&reg; Enterprise Linux 5.3-5.8, 6.0-6.2</td>
+		<td>GCC 4.1/4.4</td>
+		<td>Use libgurobi_g++4.1.a for C++ in RHEL 5</td>
+	</tr>
+	<tr>
+		<td>SUSE&reg; Enterprise Linux 11</td>
+		<td>GCC 4.3/4.4</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Ubuntu&reg; 8.04, 10.04, 11.04, 11.10, 12.04</td>
+		<td>GCC 4.2/4.3/4.4/4.6</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Mac OS 64-bit (mac64)</td>
+		<td>Mac OS X 10.6 (Snow Leopard), 10.7 (Lion)</td>
+		<td>Xcode 3/4</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>AIX&reg; 64-bit (power64)</td>
+		<td>AIX 6.1, 7.1</td>
+		<td>XL C/C++ 9</td>
+		<td>Due to limited Python support on AIX, this port does not include the Interactive Shell or the Python libraries.</td>
+	</tr>
+</table>
+<p>
+	Our MATLAB&reg; wrapper supports version 2008b through 2012a. Our R wrapper supports version 14.2 through 15.1.
+</p>
+<h2>
+	Important Notes About Supported Platforms
+</h2>
+<p>
+	As a result of a significant fall-off in the number of customers using 32-bit Linux platforms, we have decided to drop support for this platform in our next release.  We have also chosen not to create MATLAB or R interfaces for our 32-bit Linux port.  If you are one of the few customers who currently runs Gurobi on a 32-bit Linux machine, we recommend that you start making arrangements to transition to a different platform.
+</p>
+<p>
+	We should also mention that, as of May of 2011, the Python Software Foundation no longer supports Python 2.5. As a result, we have dropped support for Python 2.5 in this Gurobi release.
+</p>
+<h2>
+	Release Notes for Version 5.0
+</h2>
+<p>
+	Gurobi 5.0 contains a number of new features and capabilities. Users of previous versions will typically not need to make any changes to their programs to use the new version. The new capabilities are described here.
+</p>
+<ul>
+	<li><b>Quadratic constraint support:</b> You can now add Second-Order Cone constraints, rotated Second-Order Cone constraints, and general Quadratic Constraints to an optimization model. Continuous models containing these constraints are solved using a new barrier SOCP solver.  Mixed-integer models are solved using a branch-and-cut algorithm, employing either QCP node relaxations or an outer-approximation algorithm. Gurobi 5.0 includes new routines for adding, querying, and removing quadratic constraints, as well as a number of new attributes and parameters for managing such constraints. The new attributes related to quadratic constraints are:
+	<ul>
+		<li><b>NumQConstrs:</b> The number of quadratic constraints in the model.</li>
+		<li><b>NumQCNZs:</b> The number of non-zero coefficients in the quadratic constraints.</li>
+		<li><b>IsQCP:</b> Indicates whether the model has quadratic constraints.</li>
+		<li><b>QCRHS:</b> The right-hand side value for a particular quadratic constraint.</li>
+		<li><b>QCSense:</b> The sense for a particular quadratic constraint.</li>
+		<li><b>QCName:</b> The name of a particular quadratic constraint.</li>
+		<li><b>QCPi:</b> The dual multiplier for a particular quadratic constraint.</li>
+		<li><b>QCSlack:</b> The constraint slack for a particular quadratic constraint.</li>
+		<li><b>IISQConstr:</b> Indicates whether a particular quadratic constraint participates in the computed Irreducible Inconsistent Subsystem (IIS).</li>
+	</ul>
+	The new parameters are:
+	<ul>
+		<li><b>BarQCPConvTol:</b> Convergence tolerance for the barrier algorithm when solving a QCP.</li>
+		<li><b>PreQLinearize:</b> Controls linearization of Q matrices in the quadratic constraints or a quadratic objective.</li>
+		<li><b>QCPDual:</b> Determines whether dual variable values are computed for QCP models.</li>
+		<li><b>MIQCPMethod:</b> Determines whether outer approximation is used to solve an MIQCP model.</li>
+	</ul>
+	</li>
+	<li><b>Lazy constraints:</b> You can now add constraints to a MIP model in a <em>lazy</em> fashion. In other words, rather than having to specify all constraints up front, you can now add additional constraints during the branch-and-cut search (through a callback routine). Previous Gurobi versions allowed you to add cutting planes during the branch-and-cut search, but these new constraints were not allowed to cut off feasible solutions.  Set the new <em>DualReductions</em> parameter to zero when you wish to add lazy constraints. </li>
+	<li><b>Feasibility relaxation:</b> Gurobi now provides a routine that will create a <em>feasibility relaxation</em> model for an infeasible model. This related model will find a solution that minimizes the violation of the original constraints. </li>
+	<li><b>MATLAB&reg; interface:</b> You can now use Gurobi to optimize a model built within the MATLAB environment. </li>
+	<li><b>R interface:</b> You can now use Gurobi to optimize a model built within the R statistical computing environment. </li>
+	<li><b>Simplex warm-starting from a solution:</b> You can now warm-start the simplex method using a primal and dual solution vector. In previous versions, warm-starting was only possible if you had a simplex basis. Use the new <em>PStart</em> and <em>DStart</em> attributes to provide the start solution. </li>
+	<li><b>Retrieve a variable or constraint by name:</b> You can now quickly retrieve a constraint or variable using its name. </li>
+	<li><b>Barrier homogeneous algorithm:</b> We now provide a <em>homogeneous</em> algorithm in the barrier solver. This version should be used when you are likely to ask the barrier solver to solve infeasible or unbounded models. Use the new <em>BarHomogeneous</em> parameter to select this. </li>
+	<li><b>New concurrent optimizer control:</b> You can now control the algorithms used by the different threads in the concurrent optimizer when solving LP and QP models. Use the new <em>GetConcurrentEnv</em> and <em>DiscardConcurrentEnvs</em> routines (the names will vary slightly, depending on the language you are using) to set up different environments for different threads. </li>
+	<li><b>New <em>KappaExact</em> attribute:</b> We now provide both exact and approximate condition number estimates for the optimal simplex basis. Use <em>Kappa</em> if you want a quick estimate, or <em>KappaExact</em> if you want to spend the sometimes substantial time required to compute the exact condition number. </li>
+	<li><b>Additional logging control:</b> The new <em>LogToConsole</em> parameter allows you to shut off console logging. You can now choose to send the Gurobi log to a file, to the console, to both, or to neither. </li>
+	<li><b>Additional information about token licenses:</b> Users of Gurobi token licenses can now use the <em>gurobi_cl --tokens</em> command to obtain information about how many tokens are currently in use, and who is using them. </li>
+</ul>
+<h2>
+	Code Conversion from Version 4.6
+</h2>
+As mentioned earlier, programs that were originally written for version 4.6 of the Gurobi Optimizer will typically require no code changes to use version 5.0. There are a few routines that have changed, though:
+<ul>
+	<li><b>GetVarNodeRel/GetVarSolution/SetVarSolution:</b> These C++/Java/.NET callback routines are now handled as overloaded signatures of GetNodeRel/GetSolution/SetSolution, respectively.</li>
+</ul>
+<h2>
+	License Agreement
+</h2>
+<p>
+	Note that this software is covered by the <a href="EULA.pdf">Gurobi End User License Agreement</a>. By completing the Gurobi installation process and using the software, you are accepting the terms of this agreement.
+</p>
+<p>
+	Thank you using Gurobi products!
+</p>
+<hr />
+<p>
+	&copy; 2012 Gurobi Optimization. All Rights Reserved.
+</p>
+</body>
+</html>

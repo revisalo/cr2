@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBCallback</TITLE>
+<META NAME="description" CONTENT="GRBCallback">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node228.html">
+<LINK REL="previous" HREF="node208.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node218.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html3338"
+  HREF="node218.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3336"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3330"
+  HREF="node216.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html3339"
+  HREF="node218.html">GRBCallback()</A>
+<B> Up:</B> <A NAME="tex2html3337"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html3331"
+  HREF="node216.html">GRBColumn::size()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000212000000000000000"></A>
+<A NAME="cppclass:GRBCallback"></A>
+<BR>
+GRBCallback
+</H2>
+
+<P>
+Gurobi callback class.  This is an abstract class.  To implement a
+callback, you should create a subclass of this class and implement a
+<EM>callback()</EM> method.  If you pass an object of this subclass to
+method
+<A HREF="node152.html#cppmethod:GRBModel::setCallback">GRBModel::setCallback</A>
+before calling
+<A HREF="node147.html#cppmethod:GRBModel::optimize">GRBModel::optimize</A>, the
+         <EM>callback()</EM> method of the class will be called
+         periodically.  Depending on where the callback is called
+         from, you can obtain various information about the progress
+         of the optimization.
+
+<P>
+Note that this class contains one protected <EM>int</EM> member
+variable: <EM>where</EM>.  You can query this variable from your <EM>  callback()</EM> method to determine where the callback was called
+from.
+
+<P>
+Gurobi callbacks can be used both to monitor the progress of the
+optimization and to modify the behavior of the Gurobi optimizer.  A
+simple user callback function might call the
+<A HREF="node223.html#cppmethod:GRBCallback::getIntInfo">GRBCallback::getIntInfo</A>
+or
+<A HREF="node222.html#cppmethod:GRBCallback::getDoubleInfo">GRBCallback::getDoubleInfo</A>
+methods to produce a custom display, or perhaps to terminate
+optimization early (using
+<A HREF="node219.html#cppmethod:GRBCallback::abort">GRBCallback::abort</A>).
+More sophisticated MIP callbacks might use
+<A HREF="node225.html#cppmethod:GRBCallback::getSolution">GRBCallback::getSolution</A>
+to retrieve values from the solution to the current node relaxation,
+and then use
+<A HREF="node220.html#cppmethod:GRBCallback::addCut">GRBCallback::addCut</A> or
+<A HREF="node221.html#cppmethod:GRBCallback::addLazy">GRBCallback::addLazy</A> to
+add a constraint to cut off that relaxation solution, or
+<A HREF="node227.html#cppmethod:GRBCallback::setSolution">GRBCallback::setSolution</A>
+to import a heuristic solution built from the relaxation solution.
+
+<P>
+When solving a model using multiple threads, note that the user
+callback is only ever called from a single thread, so you don't need
+to worry about the thread-safety of your callback.
+
+<P>
+You can look at the <EM>callback_c++.cpp</EM> example for details of how
+to use Gurobi callbacks.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3340"
+  HREF="node218.html">GRBCallback()</A>
+<LI><A NAME="tex2html3341"
+  HREF="node219.html">GRBCallback::abort()</A>
+<LI><A NAME="tex2html3342"
+  HREF="node220.html">GRBCallback::addCut()</A>
+<LI><A NAME="tex2html3343"
+  HREF="node221.html">GRBCallback::addLazy()</A>
+<LI><A NAME="tex2html3344"
+  HREF="node222.html">GRBCallback::getDoubleInfo()</A>
+<LI><A NAME="tex2html3345"
+  HREF="node223.html">GRBCallback::getIntInfo()</A>
+<LI><A NAME="tex2html3346"
+  HREF="node224.html">GRBCallback::getNodeRel()</A>
+<LI><A NAME="tex2html3347"
+  HREF="node225.html">GRBCallback::getSolution()</A>
+<LI><A NAME="tex2html3348"
+  HREF="node226.html">GRBCallback::getStringInfo()</A>
+<LI><A NAME="tex2html3349"
+  HREF="node227.html">GRBCallback::setSolution()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3338"
+  HREF="node218.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3336"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3330"
+  HREF="node216.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html3339"
+  HREF="node218.html">GRBCallback()</A>
+<B> Up:</B> <A NAME="tex2html3337"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html3331"
+  HREF="node216.html">GRBColumn::size()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

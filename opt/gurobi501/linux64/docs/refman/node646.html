@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>tuplelist</TITLE>
+<META NAME="description" CONTENT="tuplelist">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="previous" HREF="node642.html">
+<LINK REL="up" HREF="node522.html">
+<LINK REL="next" HREF="node647.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html8315"
+  HREF="node647.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8313"
+  HREF="node522.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8309"
+  HREF="node645.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8316"
+  HREF="node647.html">tuplelist()</A>
+<B> Up:</B> <A NAME="tex2html8314"
+  HREF="node522.html">Python Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8310"
+  HREF="node645.html">GRB.param</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000514000000000000000"></A>
+<A NAME="pythonclass:tuplelist"></A>
+<BR>
+tuplelist
+</H2>
+
+<P>
+Gurobi tuple list.  This is a sub-class of the Python <EM>list</EM>
+class that is designed to efficiently support a usage pattern that is
+quite common when building optimization models.  In particular, if a
+<EM>tuplelist</EM> is populated with a list of tuples, the
+<A HREF="node648.html#pythonmethod:tuplelist.select">select</A> function on this
+class efficiently selects tuples whose values match specified values
+in specified tuple fields.  To give an example, the statement
+<EM>l.select(1, '*', 5)</EM> would select all member tuples whose first
+field is equal to '1' and whose third field is equal to '5'.  The
+<EM>'*'</EM> character is used as a wildcard to indicate that any value is
+acceptable in that field.
+
+<P>
+You generally build <EM>tuplelist</EM> objects in the same way
+you would build standard Python lists.  For example, you
+can use the <EM>+=</EM> operator to append a new list of items to
+an existing <EM>tuplelist</EM>, or the <EM>+</EM> operator to concatenate
+a pair of <EM>tuplelist</EM> objects.  You can also call the <EM>append</EM>,
+<EM>extend</EM>, <EM>insert</EM>, <EM>pop</EM>, and <EM>remove</EM> functions.
+
+<P>
+To access the members of a <EM>tuplelist</EM>, you also use standard list
+functions.  For example, <EM>l[0]</EM> returns the first member of a
+<EM>tuplelist</EM>, while <EM>l[0:10]</EM> returns a <EM>tuplelist</EM>
+containing the first ten members.  You can also use <EM>len(l)</EM> to
+query the length of a list.
+
+<P>
+Note that <EM>tuplelist</EM> objects build and maintain a set of internal
+data structures to support efficient <EM>select</EM> operations.  If
+you wish to reclaim the storage associated with these data structures,
+you can call the <A HREF="node649.html#pythonmethod:tuplelist.clean">clean</A>
+function.
+
+<P>
+While you can use a <EM>tuplelist</EM> anywhere you would normally use a
+list, we suggest that you only use them when you wish to populate the
+list with tuples and use the sub-list selection facilities provided by
+<A HREF="node648.html#pythonmethod:tuplelist.select">select</A>.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html8317"
+  HREF="node647.html">tuplelist()</A>
+<LI><A NAME="tex2html8318"
+  HREF="node648.html">tuplelist.select()</A>
+<LI><A NAME="tex2html8319"
+  HREF="node649.html">tuplelist.clean()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html8315"
+  HREF="node647.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8313"
+  HREF="node522.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8309"
+  HREF="node645.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8316"
+  HREF="node647.html">tuplelist()</A>
+<B> Up:</B> <A NAME="tex2html8314"
+  HREF="node522.html">Python Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8310"
+  HREF="node645.html">GRB.param</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

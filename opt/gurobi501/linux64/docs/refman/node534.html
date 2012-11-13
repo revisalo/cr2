@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Model</TITLE>
+<META NAME="description" CONTENT="Model">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node584.html">
+<LINK REL="previous" HREF="node523.html">
+<LINK REL="up" HREF="node522.html">
+<LINK REL="next" HREF="node535.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7115"
+  HREF="node535.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7113"
+  HREF="node522.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7107"
+  HREF="node533.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7116"
+  HREF="node535.html">Model()</A>
+<B> Up:</B> <A NAME="tex2html7114"
+  HREF="node522.html">Python Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html7108"
+  HREF="node533.html">writeParams()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00052000000000000000"></A>
+<A NAME="pythonclass:Model"></A>
+<BR>
+Model
+</H2>
+
+<P>
+Gurobi model object.  Commonly used methods on the model object in the
+Gurobi shell include
+<A HREF="node563.html#pythonmethod:Model.optimize">optimize</A> (optimizes the
+model), <A HREF="node567.html#pythonmethod:Model.printStats">printStats</A>
+(prints statistics about the model),
+<A HREF="node565.html#pythonmethod:Model.printAttr">printAttr</A> (prints the
+values of an attribute), and
+<A HREF="node583.html#pythonmethod:Model.write">write</A> (writes information
+about the model to a file).  Commonly used methods when building a
+model include <A HREF="node540.html#pythonmethod:Model.addVar">addVar</A> (adds a
+new variable), <A HREF="node536.html#pythonmethod:Model.addConstr">addConstr</A>
+(adds a new constraint), and
+<A HREF="node582.html#pythonmethod:Model.update">update</A> (integrates model
+changes into the model).
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html7117"
+  HREF="node535.html">Model()</A>
+<LI><A NAME="tex2html7118"
+  HREF="node536.html">Model.addConstr()</A>
+<LI><A NAME="tex2html7119"
+  HREF="node537.html">Model.addQConstr()</A>
+<LI><A NAME="tex2html7120"
+  HREF="node538.html">Model.addRange()</A>
+<LI><A NAME="tex2html7121"
+  HREF="node539.html">Model.addSOS()</A>
+<LI><A NAME="tex2html7122"
+  HREF="node540.html">Model.addVar()</A>
+<LI><A NAME="tex2html7123"
+  HREF="node541.html">Model.chgCoeff()</A>
+<LI><A NAME="tex2html7124"
+  HREF="node542.html">Model.computeIIS()</A>
+<LI><A NAME="tex2html7125"
+  HREF="node543.html">Model.copy()</A>
+<LI><A NAME="tex2html7126"
+  HREF="node544.html">Model.discardConcurrentEnvs()</A>
+<LI><A NAME="tex2html7127"
+  HREF="node545.html">Model.feasRelaxS()</A>
+<LI><A NAME="tex2html7128"
+  HREF="node546.html">Model.feasRelax()</A>
+<LI><A NAME="tex2html7129"
+  HREF="node547.html">Model.fixed()</A>
+<LI><A NAME="tex2html7130"
+  HREF="node548.html">Model.getAttr()</A>
+<LI><A NAME="tex2html7131"
+  HREF="node549.html">Model.getCoeff()</A>
+<LI><A NAME="tex2html7132"
+  HREF="node550.html">Model.getCol()</A>
+<LI><A NAME="tex2html7133"
+  HREF="node551.html">Model.getConcurrentEnv()</A>
+<LI><A NAME="tex2html7134"
+  HREF="node552.html">Model.getConstrByName()</A>
+<LI><A NAME="tex2html7135"
+  HREF="node553.html">Model.getConstrs()</A>
+<LI><A NAME="tex2html7136"
+  HREF="node554.html">Model.getObjective()</A>
+<LI><A NAME="tex2html7137"
+  HREF="node555.html">Model.getQConstrs()</A>
+<LI><A NAME="tex2html7138"
+  HREF="node556.html">Model.getParamInfo()</A>
+<LI><A NAME="tex2html7139"
+  HREF="node557.html">Model.getQCRow()</A>
+<LI><A NAME="tex2html7140"
+  HREF="node558.html">Model.getRow()</A>
+<LI><A NAME="tex2html7141"
+  HREF="node559.html">Model.getSOS()</A>
+<LI><A NAME="tex2html7142"
+  HREF="node560.html">Model.getVarByName()</A>
+<LI><A NAME="tex2html7143"
+  HREF="node561.html">Model.getVars()</A>
+<LI><A NAME="tex2html7144"
+  HREF="node562.html">Model.message()</A>
+<LI><A NAME="tex2html7145"
+  HREF="node563.html">Model.optimize()</A>
+<LI><A NAME="tex2html7146"
+  HREF="node564.html">Model.presolve()</A>
+<LI><A NAME="tex2html7147"
+  HREF="node565.html">Model.printAttr()</A>
+<LI><A NAME="tex2html7148"
+  HREF="node566.html">Model.printQuality()</A>
+<LI><A NAME="tex2html7149"
+  HREF="node567.html">Model.printStats()</A>
+<LI><A NAME="tex2html7150"
+  HREF="node568.html">Model.cbCut()</A>
+<LI><A NAME="tex2html7151"
+  HREF="node569.html">Model.cbGet()</A>
+<LI><A NAME="tex2html7152"
+  HREF="node570.html">Model.cbGetNodeRel()</A>
+<LI><A NAME="tex2html7153"
+  HREF="node571.html">Model.cbGetSolution()</A>
+<LI><A NAME="tex2html7154"
+  HREF="node572.html">Model.cbLazy()</A>
+<LI><A NAME="tex2html7155"
+  HREF="node573.html">Model.cbSetSolution()</A>
+<LI><A NAME="tex2html7156"
+  HREF="node574.html">Model.read()</A>
+<LI><A NAME="tex2html7157"
+  HREF="node575.html">Model.relax()</A>
+<LI><A NAME="tex2html7158"
+  HREF="node576.html">Model.remove()</A>
+<LI><A NAME="tex2html7159"
+  HREF="node577.html">Model.reset()</A>
+<LI><A NAME="tex2html7160"
+  HREF="node578.html">Model.setAttr()</A>
+<LI><A NAME="tex2html7161"
+  HREF="node579.html">Model.setObjective()</A>
+<LI><A NAME="tex2html7162"
+  HREF="node580.html">Model.setParam()</A>
+<LI><A NAME="tex2html7163"
+  HREF="node581.html">Model.terminate()</A>
+<LI><A NAME="tex2html7164"
+  HREF="node582.html">Model.update()</A>
+<LI><A NAME="tex2html7165"
+  HREF="node583.html">Model.write()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7115"
+  HREF="node535.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7113"
+  HREF="node522.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7107"
+  HREF="node533.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7116"
+  HREF="node535.html">Model()</A>
+<B> Up:</B> <A NAME="tex2html7114"
+  HREF="node522.html">Python Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html7108"
+  HREF="node533.html">writeParams()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBLinExpr</TITLE>
+<META NAME="description" CONTENT="GRBLinExpr">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node465.html">
+<LINK REL="previous" HREF="node449.html">
+<LINK REL="up" HREF="node380.html">
+<LINK REL="next" HREF="node452.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html6103"
+  HREF="node452.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6101"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6095"
+  HREF="node450.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6104"
+  HREF="node452.html">GRBLinExpr()</A>
+<B> Up:</B> <A NAME="tex2html6102"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6096"
+  HREF="node450.html">GRBExpr.Value</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00048000000000000000"></A>
+<A NAME="dotnetclass:GRBLinExpr"></A>
+<BR>
+GRBLinExpr
+</H2>
+
+<P>
+Gurobi linear expression object.  A linear expression consists of a
+constant term, plus a list of coefficient-variable pairs that capture
+the linear terms.  Linear expressions are used to build constraints.
+They are temporary objects that typically have short lifespans.
+
+<P>
+The <EM>GRBLinExpr</EM> class is a sub-class of the abstract base
+class <A HREF="node449.html#dotnetclass:GRBExpr">GRBExpr</A>.
+
+<P>
+In .NET languages that support operator overloading, you generally
+build linear expressions using overloaded operators.  For example, if
+<EM>x</EM> is a <A HREF="node436.html#dotnetclass:GRBVar">GRBVar</A> object, then
+<EM>x + 1</EM> is a <A HREF="#dotnetclass:GRBLinExpr">GRBLinExpr</A>
+object.  Expressions can be built from constants (e.g., <EM>expr =
+  0</EM>), variables (e.g., <EM>expr = 1 * x + 2 * y</EM>), or from other
+expressions (e.g., <EM>expr2 = 2 * expr1 + x</EM>, or <EM>expr3 =
+  expr1 + 2 * expr2</EM>).  You can also modify existing expressions
+(e.g., <EM>expr += x</EM>, or <EM>expr2 -= expr1</EM>).
+
+<P>
+The other option for building expressions is to start with an empty
+expression (using the
+<A HREF="node452.html#dotnetmethod:GRBLinExpr">GRBLinExpr</A> constructor), and
+then add terms.  Terms can be added individually (using
+<A HREF="node455.html#dotnetmethod:GRBLinExpr.AddTerm">AddTerm</A>) or in groups
+(using <A HREF="node456.html#dotnetmethod:GRBLinExpr.AddTerms">AddTerms</A> or
+<A HREF="node461.html#dotnetmethod:GRBLinExpr.MultAdd">MultAdd</A>).  Terms can
+also be removed from an expression, using
+<A HREF="node462.html#dotnetmethod:GRBLinExpr.Remove">Remove</A>.
+
+<P>
+Note that it is <EM>much</EM> more efficient to build a linear
+expression by modifying an existing expression (using
+<A HREF="node455.html#dotnetmethod:GRBLinExpr.AddTerm">AddTerm</A> or
+<A HREF="node456.html#dotnetmethod:GRBLinExpr.AddTerms">AddTerms</A>) rather than
+creating a new one (using overloaded operators).  The statement
+<EM>expr = expr + x</EM>, for example, creates a brand new expression to
+represent the sum.  This incurs a cost for building the new
+expression, and it requires the previous expression to be reclaimed
+via garbage collection.  The
+<A HREF="node455.html#dotnetmethod:GRBLinExpr.AddTerm">AddTerm</A> or
+<A HREF="node456.html#dotnetmethod:GRBLinExpr.AddTerms">AddTerms</A> methods just
+append new terms to an existing expression object.
+
+<P>
+Individual terms in a linear expression can be queried using the
+<A HREF="node460.html#dotnetmethod:GRBLinExpr.GetVar">GetVar</A> and
+<A HREF="node459.html#dotnetmethod:GRBLinExpr.GetCoeff">GetCoeff</A> methods.
+The constant can be queried using the
+<A HREF="node458.html#dotnetmethod:GRBLinExpr.Constant">Constant</A> property.
+You can query the number of terms in the expression using the
+<A HREF="node463.html#dotnetmethod:GRBLinExpr.Size">Size</A> property.
+
+<P>
+Note that a linear expression may contain multiple terms that involve
+the same variable.  These duplicate terms are merged when creating a
+constraint from an expression, but they may be visible when inspecting
+individual terms in the expression (e.g., when using
+<A HREF="node460.html#dotnetmethod:GRBLinExpr.GetVar">GetVar</A>).
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html6105"
+  HREF="node452.html">GRBLinExpr()</A>
+<LI><A NAME="tex2html6106"
+  HREF="node453.html">GRBLinExpr.Add()</A>
+<LI><A NAME="tex2html6107"
+  HREF="node454.html">GRBLinExpr.AddConstant()</A>
+<LI><A NAME="tex2html6108"
+  HREF="node455.html">GRBLinExpr.AddTerm()</A>
+<LI><A NAME="tex2html6109"
+  HREF="node456.html">GRBLinExpr.AddTerms()</A>
+<LI><A NAME="tex2html6110"
+  HREF="node457.html">GRBLinExpr.Clear()</A>
+<LI><A NAME="tex2html6111"
+  HREF="node458.html">GRBLinExpr.Constant</A>
+<LI><A NAME="tex2html6112"
+  HREF="node459.html">GRBLinExpr.GetCoeff()</A>
+<LI><A NAME="tex2html6113"
+  HREF="node460.html">GRBLinExpr.GetVar()</A>
+<LI><A NAME="tex2html6114"
+  HREF="node461.html">GRBLinExpr.MultAdd()</A>
+<LI><A NAME="tex2html6115"
+  HREF="node462.html">GRBLinExpr.Remove()</A>
+<LI><A NAME="tex2html6116"
+  HREF="node463.html">GRBLinExpr.Size</A>
+<LI><A NAME="tex2html6117"
+  HREF="node464.html">GRBLinExpr.Value</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html6103"
+  HREF="node452.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6101"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6095"
+  HREF="node450.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6104"
+  HREF="node452.html">GRBLinExpr()</A>
+<B> Up:</B> <A NAME="tex2html6102"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6096"
+  HREF="node450.html">GRBExpr.Value</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

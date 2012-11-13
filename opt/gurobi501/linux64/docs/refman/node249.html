@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBEnv</TITLE>
+<META NAME="description" CONTENT="GRBEnv">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node261.html">
+<LINK REL="previous" HREF="node248.html">
+<LINK REL="up" HREF="node248.html">
+<LINK REL="next" HREF="node250.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html3803"
+  HREF="node250.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3801"
+  HREF="node248.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3795"
+  HREF="node248.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html3804"
+  HREF="node250.html">GRBEnv()</A>
+<B> Up:</B> <A NAME="tex2html3802"
+  HREF="node248.html">Java Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html3796"
+  HREF="node248.html">Java Reference Manual</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00031000000000000000"></A>
+<A NAME="javaclass:GRBEnv"></A>
+<BR>
+GRBEnv
+</H2>
+
+<P>
+Gurobi environment object.  Gurobi models are always associated with
+an environment.  You must create an environment before can you create
+and populate a model.  You will generally only need a single
+environment object in your program.
+
+<P>
+The methods on environment objects are mainly used to manage
+Gurobi parameters (e.g.,
+<A HREF="node252.html#javamethod:GRBEnv.get">get</A>,
+<A HREF="node254.html#javamethod:GRBEnv.getParamInfo">getParamInfo</A>,
+<A HREF="node259.html#javamethod:GRBEnv.set">set</A>).
+
+<P>
+While the Java garbage collector will eventually collect an unused
+<EM>GRBEnv</EM> object, an environment will hold onto resources (Gurobi
+licenses, file descriptors, etc.) until that collection occurs.  If
+your program creates multiple <EM>GRBEnv</EM> objects, we recommend
+that you call <A HREF="node251.html#javamethod:GRBEnv.dispose">GRBEnv.dispose</A>
+when you are done using one.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3805"
+  HREF="node250.html">GRBEnv()</A>
+<LI><A NAME="tex2html3806"
+  HREF="node251.html">GRBEnv.dispose()</A>
+<LI><A NAME="tex2html3807"
+  HREF="node252.html">GRBEnv.get()</A>
+<LI><A NAME="tex2html3808"
+  HREF="node253.html">GRBEnv.getErrorMsg()</A>
+<LI><A NAME="tex2html3809"
+  HREF="node254.html">GRBEnv.getParamInfo()</A>
+<LI><A NAME="tex2html3810"
+  HREF="node255.html">GRBEnv.message()</A>
+<LI><A NAME="tex2html3811"
+  HREF="node256.html">GRBEnv.readParams()</A>
+<LI><A NAME="tex2html3812"
+  HREF="node257.html">GRBEnv.release()</A>
+<LI><A NAME="tex2html3813"
+  HREF="node258.html">GRBEnv.resetParams()</A>
+<LI><A NAME="tex2html3814"
+  HREF="node259.html">GRBEnv.set()</A>
+<LI><A NAME="tex2html3815"
+  HREF="node260.html">GRBEnv.writeParams()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3803"
+  HREF="node250.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3801"
+  HREF="node248.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3795"
+  HREF="node248.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html3804"
+  HREF="node250.html">GRBEnv()</A>
+<B> Up:</B> <A NAME="tex2html3802"
+  HREF="node248.html">Java Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html3796"
+  HREF="node248.html">Java Reference Manual</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

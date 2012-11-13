@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBcomputeIIS</TITLE>
+<META NAME="description" CONTENT="GRBcomputeIIS">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node28.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html1200"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1198"
+  HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1192"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1201"
+  HREF="node31.html">GRBfeasrelax</A>
+<B> Up:</B> <A NAME="tex2html1199"
+  HREF="node28.html">Model Solution</A>
+<B> Previous:</B> <A NAME="tex2html1193"
+  HREF="node29.html">GRBoptimize</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00013200000000000000"></A>
+<A NAME="routine:GRBcomputeIIS"></A>
+<BR>
+GRBcomputeIIS
+</H3>
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">int</TD>
+<TD ALIGN="LEFT"><BIG CLASS="LARGE"><FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">GRBcomputeIIS</SPAN></FONT></BIG> (</TD>
+<TD ALIGN="LEFT">GRBmodel</TD>
+<TD ALIGN="LEFT">*model )</TD>
+</TR>
+</TABLE>
+
+<P>
+Compute an Irreducible Inconsistent Subsystem (IIS).  An IIS is a
+subset of the constraints and variable bounds of the original model.
+If all constraints in the model except those in the IIS are removed,
+the model is still infeasible.  However, further removing any one
+member of the IIS produces a feasible result.
+
+<P>
+This routine populates the <EM>IISConstr</EM>, <EM>IISQConstr</EM>,
+<EM>IISSOS</EM>, <EM>IISLB</EM>, and <EM>IISUB</EM> attributes.  You can
+also obtain information about the results of the IIS computation by
+writing a <EM>.ilp</EM> format file (see <A HREF="node47.html#routine:GRBwrite">GRBwrite</A>).
+This file contains only the IIS from the original model.
+
+<P>
+Note that this routine can be used to compute IISs for both continuous
+and MIP models.
+
+<P>
+
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Return value:</SPAN></BIG>
+
+<P>
+A non-zero return value indicates that a problem occurred while computing the IIS.
+Refer to the <A HREF="node742.html#sec:ErrorCodes">Error Code</A> table for a
+list of possible return values.  Details on the error can be obtained
+by calling <A HREF="node104.html#routine:GRBgeterrormsg">GRBgeterrormsg</A>.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">model</SPAN>: The infeasible model.  This routine will return an
+  error if the input model is feasible.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Important note:</SPAN></BIG>
+
+<P>
+This routine only reports whether the computation ran into an error.
+Query the <EM>IISConstr</EM>, <EM>IISQConstr</EM>, <EM>IISSOS</EM>, <EM>IISLB</EM>, or
+<EM>IISUB</EM> attributes to determine the result of the computation
+(see the <A HREF="node652.html#sec:Attributes">Attributes</A> section for more
+information on querying attributes).
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Example usage:</SPAN></BIG>
+<PRE>
+  error = GRBcomputeIIS(model);
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1200"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1198"
+  HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1192"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1201"
+  HREF="node31.html">GRBfeasrelax</A>
+<B> Up:</B> <A NAME="tex2html1199"
+  HREF="node28.html">Model Solution</A>
+<B> Previous:</B> <A NAME="tex2html1193"
+  HREF="node29.html">GRBoptimize</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

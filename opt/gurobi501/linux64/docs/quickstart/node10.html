@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>.NET Interface (C#)</TITLE>
+<META NAME="description" CONTENT=".NET Interface (C#)">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node9.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html153"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html151"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html145"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html154"
+  HREF="node11.html">Python Interface</A>
+<B> Up:</B> <A NAME="tex2html152"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html146"
+  HREF="node9.html">Java Interface</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00080000000000000000"></A>
+<A NAME="section:.NET"></A>
+<BR>
+.NET Interface (C#)
+</H1>
+
+<P>
+This section will work through a simple C# example in order to
+illustrate the use of the Gurobi .NET interface.  The example builds a
+model, optimizes it, and outputs the optimal objective value.  This
+section assumes that you are already familiar with the C# programming
+language.  If not, a variety of books and web sites are available for
+learning the language (for example, <A NAME="tex2html23"
+  HREF="http://msdn.microsoft.com/en-us/vcsharp">the Microsoft
+  online C# documentation</A>).
+
+<P>
+Our example optimizes the following model:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="RIGHT"><B>maximize</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 z</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="RIGHT"><B>subject to</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">3 z</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\leq$"></SPAN></TD>
+<TD ALIGN="RIGHT">4</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$\geq$"></SPAN></TD>
+<TD ALIGN="RIGHT">1</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" COLSPAN=6><SPAN>x, y, z binary</SPAN></TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+Note that this is the same model that was modeled and optimized in the
+<A HREF="node7.html#section:C">C Interface</A> section.
+
+<P>
+<B>Example mip1_cs.cs</B>
+
+<P>
+This is the complete source code for our example (also available in
+<EM>&lt;installdir&gt;/examples/c#/mip1_cs.cs</EM>)...
+
+<P>
+<PRE>
+using System;
+using Gurobi;
+
+class mip1_cs
+{
+  static void Main()
+  {
+    try {
+      GRBEnv    env   = new GRBEnv("mip1.log");
+      GRBModel  model = new GRBModel(env);
+
+      // Create variables
+
+      GRBVar x = model.AddVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
+      GRBVar y = model.AddVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
+      GRBVar z = model.AddVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+
+      // Integrate new variables
+
+      model.Update();
+
+      // Set objective: maximize x + y + 2 z
+
+      model.SetObjective(x + y + 2 * z, GRB.MAXIMIZE);
+
+      // Add constraint: x + 2 y + 3 z &lt;= 4
+
+      model.AddConstr(x + 2 * y + 3 * z &lt;= 4.0, "c0");
+
+      // Add constraint: x + y &gt;= 1
+
+      model.AddConstr(x + y &gt;= 1.0, "c1");
+
+      // Optimize model
+
+      model.Optimize();
+
+      Console.WriteLine(x.Get(GRB.StringAttr.VarName)
+                         + " " + x.Get(GRB.DoubleAttr.X));
+      Console.WriteLine(y.Get(GRB.StringAttr.VarName)
+                         + " " + y.Get(GRB.DoubleAttr.X));
+      Console.WriteLine(z.Get(GRB.StringAttr.VarName)
+                         + " " + z.Get(GRB.DoubleAttr.X));
+
+      Console.WriteLine("Obj: " + model.Get(GRB.DoubleAttr.ObjVal));
+
+      // Dispose of model and env
+
+      model.Dispose();
+      env.Dispose();
+
+    } catch (GRBException e) {
+      Console.WriteLine("Error code: " + e.ErrorCode + ". " + e.Message);
+    }
+  }
+}
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of optimizing the indicated model.
+
+<P>
+The example begins by importing the Gurobi namespace
+(<EM>using Gurobi</EM>).  Gurobi .NET applications should
+always start with this
+line.
+
+<P>
+<B>Creating the environment</B>
+
+<P>
+The first executable statement in our example obtains a Gurobi
+environment (using the <EM>GRBEnv()</EM> constructor):
+<PRE>
+   GRBEnv env = new GRBEnv("mip1.log");
+</PRE>
+Later calls to create an optimization model will always require an
+environment, so environment creation is typically the first step in a
+Gurobi application.  The constructor argument specifies the name of
+the log file.
+
+<P>
+<B>Creating the model</B>
+
+<P>
+Once an environment has been created, the next step is to create a
+model.  A Gurobi model holds a single optimization problem.  It
+consists of a set of variables, a set of constraints, and the
+associated attributes (variable bounds, objective coefficients,
+variable integrality types, constraint senses, constraint right-hand
+side values, etc.).  The first step towards building a model that
+contains all of this information is to create an empty model object:
+<PRE>
+  GRBModel model = new GRBModel(env);
+</PRE>
+The constructor takes the previously created environment as its
+argument.
+
+<P>
+<B>Adding variables to the model</B>
+
+<P>
+The next step in our example is to add variables to the model.
+<PRE>
+  // Create variables
+  GRBVar x = model.AddVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
+  GRBVar y = model.AddVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
+  GRBVar z = model.AddVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+</PRE>
+Variables are added through the <EM>AddVar()</EM> method on a model
+object.  A variable is always associated with a particular model.
+
+<P>
+The first and second arguments to the <EM>AddVar()</EM> call are the
+variable lower and upper bounds, respectively.  The third argument is
+the linear objective coefficient (zero here - we'll set the objective
+later).  The fourth argument is the variable type.  Our variables are
+all binary in this example.  The final argument is the name of the
+variable.
+
+<P>
+The <EM>AddVar()</EM> method has been overloaded to accept several
+different argument lists.  Please refer to the
+<A NAME="tex2html24"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>
+for further details.
+
+<P>
+<B>Updating the model - lazy modification</B>
+
+<P>
+Model modifications in the Gurobi optimizer are done in a <EM>lazy</EM>
+fashion, meaning that the effects of the modifications are not seen
+immediately.  This approach makes it easier to perform a sequence of
+model modifications, since the model doesn't change while it is being
+modified.  However, lazy modifications do require you to manually
+integrate model changes when needed.  This is done with the
+<EM>Update</EM> method:
+<PRE>
+  // Integrate new variables
+  model.Update();
+</PRE>
+
+<P>
+<B>Setting the objective</B>
+
+<P>
+The next step in the example is to set the optimization
+objective:
+<PRE>
+  // Set objective: maximize x + y + 2 z
+  model.SetObjective(x + y + 2 * z, GRB.MAXIMIZE);
+</PRE>
+
+<P>
+The objective is built here using overloaded operators.  The C#
+API overloads the arithmetic operators to allow you to build linear
+and quadratic expression involving Gurobi variables.
+
+<P>
+The second argument indicates that the sense is maximization.
+
+<P>
+<B>Adding constraints to the model</B>
+
+<P>
+The next step in the example is to add the constraints:
+<PRE>
+  // Add constraint: x + 2 y + 3 z &lt;= 4
+  model.AddConstr(x + 2 * y + 3 * z &lt;= 4.0, "c0");
+
+  // Add constraint: x + y &gt;= 1
+  model.AddConstr(x + y &gt;= 1.0, "c1");
+</PRE>
+As with variables, constraints are always associated with a specific
+model.  They are created using the <EM>AddConstr()</EM> or
+<EM>AddConstrs()</EM> methods on the model object.
+
+<P>
+We again use overloaded arithmetic operators to build linear
+expressions.  The comparison operators are also overloaded to make it
+easy to build constraints.
+
+<P>
+The second argument to <EM>AddConstr</EM> gives the constraint name.
+
+<P>
+The Gurobi .NET interface also allows you to add constraints by
+building linear expressions in a term-by-term fashion:
+<PRE>
+  GRBLinExpr expr = 0.0;
+  expr.AddTerm(1.0, x);
+  expr.AddTerm(2.0, x);
+  expr.AddTerm(3.0, x);
+  model.AddConstr(expr, GRB.LESS_EQUAL, 4.0, "c0");
+</PRE>
+This particular <EM>AddConstr()</EM> signature takes a linear
+expression that captures the left-hand side of the constraint as its
+first argument, the sense of the constraint as its second argument,
+and a linear expression that captures the right-hand side of the
+constraint as its third argument.  The constraint name is given as the
+fourth argument.
+
+<P>
+<B>Optimizing the model</B>
+
+<P>
+Now that the model has been built, the next step is to optimize it:
+<PRE>
+  // Optimize model
+  model.Optimize();
+</PRE>
+This routine performs the optimization and populates several internal
+model attributes (including the status of the optimization, the
+solution, etc.).
+
+<P>
+<B>Reporting results - attributes</B>
+
+<P>
+Once the optimization is complete, we can query the values of the
+attributes.  In particular, we can query the <EM>VarName</EM> and <EM>X</EM>
+attributes to obtain the name and solution value for each variable:
+<PRE>
+  Console.WriteLine(x.Get(GRB.StringAttr.VarName) + " " + x.Get(GRB.DoubleAttr.X));
+  Console.WriteLine(y.Get(GRB.StringAttr.VarName) + " " + y.Get(GRB.DoubleAttr.X));
+  Console.WriteLine(z.Get(GRB.StringAttr.VarName) + " " + z.Get(GRB.DoubleAttr.X));
+</PRE>
+
+<P>
+We can also query the <EM>ObjVal</EM> attribute on the model
+to obtain the objective value for the current solution:
+<PRE>
+  Console.WriteLine("Obj: " + model.Get(GRB.DoubleAttr.ObjVal));
+</PRE>
+
+<P>
+The names and types of all model, variable, and constraint attributes
+can be found in the <EM>Attributes</EM> section of the
+<A NAME="tex2html25"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>.
+
+<P>
+<B>Cleaning up</B>
+
+<P>
+The example concludes with <EM>Dispose</EM> calls:
+<PRE>
+  model.Dispose();
+  env.Dispose();
+</PRE>
+These reclaim the resources associated with the model and environment.
+Garbage collection would reclaim these eventually, but if your program
+doesn't exit immediately after performing the optimization, it is best
+to reclaim them explicitly.
+
+<P>
+Note that all models associated with an environment must be disposed
+before the environment itself is disposed.
+
+<P>
+<B>Error handling</B>
+
+<P>
+Errors in the Gurobi .NET interface are handled through the .NET
+exception mechanism.  In the example, all Gurobi statements are
+enclosed inside a <EM>try</EM> block, and any associated errors would be
+caught by the <EM>catch</EM> block.
+
+<P>
+<B>Building and running the example</B>
+
+<P>
+You can use the <EM>CS_examples_2008.sln</EM> or
+<EM>CS_examples_2010.sln</EM> solution files in
+<EM>&lt;installdir&gt;/examples/build</EM> to build and run the example with
+Visual Studio 2008 or 2010, respectively.  Clicking on the 'mip1_cs'
+project, and then selecting <EM>Run</EM> from the <EM>Build</EM> menu
+will compile and run the example.
+
+<P>
+The C# and Visual Basic example directories
+(<EM>&lt;installdir&gt;/examples/c#</EM> and <EM>&lt;installdir&gt;/examples/vb</EM>)
+contain a number of examples.  We encourage you to browse and modify
+them in order to become more familiar with the Gurobi .NET interface.
+We also encourage you to read the
+<A NAME="tex2html26"
+  HREF="../examples/examples.html">Gurobi Example Tour</A>
+for more information.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html153"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html151"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html145"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html154"
+  HREF="node11.html">Python Interface</A>
+<B> Up:</B> <A NAME="tex2html152"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html146"
+  HREF="node9.html">Java Interface</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBColumn</TITLE>
+<META NAME="description" CONTENT="GRBColumn">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node490.html">
+<LINK REL="previous" HREF="node480.html">
+<LINK REL="up" HREF="node380.html">
+<LINK REL="next" HREF="node482.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html6426"
+  HREF="node482.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6424"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6418"
+  HREF="node480.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6427"
+  HREF="node482.html">GRBColumn()</A>
+<B> Up:</B> <A NAME="tex2html6425"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6419"
+  HREF="node480.html">GRBTempConstr</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000411000000000000000"></A>
+<A NAME="dotnetclass:GRBColumn"></A>
+<BR>
+GRBColumn
+</H2>
+
+<P>
+Gurobi column object.  A column consists of a list of coefficient,
+constraint pairs.  Columns are used to represent the set of
+constraints in which a variable participates, and the associated
+coefficients.  They are temporary objects that typically have short
+lifespans.
+
+<P>
+You generally build columns by starting with an empty column (using
+the <A HREF="node482.html#dotnetmethod:GRBColumn">GRBColumn</A> constructor), and
+then adding terms.  Terms can be added individually, using
+<A HREF="node483.html#dotnetmethod:GRBColumn.AddTerm">AddTerm</A>, or in groups,
+using <A HREF="node484.html#dotnetmethod:GRBColumn.AddTerms">AddTerms</A>.  Terms
+can also be removed from a column, using
+<A HREF="node488.html#dotnetmethod:GRBColumn.Remove">Remove</A>.
+
+<P>
+Individual terms in a column can be queried using the
+<A HREF="node487.html#dotnetmethod:GRBColumn.GetConstr">GetConstr</A>, and
+<A HREF="node486.html#dotnetmethod:GRBColumn.GetCoeff">GetCoeff</A> methods.  You
+can query the number of terms in the column using the
+<A HREF="node489.html#dotnetmethod:GRBColumn.Size">Size</A> property.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html6428"
+  HREF="node482.html">GRBColumn()</A>
+<LI><A NAME="tex2html6429"
+  HREF="node483.html">GRBColumn.AddTerm()</A>
+<LI><A NAME="tex2html6430"
+  HREF="node484.html">GRBColumn.AddTerms()</A>
+<LI><A NAME="tex2html6431"
+  HREF="node485.html">GRBColumn.Clear()</A>
+<LI><A NAME="tex2html6432"
+  HREF="node486.html">GRBColumn.GetCoeff()</A>
+<LI><A NAME="tex2html6433"
+  HREF="node487.html">GRBColumn.GetConstr()</A>
+<LI><A NAME="tex2html6434"
+  HREF="node488.html">GRBColumn.Remove()</A>
+<LI><A NAME="tex2html6435"
+  HREF="node489.html">GRBColumn.Size</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html6426"
+  HREF="node482.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6424"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6418"
+  HREF="node480.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6427"
+  HREF="node482.html">GRBColumn()</A>
+<B> Up:</B> <A NAME="tex2html6425"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6419"
+  HREF="node480.html">GRBTempConstr</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

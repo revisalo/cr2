@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C++ Interface</TITLE>
+<META NAME="description" CONTENT="C++ Interface">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html133"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html131"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html125"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html134"
+  HREF="node9.html">Java Interface</A>
+<B> Up:</B> <A NAME="tex2html132"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html126"
+  HREF="node7.html">C Interface</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00060000000000000000"></A>
+<A NAME="section:C++"></A>
+<BR>
+C++ Interface
+</H1>
+
+<P>
+This section will work through a simple C++ example in order to
+illustrate the use of the Gurobi C++ interface.  The example builds a
+model, optimizes it, and outputs the optimal objective value.  This
+section assumes that you are already familiar with the C++ programming
+language.  If not, a variety of books are available for learning the
+language (for example, <EM>The C++ Programming Language</EM>, by
+Stroustrup).
+
+<P>
+Our example optimizes the following model:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="RIGHT"><B>maximize</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 z</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="RIGHT"><B>subject to</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">3 z</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\leq$"></SPAN></TD>
+<TD ALIGN="RIGHT">4</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$\geq$"></SPAN></TD>
+<TD ALIGN="RIGHT">1</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" COLSPAN=6><SPAN>x, y, z binary</SPAN></TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+Note that this is the same model that was modeled and optimized in the
+<A HREF="node7.html#section:C">C Interface</A> section.
+
+<P>
+<B>Example mip1_c++.cpp</B>
+
+<P>
+This is the complete source code for our example (also available in
+<EM>&lt;installdir&gt;/examples/c++/mip1_c++.cpp</EM>)...
+
+<P>
+<PRE>
+#include "gurobi_c++.h"
+using namespace std;
+
+int
+main(int   argc,
+     char *argv[])
+{
+  try {
+    GRBEnv env = GRBEnv();
+
+    GRBModel model = GRBModel(env);
+
+    // Create variables
+
+    GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "x");
+    GRBVar y = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "y");
+    GRBVar z = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "z");
+
+    // Integrate new variables
+
+    model.update();
+
+    // Set objective: maximize x + y + 2 z
+
+    model.setObjective(x + y + 2 * z, GRB_MAXIMIZE);
+
+    // Add constraint: x + 2 y + 3 z &lt;= 4
+
+    model.addConstr(x + 2 * y + 3 * z &lt;= 4, "c0");
+
+    // Add constraint: x + y &gt;= 1
+
+    model.addConstr(x + y &gt;= 1, "c1");
+
+    // Optimize model
+
+    model.optimize();
+
+    cout &lt;&lt; x.get(GRB_StringAttr_VarName) &lt;&lt; " "
+         &lt;&lt; x.get(GRB_DoubleAttr_X) &lt;&lt; endl;
+    cout &lt;&lt; y.get(GRB_StringAttr_VarName) &lt;&lt; " "
+         &lt;&lt; y.get(GRB_DoubleAttr_X) &lt;&lt; endl;
+    cout &lt;&lt; z.get(GRB_StringAttr_VarName) &lt;&lt; " "
+         &lt;&lt; z.get(GRB_DoubleAttr_X) &lt;&lt; endl;
+
+    cout &lt;&lt; "Obj: " &lt;&lt; model.get(GRB_DoubleAttr_ObjVal) &lt;&lt; endl;
+
+  } catch(GRBException e) {
+    cout &lt;&lt; "Error code = " &lt;&lt; e.getErrorCode() &lt;&lt; endl;
+    cout &lt;&lt; e.getMessage() &lt;&lt; endl;
+  } catch(...) {
+    cout &lt;&lt; "Exception during optimization" &lt;&lt; endl;
+  }
+
+  return 0;
+}
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of optimizing the indicated model.
+
+<P>
+The example begins by including file <EM>gurobi_c++.h</EM>.  Gurobi
+C++ applications should always start by including this file.
+
+<P>
+<B>Creating the environment</B>
+
+<P>
+The first executable statement in our example obtains a Gurobi
+environment (using the <EM>GRBEnv()</EM> constructor):
+<PRE>
+  GRBEnv env = GRBEnv();
+</PRE>
+Later calls to create an optimization model will always require an
+environment, so environment creation is typically the first step in a
+Gurobi application.
+
+<P>
+<B>Creating the model</B>
+
+<P>
+Once an environment has been created, the next step is to create a
+model.  A Gurobi model holds a single optimization problem.  It
+consists of a set of variables, a set of constraints, and the
+associated attributes (variable bounds, objective coefficients,
+variable integrality types, constraint senses, constraint right-hand
+side values, etc.).  The first step towards building a model that
+contains all of this information is to create an empty model object:
+<PRE>
+  GRBModel model = GRBModel(env);
+</PRE>
+The constructor takes the previously created environment as its
+argument.
+
+<P>
+<B>Adding variables to the model</B>
+
+<P>
+The next step in our example is to add variables to the model.
+<PRE>
+  // Create variables
+  GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "x");
+  GRBVar y = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "y");
+  GRBVar z = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "z");
+</PRE>
+Variables are added through the <EM>addVar()</EM> method on the model
+object.  A variable is always associated with a particular model.
+
+<P>
+The first and second arguments to the <EM>addVar()</EM> call are the
+variable lower and upper bounds, respectively.  The third argument is
+the linear objective coefficient (zero here - we'll set the objective
+later).  The fourth argument is the variable type.  Our variables are
+all binary in this example.  The final argument is the name of the
+variable.
+
+<P>
+The <EM>addVar()</EM> method has been overloaded to accept several
+different argument lists.  Please refer to the
+<A NAME="tex2html15"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>
+for further details.
+
+<P>
+<B>Updating the model - lazy modification</B>
+
+<P>
+Model modifications in the Gurobi optimizer are done in a <EM>lazy</EM>
+fashion, meaning that the effects of the modifications are not seen
+immediately.  This approach makes it easier to perform a sequence of
+model modifications, since the model doesn't change while it is being
+modified.  However, lazy modifications do require you to manually
+integrate model changes when needed.  This is done with the
+<EM>update</EM> method:
+<PRE>
+  // Integrate new variables
+  model.update();
+</PRE>
+
+<P>
+<B>Setting the objective</B>
+
+<P>
+The next step in the example is to set the optimization
+objective:
+<PRE>
+  // Set objective: maximize x + y + 2 z
+  model.setObjective(x + y + 2 * z, GRB_MAXIMIZE);
+</PRE>
+
+<P>
+The objective is built here using overloaded operators.  The C++
+API overloads the arithmetic operators to allow you to build linear
+and quadratic expression involving Gurobi variables.
+
+<P>
+The second argument indicates that the sense is maximization.
+
+<P>
+<B>Adding constraints to the model</B>
+
+<P>
+The next step in the example is to add the constraints.  The first
+constraint is added here:
+<PRE>
+  // Add constraint: x + 2 y + 3 z &lt;= 4
+  model.addConstr(x + 2 * y + 3 * z &lt;= 4, "c0");
+</PRE>
+As with variables, constraints are always associated with a specific
+model.  They are created using the <EM>addConstr()</EM> or
+<EM>addConstrs()</EM> methods on the model object.
+
+<P>
+We again use overloaded arithmetic operators to build the linear
+expression.  The comparison operators are also overloaded to make it
+easy to build linear constraints.
+
+<P>
+The second argument to <EM>addConstr</EM> gives the (optional)
+constraint name.
+
+<P>
+The second constraint in our model is added with this similar call:
+<PRE>
+  // Add constraint: x + y &gt;= 1
+  model.addConstr(x + y &gt;= 1, "c1");
+</PRE>
+
+<P>
+<B>Optimizing the model</B>
+
+<P>
+Now that the model has been built, the next step is to optimize it:
+<PRE>
+  // Optimize model
+  model.optimize();
+</PRE>
+This routine performs the optimization and populates several internal
+model attributes (including the status of the optimization, the
+solution, etc.).
+
+<P>
+<B>Reporting results - attributes</B>
+
+<P>
+Once the optimization is complete, we can query the values of the
+attributes.  In particular, we can query the <EM>VarName</EM> and
+<EM>X</EM> attributes to obtain the name and solution value of each
+variable:
+<PRE>
+  cout &lt;&lt; x.get(GRB_StringAttr_VarName) &lt;&lt; " "
+       &lt;&lt; x.get(GRB_DoubleAttr_X) &lt;&lt; endl;
+  cout &lt;&lt; y.get(GRB_StringAttr_VarName) &lt;&lt; " "
+       &lt;&lt; y.get(GRB_DoubleAttr_X) &lt;&lt; endl;
+  cout &lt;&lt; z.get(GRB_StringAttr_VarName) &lt;&lt; " "
+       &lt;&lt; z.get(GRB_DoubleAttr_X) &lt;&lt; endl;
+</PRE>
+
+<P>
+We can also query the <EM>ObjVal</EM> attribute on the model to
+obtain the objective value for the current solution:
+<PRE>
+  cout &lt;&lt; "Obj: " &lt;&lt; model.get(GRB_DoubleAttr_ObjVal) &lt;&lt; endl;
+</PRE>
+
+<P>
+The names and types of all model, variable, and constraint attributes
+can be found in the <EM>Attributes</EM> section of the
+<A NAME="tex2html16"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>.
+
+<P>
+<B>Error handling</B>
+
+<P>
+Errors in the Gurobi C++ interface are handled through the C++
+exception mechanism.  In the example, all Gurobi statements are
+enclosed inside a <EM>try</EM> block, and any associated errors would be
+caught by the <EM>catch</EM> block.
+
+<P>
+<B>Building and running the example</B>
+
+<P>
+To build and run the example, we refer the user to the files in
+<EM>&lt;installdir&gt;/examples/build</EM>.  For Windows platforms, this
+directory contains <EM>C++_examples_2008.sln</EM> and
+<EM>C++_examples_2010.sln</EM> (Visual Studio 2008 and 2010 solution
+files for the C++ examples).  Double-clicking on the solution file will
+bring up Visual Studio.  Clicking on the 'mip1_c++' project, and then
+selecting <EM>Run</EM> from the <EM>Build</EM> menu will compile and run
+the example.  For Linux or Mac OS platforms, the
+<EM>&lt;installdir&gt;/examples/build</EM> directory contains an example
+Makefile.  Typing <EM>make mip1_c++</EM> will build and run this
+example.
+
+<P>
+The C++ example directory <EM>&lt;installdir&gt;/examples/c++</EM> contains a
+number of examples.  We encourage you to browse and modify them in
+order to become more familiar with the Gurobi C++ interface.  We
+also encourage you to read the
+<A NAME="tex2html17"
+  HREF="../examples/examples.html">Gurobi Example Tour</A>
+for more information.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html133"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html131"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html125"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html134"
+  HREF="node9.html">Java Interface</A>
+<B> Up:</B> <A NAME="tex2html132"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html126"
+  HREF="node7.html">C Interface</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

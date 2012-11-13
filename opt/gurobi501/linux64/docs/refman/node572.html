@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Model.cbLazy()</TITLE>
+<META NAME="description" CONTENT="Model.cbLazy()">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node573.html">
+<LINK REL="previous" HREF="node571.html">
+<LINK REL="up" HREF="node534.html">
+<LINK REL="next" HREF="node573.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7544"
+  HREF="node573.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7542"
+  HREF="node534.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7536"
+  HREF="node571.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7545"
+  HREF="node573.html">Model.cbSetSolution()</A>
+<B> Up:</B> <A NAME="tex2html7543"
+  HREF="node534.html">Model</A>
+<B> Previous:</B> <A NAME="tex2html7537"
+  HREF="node571.html">Model.cbGetSolution()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION000523800000000000000"></A>
+<A NAME="pythonmethod:Model.cbLazy"></A>
+<BR>
+Model.cbLazy()
+</H3>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">cbLazy</SPAN></FONT></BIG> ( lhs, sense, rhs )
+
+
+<P>
+Add a new lazy constraint to a MIP model from within a callback function.
+Note that this method can only be invoked when the
+<EM>where</EM> value on the callback function is
+<EM>GRB.Callback.MIPNODE</EM> or <EM>GRB.Callback.MIPSOL</EM> (see the
+<A HREF="node741.html#sec:CallbackCodes">Callback Codes</A> section
+for more information).
+
+<P>
+Lazy constraints are typically used when the full set of constraints
+for a MIP model is too large to represent explicitly.  By only
+including the constraints that are actually violated by solutions
+found during the branch-and-cut search, it is sometimes possible to
+find a proven optimal solution while only adding a fraction of the
+full set of constraints.
+
+<P>
+You would typically add a lazy constraint by first querying the
+current node solution (by calling
+<A HREF="node571.html#pythonmethod:Model.cbGetSolution">cbGetSolution</A> from a
+GRB.CB_MIPSOL callback, or
+<A HREF="node570.html#pythonmethod:Model.cbGetNodeRel">cbGetNodeRel</A> from a
+GRB.CB_MIPNODE callback), and then calling <EM>cbLazy()</EM> to add a
+constraint that cuts off the solution.  Gurobi guarantees that you
+will have the opportunity to cut off any solutions that would
+otherwise be considered feasible.
+
+<P>
+Note that you must disable dual reductions (using the
+<EM>DualReductions</EM> parameter) if you want to use lazy constraints.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">lhs</SPAN>: Left-hand side for new lazy constraint.  Can be a
+  constant, a <A HREF="node584.html#pythonclass:Var">Var</A>, or a
+  <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A>.
+
+<P>
+ <SPAN  CLASS="textbf">sense</SPAN>: Sense for new lazy constraint (GRB.LESS_EQUAL,
+  GRB.EQUAL, or GRB.GREATER_EQUAL).
+
+<P>
+ <SPAN  CLASS="textbf">rhs</SPAN>: Right-hand side for new lazy constraint.  Can be a
+  constant, a <A HREF="node584.html#pythonclass:Var">Var</A>, or a
+  <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A>.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Example usage:</SPAN></BIG>
+<PRE>
+  def mycallback(model, where):
+    if where == GRB.Callback.MIPSOL:
+      sol = model.cbGetSolution([model._vars[0], model._vars[1]])
+      if sol[0] + sol[1] &gt; 1.1:
+        model.cbLazy(model._vars[0] + model._vars[1] &lt;= 1)
+
+  model._vars = model.getVars()
+  model.optimize(mycallback)
+</PRE>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7544"
+  HREF="node573.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7542"
+  HREF="node534.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7536"
+  HREF="node571.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7545"
+  HREF="node573.html">Model.cbSetSolution()</A>
+<B> Up:</B> <A NAME="tex2html7543"
+  HREF="node534.html">Model</A>
+<B> Previous:</B> <A NAME="tex2html7537"
+  HREF="node571.html">Model.cbGetSolution()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

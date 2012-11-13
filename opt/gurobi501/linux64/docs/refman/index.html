@@ -1,0 +1,1775 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Gurobi Optimizer Reference Manual</TITLE>
+<META NAME="description" CONTENT="Gurobi Optimizer Reference Manual">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html14"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html15"
+  HREF="node1.html">C Reference Manual</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<P>
+
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="237" HEIGHT="70" ALIGN="BOTTOM" BORDER="0"
+ SRC="./logo.png"
+ ALT="Image logo">
+
+</DIV>
+
+<P>
+<H1 ALIGN="CENTER">Gurobi Optimizer Reference Manual</H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>Version 5.0, Copyright &#169; 2012, Gurobi Optimization, Inc.</STRONG></P>
+</DIV>
+
+<P>
+This is the reference manual for the Gurobi<SUP><SMALL>TM</SMALL></SUP> Optimizer.
+It contains documentation for the <A HREF="node1.html#sec:C">C</A>,
+<A HREF="node105.html#sec:C++">C++</A>,
+<A HREF="node248.html#sec:Java">Java&#174;</A>,
+<A HREF="node380.html#sec:DotNet">Microsoft&#174;.NET</A>,
+<A HREF="node522.html#sec:Python">Python&#174;</A>,
+<A HREF="node650.html#sec:MATLAB">MATLAB&#174;</A>, and
+<A HREF="node651.html#sec:R">R</A> library interfaces.
+The <EM>Gurobi interactive shell</EM> is also documented in the
+<A HREF="node522.html#sec:Python">Python</A> section.
+
+<P>
+The different Gurobi language interfaces share many common features.
+These are described at the end of this manual.  Two particularly
+important common features are the
+<A HREF="node652.html#sec:Attributes">Attribute</A> interface and the Gurobi
+<A HREF="node653.html#sec:Parameters">Parameter</A> set.  You may wish to
+bookmark these pages, since you are likely to refer to them frequently
+as you develop applications that use the Gurobi Optimizer.
+
+<P>
+If you have a question that is not answered in this document, you can
+post it to the <A NAME="tex2html1"
+  HREF="http://groups.google.com/group/gurobi">Gurobi Google
+  Group</A>.  If you have a
+current maintenance contract with us, you can send your question to
+<EM>support@gurobi.com</EM>.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html16"
+  HREF="node1.html">C Reference Manual</A>
+<UL>
+<LI><A NAME="tex2html17"
+  HREF="node2.html">Environment Creation and Destruction</A>
+<UL>
+<LI><A NAME="tex2html18"
+  HREF="node3.html">GRBloadenv</A>
+<LI><A NAME="tex2html19"
+  HREF="node4.html">GRBfreeenv</A>
+<LI><A NAME="tex2html20"
+  HREF="node5.html">GRBgetconcurrentenv</A>
+<LI><A NAME="tex2html21"
+  HREF="node6.html">GRBdiscardconcurrentenvs</A>
+</UL>
+<LI><A NAME="tex2html22"
+  HREF="node7.html">Model Creation and Modification</A>
+<UL>
+<LI><A NAME="tex2html23"
+  HREF="node8.html">GRBloadmodel</A>
+<LI><A NAME="tex2html24"
+  HREF="node9.html">GRBnewmodel</A>
+<LI><A NAME="tex2html25"
+  HREF="node10.html">GRBcopymodel</A>
+<LI><A NAME="tex2html26"
+  HREF="node11.html">GRBaddconstr</A>
+<LI><A NAME="tex2html27"
+  HREF="node12.html">GRBaddconstrs</A>
+<LI><A NAME="tex2html28"
+  HREF="node13.html">GRBaddqconstr</A>
+<LI><A NAME="tex2html29"
+  HREF="node14.html">GRBaddqpterms</A>
+<LI><A NAME="tex2html30"
+  HREF="node15.html">GRBaddrangeconstr</A>
+<LI><A NAME="tex2html31"
+  HREF="node16.html">GRBaddrangeconstrs</A>
+<LI><A NAME="tex2html32"
+  HREF="node17.html">GRBaddsos</A>
+<LI><A NAME="tex2html33"
+  HREF="node18.html">GRBaddvar</A>
+<LI><A NAME="tex2html34"
+  HREF="node19.html">GRBaddvars</A>
+<LI><A NAME="tex2html35"
+  HREF="node20.html">GRBchgcoeffs</A>
+<LI><A NAME="tex2html36"
+  HREF="node21.html">GRBdelconstrs</A>
+<LI><A NAME="tex2html37"
+  HREF="node22.html">GRBdelq</A>
+<LI><A NAME="tex2html38"
+  HREF="node23.html">GRBdelqconstrs</A>
+<LI><A NAME="tex2html39"
+  HREF="node24.html">GRBdelsos</A>
+<LI><A NAME="tex2html40"
+  HREF="node25.html">GRBdelvars</A>
+<LI><A NAME="tex2html41"
+  HREF="node26.html">GRBupdatemodel</A>
+<LI><A NAME="tex2html42"
+  HREF="node27.html">GRBfreemodel</A>
+</UL>
+<LI><A NAME="tex2html43"
+  HREF="node28.html">Model Solution</A>
+<UL>
+<LI><A NAME="tex2html44"
+  HREF="node29.html">GRBoptimize</A>
+<LI><A NAME="tex2html45"
+  HREF="node30.html">GRBcomputeIIS</A>
+<LI><A NAME="tex2html46"
+  HREF="node31.html">GRBfeasrelax</A>
+<LI><A NAME="tex2html47"
+  HREF="node32.html">GRBfixedmodel</A>
+<LI><A NAME="tex2html48"
+  HREF="node33.html">GRBresetmodel</A>
+</UL>
+<LI><A NAME="tex2html49"
+  HREF="node34.html">Model Queries</A>
+<UL>
+<LI><A NAME="tex2html50"
+  HREF="node35.html">GRBgetcoeff</A>
+<LI><A NAME="tex2html51"
+  HREF="node36.html">GRBgetconstrbyname</A>
+<LI><A NAME="tex2html52"
+  HREF="node37.html">GRBgetconstrs</A>
+<LI><A NAME="tex2html53"
+  HREF="node38.html">GRBgetenv</A>
+<LI><A NAME="tex2html54"
+  HREF="node39.html">GRBgetq</A>
+<LI><A NAME="tex2html55"
+  HREF="node40.html">GRBgetqconstr</A>
+<LI><A NAME="tex2html56"
+  HREF="node41.html">GRBgetsos</A>
+<LI><A NAME="tex2html57"
+  HREF="node42.html">GRBgetvarbyname</A>
+<LI><A NAME="tex2html58"
+  HREF="node43.html">GRBgetvars</A>
+</UL>
+<LI><A NAME="tex2html59"
+  HREF="node44.html">Input/Output</A>
+<UL>
+<LI><A NAME="tex2html60"
+  HREF="node45.html">GRBreadmodel</A>
+<LI><A NAME="tex2html61"
+  HREF="node46.html">GRBread</A>
+<LI><A NAME="tex2html62"
+  HREF="node47.html">GRBwrite</A>
+</UL>
+<LI><A NAME="tex2html63"
+  HREF="node48.html">Attribute Management</A>
+<UL>
+<LI><A NAME="tex2html64"
+  HREF="node49.html">GRBgetattrinfo</A>
+<LI><A NAME="tex2html65"
+  HREF="node50.html">GRBgetintattr</A>
+<LI><A NAME="tex2html66"
+  HREF="node51.html">GRBsetintattr</A>
+<LI><A NAME="tex2html67"
+  HREF="node52.html">GRBgetintattrelement</A>
+<LI><A NAME="tex2html68"
+  HREF="node53.html">GRBsetintattrelement</A>
+<LI><A NAME="tex2html69"
+  HREF="node54.html">GRBgetintattrarray</A>
+<LI><A NAME="tex2html70"
+  HREF="node55.html">GRBsetintattrarray</A>
+<LI><A NAME="tex2html71"
+  HREF="node56.html">GRBgetintattrlist</A>
+<LI><A NAME="tex2html72"
+  HREF="node57.html">GRBsetintattrlist</A>
+<LI><A NAME="tex2html73"
+  HREF="node58.html">GRBgetdblattr</A>
+<LI><A NAME="tex2html74"
+  HREF="node59.html">GRBsetdblattr</A>
+<LI><A NAME="tex2html75"
+  HREF="node60.html">GRBgetdblattrelement</A>
+<LI><A NAME="tex2html76"
+  HREF="node61.html">GRBsetdblattrelement</A>
+<LI><A NAME="tex2html77"
+  HREF="node62.html">GRBgetdblattrarray</A>
+<LI><A NAME="tex2html78"
+  HREF="node63.html">GRBsetdblattrarray</A>
+<LI><A NAME="tex2html79"
+  HREF="node64.html">GRBgetdblattrlist</A>
+<LI><A NAME="tex2html80"
+  HREF="node65.html">GRBsetdblattrlist</A>
+<LI><A NAME="tex2html81"
+  HREF="node66.html">GRBgetcharattrelement</A>
+<LI><A NAME="tex2html82"
+  HREF="node67.html">GRBsetcharattrelement</A>
+<LI><A NAME="tex2html83"
+  HREF="node68.html">GRBgetcharattrarray</A>
+<LI><A NAME="tex2html84"
+  HREF="node69.html">GRBsetcharattrarray</A>
+<LI><A NAME="tex2html85"
+  HREF="node70.html">GRBgetcharattrlist</A>
+<LI><A NAME="tex2html86"
+  HREF="node71.html">GRBsetcharattrlist</A>
+<LI><A NAME="tex2html87"
+  HREF="node72.html">GRBgetstrattr</A>
+<LI><A NAME="tex2html88"
+  HREF="node73.html">GRBsetstrattr</A>
+<LI><A NAME="tex2html89"
+  HREF="node74.html">GRBgetstrattrelement</A>
+<LI><A NAME="tex2html90"
+  HREF="node75.html">GRBsetstrattrelement</A>
+<LI><A NAME="tex2html91"
+  HREF="node76.html">GRBgetstrattrarray</A>
+<LI><A NAME="tex2html92"
+  HREF="node77.html">GRBsetstrattrarray</A>
+<LI><A NAME="tex2html93"
+  HREF="node78.html">GRBgetstrattrlist</A>
+<LI><A NAME="tex2html94"
+  HREF="node79.html">GRBsetstrattrlist</A>
+</UL>
+<LI><A NAME="tex2html95"
+  HREF="node80.html">Parameter Management</A>
+<UL>
+<LI><A NAME="tex2html96"
+  HREF="node81.html">GRBgetdblparam</A>
+<LI><A NAME="tex2html97"
+  HREF="node82.html">GRBgetintparam</A>
+<LI><A NAME="tex2html98"
+  HREF="node83.html">GRBgetstrparam</A>
+<LI><A NAME="tex2html99"
+  HREF="node84.html">GRBsetdblparam</A>
+<LI><A NAME="tex2html100"
+  HREF="node85.html">GRBsetintparam</A>
+<LI><A NAME="tex2html101"
+  HREF="node86.html">GRBsetstrparam</A>
+<LI><A NAME="tex2html102"
+  HREF="node87.html">GRBgetdblparaminfo</A>
+<LI><A NAME="tex2html103"
+  HREF="node88.html">GRBgetintparaminfo</A>
+<LI><A NAME="tex2html104"
+  HREF="node89.html">GRBgetstrparaminfo</A>
+<LI><A NAME="tex2html105"
+  HREF="node90.html">GRBreadparams</A>
+<LI><A NAME="tex2html106"
+  HREF="node91.html">GRBwriteparams</A>
+</UL>
+<LI><A NAME="tex2html107"
+  HREF="node92.html">Monitoring Progress - Logging and Callbacks</A>
+<UL>
+<LI><A NAME="tex2html108"
+  HREF="node93.html">GRBmsg</A>
+<LI><A NAME="tex2html109"
+  HREF="node94.html">GRBsetcallbackfunc</A>
+<LI><A NAME="tex2html110"
+  HREF="node95.html">GRBgetcallbackfunc</A>
+<LI><A NAME="tex2html111"
+  HREF="node96.html">GRBcbget</A>
+<LI><A NAME="tex2html112"
+  HREF="node97.html">GRBversion</A>
+</UL>
+<LI><A NAME="tex2html113"
+  HREF="node98.html">Modifying Solver Behavior - Callbacks</A>
+<UL>
+<LI><A NAME="tex2html114"
+  HREF="node99.html">GRBcbcut</A>
+<LI><A NAME="tex2html115"
+  HREF="node100.html">GRBcblazy</A>
+<LI><A NAME="tex2html116"
+  HREF="node101.html">GRBcbsolution</A>
+<LI><A NAME="tex2html117"
+  HREF="node102.html">GRBterminate</A>
+</UL>
+<LI><A NAME="tex2html118"
+  HREF="node103.html">Error Handling</A>
+<UL>
+<LI><A NAME="tex2html119"
+  HREF="node104.html">GRBgeterrormsg</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html120"
+  HREF="node105.html">C++ Reference Manual</A>
+<UL>
+<LI><A NAME="tex2html121"
+  HREF="node106.html">GRBEnv</A>
+<UL>
+<LI><A NAME="tex2html122"
+  HREF="node107.html">GRBEnv()</A>
+<LI><A NAME="tex2html123"
+  HREF="node108.html">GRBEnv::get()</A>
+<LI><A NAME="tex2html124"
+  HREF="node109.html">GRBEnv::getErrorMsg()</A>
+<LI><A NAME="tex2html125"
+  HREF="node110.html">GRBEnv::getParamInfo()</A>
+<LI><A NAME="tex2html126"
+  HREF="node111.html">GRBEnv::message()</A>
+<LI><A NAME="tex2html127"
+  HREF="node112.html">GRBEnv::readParams()</A>
+<LI><A NAME="tex2html128"
+  HREF="node113.html">GRBEnv::resetParams()</A>
+<LI><A NAME="tex2html129"
+  HREF="node114.html">GRBEnv::set()</A>
+<LI><A NAME="tex2html130"
+  HREF="node115.html">GRBEnv::writeParams()</A>
+</UL>
+<LI><A NAME="tex2html131"
+  HREF="node116.html">GRBModel</A>
+<UL>
+<LI><A NAME="tex2html132"
+  HREF="node117.html">GRBModel()</A>
+<LI><A NAME="tex2html133"
+  HREF="node118.html">GRBModel::addConstr()</A>
+<LI><A NAME="tex2html134"
+  HREF="node119.html">GRBModel::addConstrs()</A>
+<LI><A NAME="tex2html135"
+  HREF="node120.html">GRBModel::addQConstr()</A>
+<LI><A NAME="tex2html136"
+  HREF="node121.html">GRBModel::addRange()</A>
+<LI><A NAME="tex2html137"
+  HREF="node122.html">GRBModel::addRanges()</A>
+<LI><A NAME="tex2html138"
+  HREF="node123.html">GRBModel::addSOS()</A>
+<LI><A NAME="tex2html139"
+  HREF="node124.html">GRBModel::addVar()</A>
+<LI><A NAME="tex2html140"
+  HREF="node125.html">GRBModel::addVars()</A>
+<LI><A NAME="tex2html141"
+  HREF="node126.html">GRBModel::chgCoeff()</A>
+<LI><A NAME="tex2html142"
+  HREF="node127.html">GRBModel::chgCoeffs()</A>
+<LI><A NAME="tex2html143"
+  HREF="node128.html">GRBModel::computeIIS()</A>
+<LI><A NAME="tex2html144"
+  HREF="node129.html">GRBModel::discardConcurrentEnvs()</A>
+<LI><A NAME="tex2html145"
+  HREF="node130.html">GRBModel::feasRelax()</A>
+<LI><A NAME="tex2html146"
+  HREF="node131.html">GRBModel::fixedModel()</A>
+<LI><A NAME="tex2html147"
+  HREF="node132.html">GRBModel::get()</A>
+<LI><A NAME="tex2html148"
+  HREF="node133.html">GRBModel::getCoeff()</A>
+<LI><A NAME="tex2html149"
+  HREF="node134.html">GRBModel::getCol()</A>
+<LI><A NAME="tex2html150"
+  HREF="node135.html">GRBModel::getConcurrentEnv()</A>
+<LI><A NAME="tex2html151"
+  HREF="node136.html">GRBModel::getConstrByName()</A>
+<LI><A NAME="tex2html152"
+  HREF="node137.html">GRBModel::getConstrs()</A>
+<LI><A NAME="tex2html153"
+  HREF="node138.html">GRBModel::getEnv()</A>
+<LI><A NAME="tex2html154"
+  HREF="node139.html">GRBModel::getObjective()</A>
+<LI><A NAME="tex2html155"
+  HREF="node140.html">GRBModel::getQConstr()</A>
+<LI><A NAME="tex2html156"
+  HREF="node141.html">GRBModel::getQConstrs()</A>
+<LI><A NAME="tex2html157"
+  HREF="node142.html">GRBModel::getRow()</A>
+<LI><A NAME="tex2html158"
+  HREF="node143.html">GRBModel::getSOS()</A>
+<LI><A NAME="tex2html159"
+  HREF="node144.html">GRBModel::getSOSs()</A>
+<LI><A NAME="tex2html160"
+  HREF="node145.html">GRBModel::getVarByName()</A>
+<LI><A NAME="tex2html161"
+  HREF="node146.html">GRBModel::getVars()</A>
+<LI><A NAME="tex2html162"
+  HREF="node147.html">GRBModel::optimize()</A>
+<LI><A NAME="tex2html163"
+  HREF="node148.html">GRBModel::presolve()</A>
+<LI><A NAME="tex2html164"
+  HREF="node149.html">GRBModel::read()</A>
+<LI><A NAME="tex2html165"
+  HREF="node150.html">GRBModel::remove()</A>
+<LI><A NAME="tex2html166"
+  HREF="node151.html">GRBModel::reset()</A>
+<LI><A NAME="tex2html167"
+  HREF="node152.html">GRBModel::setCallback()</A>
+<LI><A NAME="tex2html168"
+  HREF="node153.html">GRBModel::set()</A>
+<LI><A NAME="tex2html169"
+  HREF="node154.html">GRBModel::setObjective()</A>
+<LI><A NAME="tex2html170"
+  HREF="node155.html">GRBModel::terminate()</A>
+<LI><A NAME="tex2html171"
+  HREF="node156.html">GRBModel::update()</A>
+<LI><A NAME="tex2html172"
+  HREF="node157.html">GRBModel::write()</A>
+</UL>
+<LI><A NAME="tex2html173"
+  HREF="node158.html">GRBVar</A>
+<UL>
+<LI><A NAME="tex2html174"
+  HREF="node159.html">GRBVar::get()</A>
+<LI><A NAME="tex2html175"
+  HREF="node160.html">GRBVar::sameAs()</A>
+<LI><A NAME="tex2html176"
+  HREF="node161.html">GRBVar::set()</A>
+</UL>
+<LI><A NAME="tex2html177"
+  HREF="node162.html">GRBConstr</A>
+<UL>
+<LI><A NAME="tex2html178"
+  HREF="node163.html">GRBConstr::get()</A>
+<LI><A NAME="tex2html179"
+  HREF="node164.html">GRBConstr::sameAs()</A>
+<LI><A NAME="tex2html180"
+  HREF="node165.html">GRBConstr::set()</A>
+</UL>
+<LI><A NAME="tex2html181"
+  HREF="node166.html">GRBQConstr</A>
+<UL>
+<LI><A NAME="tex2html182"
+  HREF="node167.html">GRBQConstr::get()</A>
+<LI><A NAME="tex2html183"
+  HREF="node168.html">GRBQConstr::set()</A>
+</UL>
+<LI><A NAME="tex2html184"
+  HREF="node169.html">GRBSOS</A>
+<UL>
+<LI><A NAME="tex2html185"
+  HREF="node170.html">GRBSOS::get()</A>
+</UL>
+<LI><A NAME="tex2html186"
+  HREF="node171.html">GRBExpr</A>
+<UL>
+<LI><A NAME="tex2html187"
+  HREF="node172.html">GRBExpr::getValue()</A>
+</UL>
+<LI><A NAME="tex2html188"
+  HREF="node173.html">GRBLinExpr</A>
+<UL>
+<LI><A NAME="tex2html189"
+  HREF="node174.html">GRBLinExpr()</A>
+<LI><A NAME="tex2html190"
+  HREF="node175.html">GRBLinExpr::addTerms()</A>
+<LI><A NAME="tex2html191"
+  HREF="node176.html">GRBLinExpr::clear()</A>
+<LI><A NAME="tex2html192"
+  HREF="node177.html">GRBLinExpr::getConstant()</A>
+<LI><A NAME="tex2html193"
+  HREF="node178.html">GRBLinExpr::getCoeff()</A>
+<LI><A NAME="tex2html194"
+  HREF="node179.html">GRBLinExpr::getValue()</A>
+<LI><A NAME="tex2html195"
+  HREF="node180.html">GRBLinExpr::getVar()</A>
+<LI><A NAME="tex2html196"
+  HREF="node181.html">GRBLinExpr::operator=</A>
+<LI><A NAME="tex2html197"
+  HREF="node182.html">GRBLinExpr::operator+</A>
+<LI><A NAME="tex2html198"
+  HREF="node183.html">GRBLinExpr::operator-</A>
+<LI><A NAME="tex2html199"
+  HREF="node184.html">GRBLinExpr::operator+=</A>
+<LI><A NAME="tex2html200"
+  HREF="node185.html">GRBLinExpr::operator-=</A>
+<LI><A NAME="tex2html201"
+  HREF="node186.html">GRBLinExpr::operator*=</A>
+<LI><A NAME="tex2html202"
+  HREF="node187.html">GRBLinExpr::remove()</A>
+<LI><A NAME="tex2html203"
+  HREF="node188.html">GRBLinExpr::size()</A>
+</UL>
+<LI><A NAME="tex2html204"
+  HREF="node189.html">GRBQuadExpr</A>
+<UL>
+<LI><A NAME="tex2html205"
+  HREF="node190.html">GRBQuadExpr()</A>
+<LI><A NAME="tex2html206"
+  HREF="node191.html">GRBQuadExpr::addTerm()</A>
+<LI><A NAME="tex2html207"
+  HREF="node192.html">GRBQuadExpr::addTerms()</A>
+<LI><A NAME="tex2html208"
+  HREF="node193.html">GRBQuadExpr::clear()</A>
+<LI><A NAME="tex2html209"
+  HREF="node194.html">GRBQuadExpr::getCoeff()</A>
+<LI><A NAME="tex2html210"
+  HREF="node195.html">GRBQuadExpr::getLinExpr()</A>
+<LI><A NAME="tex2html211"
+  HREF="node196.html">GRBQuadExpr::getValue()</A>
+<LI><A NAME="tex2html212"
+  HREF="node197.html">GRBQuadExpr::getVar1()</A>
+<LI><A NAME="tex2html213"
+  HREF="node198.html">GRBQuadExpr::getVar2()</A>
+<LI><A NAME="tex2html214"
+  HREF="node199.html">GRBQuadExpr::operator=</A>
+<LI><A NAME="tex2html215"
+  HREF="node200.html">GRBQuadExpr::operator+</A>
+<LI><A NAME="tex2html216"
+  HREF="node201.html">GRBQuadExpr::operator-</A>
+<LI><A NAME="tex2html217"
+  HREF="node202.html">GRBQuadExpr::operator+=</A>
+<LI><A NAME="tex2html218"
+  HREF="node203.html">GRBQuadExpr::operator-=</A>
+<LI><A NAME="tex2html219"
+  HREF="node204.html">GRBQuadExpr::operator*=</A>
+<LI><A NAME="tex2html220"
+  HREF="node205.html">GRBQuadExpr::remove()</A>
+<LI><A NAME="tex2html221"
+  HREF="node206.html">GRBQuadExpr::size()</A>
+</UL>
+<LI><A NAME="tex2html222"
+  HREF="node207.html">GRBTempConstr</A>
+<LI><A NAME="tex2html223"
+  HREF="node208.html">GRBColumn</A>
+<UL>
+<LI><A NAME="tex2html224"
+  HREF="node209.html">GRBColumn()</A>
+<LI><A NAME="tex2html225"
+  HREF="node210.html">GRBColumn::addTerm()</A>
+<LI><A NAME="tex2html226"
+  HREF="node211.html">GRBColumn::addTerms()</A>
+<LI><A NAME="tex2html227"
+  HREF="node212.html">GRBColumn::clear()</A>
+<LI><A NAME="tex2html228"
+  HREF="node213.html">GRBColumn::getCoeff()</A>
+<LI><A NAME="tex2html229"
+  HREF="node214.html">GRBColumn::getConstr()</A>
+<LI><A NAME="tex2html230"
+  HREF="node215.html">GRBColumn::remove()</A>
+<LI><A NAME="tex2html231"
+  HREF="node216.html">GRBColumn::size()</A>
+</UL>
+<LI><A NAME="tex2html232"
+  HREF="node217.html">GRBCallback</A>
+<UL>
+<LI><A NAME="tex2html233"
+  HREF="node218.html">GRBCallback()</A>
+<LI><A NAME="tex2html234"
+  HREF="node219.html">GRBCallback::abort()</A>
+<LI><A NAME="tex2html235"
+  HREF="node220.html">GRBCallback::addCut()</A>
+<LI><A NAME="tex2html236"
+  HREF="node221.html">GRBCallback::addLazy()</A>
+<LI><A NAME="tex2html237"
+  HREF="node222.html">GRBCallback::getDoubleInfo()</A>
+<LI><A NAME="tex2html238"
+  HREF="node223.html">GRBCallback::getIntInfo()</A>
+<LI><A NAME="tex2html239"
+  HREF="node224.html">GRBCallback::getNodeRel()</A>
+<LI><A NAME="tex2html240"
+  HREF="node225.html">GRBCallback::getSolution()</A>
+<LI><A NAME="tex2html241"
+  HREF="node226.html">GRBCallback::getStringInfo()</A>
+<LI><A NAME="tex2html242"
+  HREF="node227.html">GRBCallback::setSolution()</A>
+</UL>
+<LI><A NAME="tex2html243"
+  HREF="node228.html">GRBException</A>
+<UL>
+<LI><A NAME="tex2html244"
+  HREF="node229.html">GRBException()</A>
+<LI><A NAME="tex2html245"
+  HREF="node230.html">GRBException::getErrorCode()</A>
+<LI><A NAME="tex2html246"
+  HREF="node231.html">GRBException::getMessage()</A>
+</UL>
+<LI><A NAME="tex2html247"
+  HREF="node232.html">Non-Member Functions</A>
+<UL>
+<LI><A NAME="tex2html248"
+  HREF="node233.html">operator==</A>
+<LI><A NAME="tex2html249"
+  HREF="node234.html">operator&lt;=</A>
+<LI><A NAME="tex2html250"
+  HREF="node235.html">operator&gt;=</A>
+<LI><A NAME="tex2html251"
+  HREF="node236.html">operator+</A>
+<LI><A NAME="tex2html252"
+  HREF="node237.html">operator-</A>
+<LI><A NAME="tex2html253"
+  HREF="node238.html">operator*</A>
+<LI><A NAME="tex2html254"
+  HREF="node239.html">operator/</A>
+</UL>
+<LI><A NAME="tex2html255"
+  HREF="node240.html">Attribute Enums</A>
+<UL>
+<LI><A NAME="tex2html256"
+  HREF="node241.html">GRB_CharAttr</A>
+<LI><A NAME="tex2html257"
+  HREF="node242.html">GRB_DoubleAttr</A>
+<LI><A NAME="tex2html258"
+  HREF="node243.html">GRB_IntAttr</A>
+<LI><A NAME="tex2html259"
+  HREF="node244.html">GRB_StringAttr</A>
+</UL>
+<LI><A NAME="tex2html260"
+  HREF="node245.html">Parameter Enums</A>
+<UL>
+<LI><A NAME="tex2html261"
+  HREF="node246.html">GRB_DoubleParam</A>
+<LI><A NAME="tex2html262"
+  HREF="node247.html">GRB_IntParam</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html263"
+  HREF="node248.html">Java Reference Manual</A>
+<UL>
+<LI><A NAME="tex2html264"
+  HREF="node249.html">GRBEnv</A>
+<UL>
+<LI><A NAME="tex2html265"
+  HREF="node250.html">GRBEnv()</A>
+<LI><A NAME="tex2html266"
+  HREF="node251.html">GRBEnv.dispose()</A>
+<LI><A NAME="tex2html267"
+  HREF="node252.html">GRBEnv.get()</A>
+<LI><A NAME="tex2html268"
+  HREF="node253.html">GRBEnv.getErrorMsg()</A>
+<LI><A NAME="tex2html269"
+  HREF="node254.html">GRBEnv.getParamInfo()</A>
+<LI><A NAME="tex2html270"
+  HREF="node255.html">GRBEnv.message()</A>
+<LI><A NAME="tex2html271"
+  HREF="node256.html">GRBEnv.readParams()</A>
+<LI><A NAME="tex2html272"
+  HREF="node257.html">GRBEnv.release()</A>
+<LI><A NAME="tex2html273"
+  HREF="node258.html">GRBEnv.resetParams()</A>
+<LI><A NAME="tex2html274"
+  HREF="node259.html">GRBEnv.set()</A>
+<LI><A NAME="tex2html275"
+  HREF="node260.html">GRBEnv.writeParams()</A>
+</UL>
+<LI><A NAME="tex2html276"
+  HREF="node261.html">GRBModel</A>
+<UL>
+<LI><A NAME="tex2html277"
+  HREF="node262.html">GRBModel()</A>
+<LI><A NAME="tex2html278"
+  HREF="node263.html">GRBModel.addConstr()</A>
+<LI><A NAME="tex2html279"
+  HREF="node264.html">GRBModel.addConstrs()</A>
+<LI><A NAME="tex2html280"
+  HREF="node265.html">GRBModel.addQConstr()</A>
+<LI><A NAME="tex2html281"
+  HREF="node266.html">GRBModel.addRange()</A>
+<LI><A NAME="tex2html282"
+  HREF="node267.html">GRBModel.addRanges()</A>
+<LI><A NAME="tex2html283"
+  HREF="node268.html">GRBModel.addSOS()</A>
+<LI><A NAME="tex2html284"
+  HREF="node269.html">GRBModel.addVar()</A>
+<LI><A NAME="tex2html285"
+  HREF="node270.html">GRBModel.addVars()</A>
+<LI><A NAME="tex2html286"
+  HREF="node271.html">GRBModel.chgCoeff()</A>
+<LI><A NAME="tex2html287"
+  HREF="node272.html">GRBModel.chgCoeffs()</A>
+<LI><A NAME="tex2html288"
+  HREF="node273.html">GRBModel.computeIIS()</A>
+<LI><A NAME="tex2html289"
+  HREF="node274.html">GRBModel.discardConcurrentEnvs()</A>
+<LI><A NAME="tex2html290"
+  HREF="node275.html">GRBModel.dispose()</A>
+<LI><A NAME="tex2html291"
+  HREF="node276.html">GRBModel.feasRelax()</A>
+<LI><A NAME="tex2html292"
+  HREF="node277.html">GRBModel.fixedModel()</A>
+<LI><A NAME="tex2html293"
+  HREF="node278.html">GRBModel.get()</A>
+<LI><A NAME="tex2html294"
+  HREF="node279.html">GRBModel.getCoeff()</A>
+<LI><A NAME="tex2html295"
+  HREF="node280.html">GRBModel.getCol()</A>
+<LI><A NAME="tex2html296"
+  HREF="node281.html">GRBModel.getConcurrentEnv()</A>
+<LI><A NAME="tex2html297"
+  HREF="node282.html">GRBModel.getConstrByName()</A>
+<LI><A NAME="tex2html298"
+  HREF="node283.html">GRBModel.getConstrs()</A>
+<LI><A NAME="tex2html299"
+  HREF="node284.html">GRBModel.getEnv()</A>
+<LI><A NAME="tex2html300"
+  HREF="node285.html">GRBModel.getObjective()</A>
+<LI><A NAME="tex2html301"
+  HREF="node286.html">GRBModel.getQConstr()</A>
+<LI><A NAME="tex2html302"
+  HREF="node287.html">GRBModel.getQConstrs()</A>
+<LI><A NAME="tex2html303"
+  HREF="node288.html">GRBModel.getRow()</A>
+<LI><A NAME="tex2html304"
+  HREF="node289.html">GRBModel.getSOS()</A>
+<LI><A NAME="tex2html305"
+  HREF="node290.html">GRBModel.getSOSs()</A>
+<LI><A NAME="tex2html306"
+  HREF="node291.html">GRBModel.getVarByName()</A>
+<LI><A NAME="tex2html307"
+  HREF="node292.html">GRBModel.getVars()</A>
+<LI><A NAME="tex2html308"
+  HREF="node293.html">GRBModel.optimize()</A>
+<LI><A NAME="tex2html309"
+  HREF="node294.html">GRBModel.presolve()</A>
+<LI><A NAME="tex2html310"
+  HREF="node295.html">GRBModel.read()</A>
+<LI><A NAME="tex2html311"
+  HREF="node296.html">GRBModel.remove()</A>
+<LI><A NAME="tex2html312"
+  HREF="node297.html">GRBModel.reset()</A>
+<LI><A NAME="tex2html313"
+  HREF="node298.html">GRBModel.setCallback()</A>
+<LI><A NAME="tex2html314"
+  HREF="node299.html">GRBModel.set()</A>
+<LI><A NAME="tex2html315"
+  HREF="node300.html">GRBModel.setObjective()</A>
+<LI><A NAME="tex2html316"
+  HREF="node301.html">GRBModel.terminate()</A>
+<LI><A NAME="tex2html317"
+  HREF="node302.html">GRBModel.update()</A>
+<LI><A NAME="tex2html318"
+  HREF="node303.html">GRBModel.write()</A>
+</UL>
+<LI><A NAME="tex2html319"
+  HREF="node304.html">GRBVar</A>
+<UL>
+<LI><A NAME="tex2html320"
+  HREF="node305.html">GRBVar.get()</A>
+<LI><A NAME="tex2html321"
+  HREF="node306.html">GRBVar.sameAs()</A>
+<LI><A NAME="tex2html322"
+  HREF="node307.html">GRBVar.set()</A>
+</UL>
+<LI><A NAME="tex2html323"
+  HREF="node308.html">GRBConstr</A>
+<UL>
+<LI><A NAME="tex2html324"
+  HREF="node309.html">GRBConstr.get()</A>
+<LI><A NAME="tex2html325"
+  HREF="node310.html">GRBConstr.sameAs()</A>
+<LI><A NAME="tex2html326"
+  HREF="node311.html">GRBConstr.set()</A>
+</UL>
+<LI><A NAME="tex2html327"
+  HREF="node312.html">GRBQConstr</A>
+<UL>
+<LI><A NAME="tex2html328"
+  HREF="node313.html">GRBQConstr.get()</A>
+<LI><A NAME="tex2html329"
+  HREF="node314.html">GRBQConstr.set()</A>
+</UL>
+<LI><A NAME="tex2html330"
+  HREF="node315.html">GRBSOS</A>
+<UL>
+<LI><A NAME="tex2html331"
+  HREF="node316.html">GRBSOS.get()</A>
+</UL>
+<LI><A NAME="tex2html332"
+  HREF="node317.html">GRBExpr</A>
+<UL>
+<LI><A NAME="tex2html333"
+  HREF="node318.html">GRBExpr.getValue()</A>
+</UL>
+<LI><A NAME="tex2html334"
+  HREF="node319.html">GRBLinExpr</A>
+<UL>
+<LI><A NAME="tex2html335"
+  HREF="node320.html">GRBLinExpr()</A>
+<LI><A NAME="tex2html336"
+  HREF="node321.html">GRBLinExpr.add()</A>
+<LI><A NAME="tex2html337"
+  HREF="node322.html">GRBLinExpr.addConstant()</A>
+<LI><A NAME="tex2html338"
+  HREF="node323.html">GRBLinExpr.addTerm()</A>
+<LI><A NAME="tex2html339"
+  HREF="node324.html">GRBLinExpr.addTerms()</A>
+<LI><A NAME="tex2html340"
+  HREF="node325.html">GRBLinExpr.clear()</A>
+<LI><A NAME="tex2html341"
+  HREF="node326.html">GRBLinExpr.getConstant()</A>
+<LI><A NAME="tex2html342"
+  HREF="node327.html">GRBLinExpr.getCoeff()</A>
+<LI><A NAME="tex2html343"
+  HREF="node328.html">GRBLinExpr.getValue()</A>
+<LI><A NAME="tex2html344"
+  HREF="node329.html">GRBLinExpr.getVar()</A>
+<LI><A NAME="tex2html345"
+  HREF="node330.html">GRBLinExpr.multAdd()</A>
+<LI><A NAME="tex2html346"
+  HREF="node331.html">GRBLinExpr.remove()</A>
+<LI><A NAME="tex2html347"
+  HREF="node332.html">GRBLinExpr.size()</A>
+</UL>
+<LI><A NAME="tex2html348"
+  HREF="node333.html">GRBQuadExpr</A>
+<UL>
+<LI><A NAME="tex2html349"
+  HREF="node334.html">GRBQuadExpr()</A>
+<LI><A NAME="tex2html350"
+  HREF="node335.html">GRBQuadExpr.add()</A>
+<LI><A NAME="tex2html351"
+  HREF="node336.html">GRBQuadExpr.addConstant()</A>
+<LI><A NAME="tex2html352"
+  HREF="node337.html">GRBQuadExpr.addTerm()</A>
+<LI><A NAME="tex2html353"
+  HREF="node338.html">GRBQuadExpr.addTerms()</A>
+<LI><A NAME="tex2html354"
+  HREF="node339.html">GRBQuadExpr.clear()</A>
+<LI><A NAME="tex2html355"
+  HREF="node340.html">GRBQuadExpr.getCoeff()</A>
+<LI><A NAME="tex2html356"
+  HREF="node341.html">GRBQuadExpr.getLinExpr()</A>
+<LI><A NAME="tex2html357"
+  HREF="node342.html">GRBQuadExpr.getValue()</A>
+<LI><A NAME="tex2html358"
+  HREF="node343.html">GRBQuadExpr.getVar1()</A>
+<LI><A NAME="tex2html359"
+  HREF="node344.html">GRBQuadExpr.getVar2()</A>
+<LI><A NAME="tex2html360"
+  HREF="node345.html">GRBQuadExpr.multAdd()</A>
+<LI><A NAME="tex2html361"
+  HREF="node346.html">GRBQuadExpr.remove()</A>
+<LI><A NAME="tex2html362"
+  HREF="node347.html">GRBQuadExpr.size()</A>
+</UL>
+<LI><A NAME="tex2html363"
+  HREF="node348.html">GRBColumn</A>
+<UL>
+<LI><A NAME="tex2html364"
+  HREF="node349.html">GRBColumn()</A>
+<LI><A NAME="tex2html365"
+  HREF="node350.html">GRBColumn.addTerm()</A>
+<LI><A NAME="tex2html366"
+  HREF="node351.html">GRBColumn.addTerms()</A>
+<LI><A NAME="tex2html367"
+  HREF="node352.html">GRBColumn.clear()</A>
+<LI><A NAME="tex2html368"
+  HREF="node353.html">GRBColumn.getCoeff()</A>
+<LI><A NAME="tex2html369"
+  HREF="node354.html">GRBColumn.getConstr()</A>
+<LI><A NAME="tex2html370"
+  HREF="node355.html">GRBColumn.remove()</A>
+<LI><A NAME="tex2html371"
+  HREF="node356.html">GRBColumn.size()</A>
+</UL>
+<LI><A NAME="tex2html372"
+  HREF="node357.html">GRBCallback</A>
+<UL>
+<LI><A NAME="tex2html373"
+  HREF="node358.html">GRBCallback()</A>
+<LI><A NAME="tex2html374"
+  HREF="node359.html">GRBCallback.abort()</A>
+<LI><A NAME="tex2html375"
+  HREF="node360.html">GRBCallback.addCut()</A>
+<LI><A NAME="tex2html376"
+  HREF="node361.html">GRBCallback.addLazy()</A>
+<LI><A NAME="tex2html377"
+  HREF="node362.html">GRBCallback.getDoubleInfo()</A>
+<LI><A NAME="tex2html378"
+  HREF="node363.html">GRBCallback.getIntInfo()</A>
+<LI><A NAME="tex2html379"
+  HREF="node364.html">GRBCallback.getNodeRel()</A>
+<LI><A NAME="tex2html380"
+  HREF="node365.html">GRBCallback.getSolution()</A>
+<LI><A NAME="tex2html381"
+  HREF="node366.html">GRBCallback.getStringInfo()</A>
+<LI><A NAME="tex2html382"
+  HREF="node367.html">GRBCallback.setSolution()</A>
+</UL>
+<LI><A NAME="tex2html383"
+  HREF="node368.html">GRBException</A>
+<UL>
+<LI><A NAME="tex2html384"
+  HREF="node369.html">GRBException()</A>
+<LI><A NAME="tex2html385"
+  HREF="node370.html">GRBException.getErrorCode()</A>
+</UL>
+<LI><A NAME="tex2html386"
+  HREF="node371.html">GRB</A>
+<UL>
+<LI><A NAME="tex2html387"
+  HREF="node372.html">Constants</A>
+<LI><A NAME="tex2html388"
+  HREF="node373.html">GRB.CharAttr</A>
+<LI><A NAME="tex2html389"
+  HREF="node374.html">GRB.DoubleAttr</A>
+<LI><A NAME="tex2html390"
+  HREF="node375.html">GRB.DoubleParam</A>
+<LI><A NAME="tex2html391"
+  HREF="node376.html">GRB.IntAttr</A>
+<LI><A NAME="tex2html392"
+  HREF="node377.html">GRB.IntParam</A>
+<LI><A NAME="tex2html393"
+  HREF="node378.html">GRB.StringAttr</A>
+<LI><A NAME="tex2html394"
+  HREF="node379.html">GRB.StringParam</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html395"
+  HREF="node380.html">.NET Reference Manual</A>
+<UL>
+<LI><A NAME="tex2html396"
+  HREF="node381.html">GRBEnv</A>
+<UL>
+<LI><A NAME="tex2html397"
+  HREF="node382.html">GRBEnv()</A>
+<LI><A NAME="tex2html398"
+  HREF="node383.html">GRBEnv.Dispose()</A>
+<LI><A NAME="tex2html399"
+  HREF="node384.html">GRBEnv.ErrorMsg</A>
+<LI><A NAME="tex2html400"
+  HREF="node385.html">GRBEnv.Get()</A>
+<LI><A NAME="tex2html401"
+  HREF="node386.html">GRBEnv.GetParamInfo()</A>
+<LI><A NAME="tex2html402"
+  HREF="node387.html">GRBEnv.Message()</A>
+<LI><A NAME="tex2html403"
+  HREF="node388.html">GRBEnv.ReadParams()</A>
+<LI><A NAME="tex2html404"
+  HREF="node389.html">GRBEnv.Release()</A>
+<LI><A NAME="tex2html405"
+  HREF="node390.html">GRBEnv.ResetParams()</A>
+<LI><A NAME="tex2html406"
+  HREF="node391.html">GRBEnv.Set()</A>
+<LI><A NAME="tex2html407"
+  HREF="node392.html">GRBEnv.WriteParams()</A>
+</UL>
+<LI><A NAME="tex2html408"
+  HREF="node393.html">GRBModel</A>
+<UL>
+<LI><A NAME="tex2html409"
+  HREF="node394.html">GRBModel()</A>
+<LI><A NAME="tex2html410"
+  HREF="node395.html">GRBModel.AddConstr()</A>
+<LI><A NAME="tex2html411"
+  HREF="node396.html">GRBModel.AddConstrs()</A>
+<LI><A NAME="tex2html412"
+  HREF="node397.html">GRBModel.AddQConstr()</A>
+<LI><A NAME="tex2html413"
+  HREF="node398.html">GRBModel.AddRange()</A>
+<LI><A NAME="tex2html414"
+  HREF="node399.html">GRBModel.AddRanges()</A>
+<LI><A NAME="tex2html415"
+  HREF="node400.html">GRBModel.AddSOS()</A>
+<LI><A NAME="tex2html416"
+  HREF="node401.html">GRBModel.AddVar()</A>
+<LI><A NAME="tex2html417"
+  HREF="node402.html">GRBModel.AddVars()</A>
+<LI><A NAME="tex2html418"
+  HREF="node403.html">GRBModel.ChgCoeff()</A>
+<LI><A NAME="tex2html419"
+  HREF="node404.html">GRBModel.ChgCoeffs()</A>
+<LI><A NAME="tex2html420"
+  HREF="node405.html">GRBModel.ComputeIIS()</A>
+<LI><A NAME="tex2html421"
+  HREF="node406.html">GRBModel.DiscardConcurrentEnvs()</A>
+<LI><A NAME="tex2html422"
+  HREF="node407.html">GRBModel.Dispose()</A>
+<LI><A NAME="tex2html423"
+  HREF="node408.html">GRBModel.FeasRelax()</A>
+<LI><A NAME="tex2html424"
+  HREF="node409.html">GRBModel.FixedModel()</A>
+<LI><A NAME="tex2html425"
+  HREF="node410.html">GRBModel.Get()</A>
+<LI><A NAME="tex2html426"
+  HREF="node411.html">GRBModel.GetCoeff()</A>
+<LI><A NAME="tex2html427"
+  HREF="node412.html">GRBModel.GetCol()</A>
+<LI><A NAME="tex2html428"
+  HREF="node413.html">GRBModel.GetConcurrentEnv()</A>
+<LI><A NAME="tex2html429"
+  HREF="node414.html">GRBModel.GetConstrByName()</A>
+<LI><A NAME="tex2html430"
+  HREF="node415.html">GRBModel.GetConstrs()</A>
+<LI><A NAME="tex2html431"
+  HREF="node416.html">GRBModel.GetEnv()</A>
+<LI><A NAME="tex2html432"
+  HREF="node417.html">GRBModel.GetObjective()</A>
+<LI><A NAME="tex2html433"
+  HREF="node418.html">GRBModel.GetQConstr()</A>
+<LI><A NAME="tex2html434"
+  HREF="node419.html">GRBModel.GetQConstrs()</A>
+<LI><A NAME="tex2html435"
+  HREF="node420.html">GRBModel.GetRow()</A>
+<LI><A NAME="tex2html436"
+  HREF="node421.html">GRBModel.GetSOS()</A>
+<LI><A NAME="tex2html437"
+  HREF="node422.html">GRBModel.GetSOSs()</A>
+<LI><A NAME="tex2html438"
+  HREF="node423.html">GRBModel.GetVarByName()</A>
+<LI><A NAME="tex2html439"
+  HREF="node424.html">GRBModel.GetVars()</A>
+<LI><A NAME="tex2html440"
+  HREF="node425.html">GRBModel.Optimize()</A>
+<LI><A NAME="tex2html441"
+  HREF="node426.html">GRBModel.Presolve()</A>
+<LI><A NAME="tex2html442"
+  HREF="node427.html">GRBModel.Read()</A>
+<LI><A NAME="tex2html443"
+  HREF="node428.html">GRBModel.Remove()</A>
+<LI><A NAME="tex2html444"
+  HREF="node429.html">GRBModel.Reset()</A>
+<LI><A NAME="tex2html445"
+  HREF="node430.html">GRBModel.SetCallback()</A>
+<LI><A NAME="tex2html446"
+  HREF="node431.html">GRBModel.Set()</A>
+<LI><A NAME="tex2html447"
+  HREF="node432.html">GRBModel.SetObjective()</A>
+<LI><A NAME="tex2html448"
+  HREF="node433.html">GRBModel.Terminate()</A>
+<LI><A NAME="tex2html449"
+  HREF="node434.html">GRBModel.Update()</A>
+<LI><A NAME="tex2html450"
+  HREF="node435.html">GRBModel.Write()</A>
+</UL>
+<LI><A NAME="tex2html451"
+  HREF="node436.html">GRBVar</A>
+<UL>
+<LI><A NAME="tex2html452"
+  HREF="node437.html">GRBVar.Get()</A>
+<LI><A NAME="tex2html453"
+  HREF="node438.html">GRBVar.SameAs()</A>
+<LI><A NAME="tex2html454"
+  HREF="node439.html">GRBVar.Set()</A>
+</UL>
+<LI><A NAME="tex2html455"
+  HREF="node440.html">GRBConstr</A>
+<UL>
+<LI><A NAME="tex2html456"
+  HREF="node441.html">GRBConstr.Get()</A>
+<LI><A NAME="tex2html457"
+  HREF="node442.html">GRBConstr.SameAs()</A>
+<LI><A NAME="tex2html458"
+  HREF="node443.html">GRBConstr.Set()</A>
+</UL>
+<LI><A NAME="tex2html459"
+  HREF="node444.html">GRBQConstr</A>
+<UL>
+<LI><A NAME="tex2html460"
+  HREF="node445.html">GRBQConstr.Get()</A>
+<LI><A NAME="tex2html461"
+  HREF="node446.html">GRBQConstr.Set()</A>
+</UL>
+<LI><A NAME="tex2html462"
+  HREF="node447.html">GRBSOS</A>
+<UL>
+<LI><A NAME="tex2html463"
+  HREF="node448.html">GRBSOS.Get()</A>
+</UL>
+<LI><A NAME="tex2html464"
+  HREF="node449.html">GRBExpr</A>
+<UL>
+<LI><A NAME="tex2html465"
+  HREF="node450.html">GRBExpr.Value</A>
+</UL>
+<LI><A NAME="tex2html466"
+  HREF="node451.html">GRBLinExpr</A>
+<UL>
+<LI><A NAME="tex2html467"
+  HREF="node452.html">GRBLinExpr()</A>
+<LI><A NAME="tex2html468"
+  HREF="node453.html">GRBLinExpr.Add()</A>
+<LI><A NAME="tex2html469"
+  HREF="node454.html">GRBLinExpr.AddConstant()</A>
+<LI><A NAME="tex2html470"
+  HREF="node455.html">GRBLinExpr.AddTerm()</A>
+<LI><A NAME="tex2html471"
+  HREF="node456.html">GRBLinExpr.AddTerms()</A>
+<LI><A NAME="tex2html472"
+  HREF="node457.html">GRBLinExpr.Clear()</A>
+<LI><A NAME="tex2html473"
+  HREF="node458.html">GRBLinExpr.Constant</A>
+<LI><A NAME="tex2html474"
+  HREF="node459.html">GRBLinExpr.GetCoeff()</A>
+<LI><A NAME="tex2html475"
+  HREF="node460.html">GRBLinExpr.GetVar()</A>
+<LI><A NAME="tex2html476"
+  HREF="node461.html">GRBLinExpr.MultAdd()</A>
+<LI><A NAME="tex2html477"
+  HREF="node462.html">GRBLinExpr.Remove()</A>
+<LI><A NAME="tex2html478"
+  HREF="node463.html">GRBLinExpr.Size</A>
+<LI><A NAME="tex2html479"
+  HREF="node464.html">GRBLinExpr.Value</A>
+</UL>
+<LI><A NAME="tex2html480"
+  HREF="node465.html">GRBQuadExpr</A>
+<UL>
+<LI><A NAME="tex2html481"
+  HREF="node466.html">GRBQuadExpr()</A>
+<LI><A NAME="tex2html482"
+  HREF="node467.html">GRBQuadExpr.Add()</A>
+<LI><A NAME="tex2html483"
+  HREF="node468.html">GRBQuadExpr.AddConstant()</A>
+<LI><A NAME="tex2html484"
+  HREF="node469.html">GRBQuadExpr.AddTerm()</A>
+<LI><A NAME="tex2html485"
+  HREF="node470.html">GRBQuadExpr.AddTerms()</A>
+<LI><A NAME="tex2html486"
+  HREF="node471.html">GRBQuadExpr.Clear()</A>
+<LI><A NAME="tex2html487"
+  HREF="node472.html">GRBQuadExpr.GetCoeff()</A>
+<LI><A NAME="tex2html488"
+  HREF="node473.html">GRBQuadExpr.GetVar1()</A>
+<LI><A NAME="tex2html489"
+  HREF="node474.html">GRBQuadExpr.GetVar2()</A>
+<LI><A NAME="tex2html490"
+  HREF="node475.html">GRBQuadExpr.LinExpr()</A>
+<LI><A NAME="tex2html491"
+  HREF="node476.html">GRBQuadExpr.MultAdd()</A>
+<LI><A NAME="tex2html492"
+  HREF="node477.html">GRBQuadExpr.Remove()</A>
+<LI><A NAME="tex2html493"
+  HREF="node478.html">GRBQuadExpr.Size</A>
+<LI><A NAME="tex2html494"
+  HREF="node479.html">GRBQuadExpr.Value</A>
+</UL>
+<LI><A NAME="tex2html495"
+  HREF="node480.html">GRBTempConstr</A>
+<LI><A NAME="tex2html496"
+  HREF="node481.html">GRBColumn</A>
+<UL>
+<LI><A NAME="tex2html497"
+  HREF="node482.html">GRBColumn()</A>
+<LI><A NAME="tex2html498"
+  HREF="node483.html">GRBColumn.AddTerm()</A>
+<LI><A NAME="tex2html499"
+  HREF="node484.html">GRBColumn.AddTerms()</A>
+<LI><A NAME="tex2html500"
+  HREF="node485.html">GRBColumn.Clear()</A>
+<LI><A NAME="tex2html501"
+  HREF="node486.html">GRBColumn.GetCoeff()</A>
+<LI><A NAME="tex2html502"
+  HREF="node487.html">GRBColumn.GetConstr()</A>
+<LI><A NAME="tex2html503"
+  HREF="node488.html">GRBColumn.Remove()</A>
+<LI><A NAME="tex2html504"
+  HREF="node489.html">GRBColumn.Size</A>
+</UL>
+<LI><A NAME="tex2html505"
+  HREF="node490.html">Overloaded Operators</A>
+<UL>
+<LI><A NAME="tex2html506"
+  HREF="node491.html">operator &lt;=</A>
+<LI><A NAME="tex2html507"
+  HREF="node492.html">operator &gt;=</A>
+<LI><A NAME="tex2html508"
+  HREF="node493.html">operator ==</A>
+<LI><A NAME="tex2html509"
+  HREF="node494.html">operator +</A>
+<LI><A NAME="tex2html510"
+  HREF="node495.html">operator -</A>
+<LI><A NAME="tex2html511"
+  HREF="node496.html">operator *</A>
+<LI><A NAME="tex2html512"
+  HREF="node497.html">operator /</A>
+<LI><A NAME="tex2html513"
+  HREF="node498.html">implicit cast</A>
+</UL>
+<LI><A NAME="tex2html514"
+  HREF="node499.html">GRBCallback</A>
+<UL>
+<LI><A NAME="tex2html515"
+  HREF="node500.html">GRBCallback()</A>
+<LI><A NAME="tex2html516"
+  HREF="node501.html">GRBCallback.Abort()</A>
+<LI><A NAME="tex2html517"
+  HREF="node502.html">GRBCallback.AddCut()</A>
+<LI><A NAME="tex2html518"
+  HREF="node503.html">GRBCallback.AddLazy()</A>
+<LI><A NAME="tex2html519"
+  HREF="node504.html">GRBCallback.GetDoubleInfo()</A>
+<LI><A NAME="tex2html520"
+  HREF="node505.html">GRBCallback.GetIntInfo()</A>
+<LI><A NAME="tex2html521"
+  HREF="node506.html">GRBCallback.GetNodeRel()</A>
+<LI><A NAME="tex2html522"
+  HREF="node507.html">GRBCallback.GetSolution()</A>
+<LI><A NAME="tex2html523"
+  HREF="node508.html">GRBCallback.GetStringInfo()</A>
+<LI><A NAME="tex2html524"
+  HREF="node509.html">GRBCallback.SetSolution()</A>
+</UL>
+<LI><A NAME="tex2html525"
+  HREF="node510.html">GRBException</A>
+<UL>
+<LI><A NAME="tex2html526"
+  HREF="node511.html">GRBException()</A>
+<LI><A NAME="tex2html527"
+  HREF="node512.html">GRBException.ErrorCode</A>
+</UL>
+<LI><A NAME="tex2html528"
+  HREF="node513.html">GRB</A>
+<UL>
+<LI><A NAME="tex2html529"
+  HREF="node514.html">Constants</A>
+<LI><A NAME="tex2html530"
+  HREF="node515.html">GRB.CharAttr</A>
+<LI><A NAME="tex2html531"
+  HREF="node516.html">GRB.DoubleAttr</A>
+<LI><A NAME="tex2html532"
+  HREF="node517.html">GRB.DoubleParam</A>
+<LI><A NAME="tex2html533"
+  HREF="node518.html">GRB.IntAttr</A>
+<LI><A NAME="tex2html534"
+  HREF="node519.html">GRB.IntParam</A>
+<LI><A NAME="tex2html535"
+  HREF="node520.html">GRB.StringAttr</A>
+<LI><A NAME="tex2html536"
+  HREF="node521.html">GRB.StringParam</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html537"
+  HREF="node522.html">Python Reference Manual</A>
+<UL>
+<LI><A NAME="tex2html538"
+  HREF="node523.html">Global Functions</A>
+<UL>
+<LI><A NAME="tex2html539"
+  HREF="node524.html">models()</A>
+<LI><A NAME="tex2html540"
+  HREF="node525.html">multidict()</A>
+<LI><A NAME="tex2html541"
+  HREF="node526.html">paramHelp()</A>
+<LI><A NAME="tex2html542"
+  HREF="node527.html">quicksum()</A>
+<LI><A NAME="tex2html543"
+  HREF="node528.html">read()</A>
+<LI><A NAME="tex2html544"
+  HREF="node529.html">readParams()</A>
+<LI><A NAME="tex2html545"
+  HREF="node530.html">resetParams()</A>
+<LI><A NAME="tex2html546"
+  HREF="node531.html">setParam()</A>
+<LI><A NAME="tex2html547"
+  HREF="node532.html">system()</A>
+<LI><A NAME="tex2html548"
+  HREF="node533.html">writeParams()</A>
+</UL>
+<LI><A NAME="tex2html549"
+  HREF="node534.html">Model</A>
+<UL>
+<LI><A NAME="tex2html550"
+  HREF="node535.html">Model()</A>
+<LI><A NAME="tex2html551"
+  HREF="node536.html">Model.addConstr()</A>
+<LI><A NAME="tex2html552"
+  HREF="node537.html">Model.addQConstr()</A>
+<LI><A NAME="tex2html553"
+  HREF="node538.html">Model.addRange()</A>
+<LI><A NAME="tex2html554"
+  HREF="node539.html">Model.addSOS()</A>
+<LI><A NAME="tex2html555"
+  HREF="node540.html">Model.addVar()</A>
+<LI><A NAME="tex2html556"
+  HREF="node541.html">Model.chgCoeff()</A>
+<LI><A NAME="tex2html557"
+  HREF="node542.html">Model.computeIIS()</A>
+<LI><A NAME="tex2html558"
+  HREF="node543.html">Model.copy()</A>
+<LI><A NAME="tex2html559"
+  HREF="node544.html">Model.discardConcurrentEnvs()</A>
+<LI><A NAME="tex2html560"
+  HREF="node545.html">Model.feasRelaxS()</A>
+<LI><A NAME="tex2html561"
+  HREF="node546.html">Model.feasRelax()</A>
+<LI><A NAME="tex2html562"
+  HREF="node547.html">Model.fixed()</A>
+<LI><A NAME="tex2html563"
+  HREF="node548.html">Model.getAttr()</A>
+<LI><A NAME="tex2html564"
+  HREF="node549.html">Model.getCoeff()</A>
+<LI><A NAME="tex2html565"
+  HREF="node550.html">Model.getCol()</A>
+<LI><A NAME="tex2html566"
+  HREF="node551.html">Model.getConcurrentEnv()</A>
+<LI><A NAME="tex2html567"
+  HREF="node552.html">Model.getConstrByName()</A>
+<LI><A NAME="tex2html568"
+  HREF="node553.html">Model.getConstrs()</A>
+<LI><A NAME="tex2html569"
+  HREF="node554.html">Model.getObjective()</A>
+<LI><A NAME="tex2html570"
+  HREF="node555.html">Model.getQConstrs()</A>
+<LI><A NAME="tex2html571"
+  HREF="node556.html">Model.getParamInfo()</A>
+<LI><A NAME="tex2html572"
+  HREF="node557.html">Model.getQCRow()</A>
+<LI><A NAME="tex2html573"
+  HREF="node558.html">Model.getRow()</A>
+<LI><A NAME="tex2html574"
+  HREF="node559.html">Model.getSOS()</A>
+<LI><A NAME="tex2html575"
+  HREF="node560.html">Model.getVarByName()</A>
+<LI><A NAME="tex2html576"
+  HREF="node561.html">Model.getVars()</A>
+<LI><A NAME="tex2html577"
+  HREF="node562.html">Model.message()</A>
+<LI><A NAME="tex2html578"
+  HREF="node563.html">Model.optimize()</A>
+<LI><A NAME="tex2html579"
+  HREF="node564.html">Model.presolve()</A>
+<LI><A NAME="tex2html580"
+  HREF="node565.html">Model.printAttr()</A>
+<LI><A NAME="tex2html581"
+  HREF="node566.html">Model.printQuality()</A>
+<LI><A NAME="tex2html582"
+  HREF="node567.html">Model.printStats()</A>
+<LI><A NAME="tex2html583"
+  HREF="node568.html">Model.cbCut()</A>
+<LI><A NAME="tex2html584"
+  HREF="node569.html">Model.cbGet()</A>
+<LI><A NAME="tex2html585"
+  HREF="node570.html">Model.cbGetNodeRel()</A>
+<LI><A NAME="tex2html586"
+  HREF="node571.html">Model.cbGetSolution()</A>
+<LI><A NAME="tex2html587"
+  HREF="node572.html">Model.cbLazy()</A>
+<LI><A NAME="tex2html588"
+  HREF="node573.html">Model.cbSetSolution()</A>
+<LI><A NAME="tex2html589"
+  HREF="node574.html">Model.read()</A>
+<LI><A NAME="tex2html590"
+  HREF="node575.html">Model.relax()</A>
+<LI><A NAME="tex2html591"
+  HREF="node576.html">Model.remove()</A>
+<LI><A NAME="tex2html592"
+  HREF="node577.html">Model.reset()</A>
+<LI><A NAME="tex2html593"
+  HREF="node578.html">Model.setAttr()</A>
+<LI><A NAME="tex2html594"
+  HREF="node579.html">Model.setObjective()</A>
+<LI><A NAME="tex2html595"
+  HREF="node580.html">Model.setParam()</A>
+<LI><A NAME="tex2html596"
+  HREF="node581.html">Model.terminate()</A>
+<LI><A NAME="tex2html597"
+  HREF="node582.html">Model.update()</A>
+<LI><A NAME="tex2html598"
+  HREF="node583.html">Model.write()</A>
+</UL>
+<LI><A NAME="tex2html599"
+  HREF="node584.html">Var</A>
+<UL>
+<LI><A NAME="tex2html600"
+  HREF="node585.html">Var.getAttr()</A>
+<LI><A NAME="tex2html601"
+  HREF="node586.html">Var.sameAs()</A>
+<LI><A NAME="tex2html602"
+  HREF="node587.html">Var.setAttr()</A>
+</UL>
+<LI><A NAME="tex2html603"
+  HREF="node588.html">Constr</A>
+<UL>
+<LI><A NAME="tex2html604"
+  HREF="node589.html">Constr.getAttr()</A>
+<LI><A NAME="tex2html605"
+  HREF="node590.html">Constr.sameAs()</A>
+<LI><A NAME="tex2html606"
+  HREF="node591.html">Constr.setAttr()</A>
+</UL>
+<LI><A NAME="tex2html607"
+  HREF="node592.html">QConstr</A>
+<UL>
+<LI><A NAME="tex2html608"
+  HREF="node593.html">QConstr.getAttr()</A>
+<LI><A NAME="tex2html609"
+  HREF="node594.html">QConstr.setAttr()</A>
+</UL>
+<LI><A NAME="tex2html610"
+  HREF="node595.html">SOS</A>
+<UL>
+<LI><A NAME="tex2html611"
+  HREF="node596.html">SOS.getAttr()</A>
+</UL>
+<LI><A NAME="tex2html612"
+  HREF="node597.html">LinExpr</A>
+<UL>
+<LI><A NAME="tex2html613"
+  HREF="node598.html">LinExpr()</A>
+<LI><A NAME="tex2html614"
+  HREF="node599.html">LinExpr.add()</A>
+<LI><A NAME="tex2html615"
+  HREF="node600.html">LinExpr.addConstant()</A>
+<LI><A NAME="tex2html616"
+  HREF="node601.html">LinExpr.addTerms()</A>
+<LI><A NAME="tex2html617"
+  HREF="node602.html">LinExpr.clear()</A>
+<LI><A NAME="tex2html618"
+  HREF="node603.html">LinExpr.copy()</A>
+<LI><A NAME="tex2html619"
+  HREF="node604.html">LinExpr.getConstant()</A>
+<LI><A NAME="tex2html620"
+  HREF="node605.html">LinExpr.getCoeff()</A>
+<LI><A NAME="tex2html621"
+  HREF="node606.html">LinExpr.getValue()</A>
+<LI><A NAME="tex2html622"
+  HREF="node607.html">LinExpr.getVar()</A>
+<LI><A NAME="tex2html623"
+  HREF="node608.html">LinExpr.remove()</A>
+<LI><A NAME="tex2html624"
+  HREF="node609.html">LinExpr.size()</A>
+<LI><A NAME="tex2html625"
+  HREF="node610.html">LinExpr.__eq__()</A>
+<LI><A NAME="tex2html626"
+  HREF="node611.html">LinExpr.__le__()</A>
+<LI><A NAME="tex2html627"
+  HREF="node612.html">LinExpr.__ge__()</A>
+</UL>
+<LI><A NAME="tex2html628"
+  HREF="node613.html">QuadExpr</A>
+<UL>
+<LI><A NAME="tex2html629"
+  HREF="node614.html">QuadExpr()</A>
+<LI><A NAME="tex2html630"
+  HREF="node615.html">QuadExpr.add()</A>
+<LI><A NAME="tex2html631"
+  HREF="node616.html">QuadExpr.addConstant()</A>
+<LI><A NAME="tex2html632"
+  HREF="node617.html">QuadExpr.addTerms()</A>
+<LI><A NAME="tex2html633"
+  HREF="node618.html">QuadExpr.clear()</A>
+<LI><A NAME="tex2html634"
+  HREF="node619.html">QuadExpr.copy()</A>
+<LI><A NAME="tex2html635"
+  HREF="node620.html">QuadExpr.getCoeff()</A>
+<LI><A NAME="tex2html636"
+  HREF="node621.html">QuadExpr.getLinExpr()</A>
+<LI><A NAME="tex2html637"
+  HREF="node622.html">QuadExpr.getValue()</A>
+<LI><A NAME="tex2html638"
+  HREF="node623.html">QuadExpr.getVar1()</A>
+<LI><A NAME="tex2html639"
+  HREF="node624.html">QuadExpr.getVar2()</A>
+<LI><A NAME="tex2html640"
+  HREF="node625.html">QuadExpr.remove()</A>
+<LI><A NAME="tex2html641"
+  HREF="node626.html">QuadExpr.size()</A>
+<LI><A NAME="tex2html642"
+  HREF="node627.html">QuadExpr.__eq__()</A>
+<LI><A NAME="tex2html643"
+  HREF="node628.html">QuadExpr.__le__()</A>
+<LI><A NAME="tex2html644"
+  HREF="node629.html">QuadExpr.__ge__()</A>
+</UL>
+<LI><A NAME="tex2html645"
+  HREF="node630.html">TempConstr</A>
+<LI><A NAME="tex2html646"
+  HREF="node631.html">Column</A>
+<UL>
+<LI><A NAME="tex2html647"
+  HREF="node632.html">Column()</A>
+<LI><A NAME="tex2html648"
+  HREF="node633.html">Column.addTerms()</A>
+<LI><A NAME="tex2html649"
+  HREF="node634.html">Column.clear()</A>
+<LI><A NAME="tex2html650"
+  HREF="node635.html">Column.copy()</A>
+<LI><A NAME="tex2html651"
+  HREF="node636.html">Column.getCoeff()</A>
+<LI><A NAME="tex2html652"
+  HREF="node637.html">Column.getConstr()</A>
+<LI><A NAME="tex2html653"
+  HREF="node638.html">Column.remove()</A>
+<LI><A NAME="tex2html654"
+  HREF="node639.html">Column.size()</A>
+</UL>
+<LI><A NAME="tex2html655"
+  HREF="node640.html">Callbacks</A>
+<LI><A NAME="tex2html656"
+  HREF="node641.html">GurobiError</A>
+<LI><A NAME="tex2html657"
+  HREF="node642.html">GRB</A>
+<UL>
+<LI><A NAME="tex2html658"
+  HREF="node643.html">Constants</A>
+<LI><A NAME="tex2html659"
+  HREF="node644.html">GRB.attr</A>
+<LI><A NAME="tex2html660"
+  HREF="node645.html">GRB.param</A>
+</UL>
+<LI><A NAME="tex2html661"
+  HREF="node646.html">tuplelist</A>
+<UL>
+<LI><A NAME="tex2html662"
+  HREF="node647.html">tuplelist()</A>
+<LI><A NAME="tex2html663"
+  HREF="node648.html">tuplelist.select()</A>
+<LI><A NAME="tex2html664"
+  HREF="node649.html">tuplelist.clean()</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html665"
+  HREF="node650.html">MATLAB Reference Manual</A>
+<LI><A NAME="tex2html666"
+  HREF="node651.html">R Reference Manual</A>
+<LI><A NAME="tex2html667"
+  HREF="node652.html">Attributes</A>
+<LI><A NAME="tex2html668"
+  HREF="node653.html">Parameters</A>
+<UL>
+<LI><A NAME="tex2html669"
+  HREF="node654.html">Parameter Guidelines</A>
+<UL>
+<LI><A NAME="tex2html670"
+  HREF="node655.html">Continuous Models</A>
+<LI><A NAME="tex2html671"
+  HREF="node656.html">MIP Models</A>
+</UL>
+<LI><A NAME="tex2html672"
+  HREF="node657.html">Parameter Descriptions</A>
+<UL>
+<LI><A NAME="tex2html673"
+  HREF="node658.html">AggFill</A>
+<LI><A NAME="tex2html674"
+  HREF="node659.html">Aggregate</A>
+<LI><A NAME="tex2html675"
+  HREF="node660.html">BarConvTol</A>
+<LI><A NAME="tex2html676"
+  HREF="node661.html">BarCorrectors</A>
+<LI><A NAME="tex2html677"
+  HREF="node662.html">BarHomogeneous</A>
+<LI><A NAME="tex2html678"
+  HREF="node663.html">BarOrder</A>
+<LI><A NAME="tex2html679"
+  HREF="node664.html">BarQCPConvTol</A>
+<LI><A NAME="tex2html680"
+  HREF="node665.html">BarIterLimit</A>
+<LI><A NAME="tex2html681"
+  HREF="node666.html">BranchDir</A>
+<LI><A NAME="tex2html682"
+  HREF="node667.html">CliqueCuts</A>
+<LI><A NAME="tex2html683"
+  HREF="node668.html">CoverCuts</A>
+<LI><A NAME="tex2html684"
+  HREF="node669.html">Crossover</A>
+<LI><A NAME="tex2html685"
+  HREF="node670.html">CrossoverBasis</A>
+<LI><A NAME="tex2html686"
+  HREF="node671.html">Cutoff</A>
+<LI><A NAME="tex2html687"
+  HREF="node672.html">CutAggPasses</A>
+<LI><A NAME="tex2html688"
+  HREF="node673.html">CutPasses</A>
+<LI><A NAME="tex2html689"
+  HREF="node674.html">Cuts</A>
+<LI><A NAME="tex2html690"
+  HREF="node675.html">DisplayInterval</A>
+<LI><A NAME="tex2html691"
+  HREF="node676.html">DualReductions</A>
+<LI><A NAME="tex2html692"
+  HREF="node677.html">FeasibilityTol</A>
+<LI><A NAME="tex2html693"
+  HREF="node678.html">FeasRelaxBigM</A>
+<LI><A NAME="tex2html694"
+  HREF="node679.html">FlowCoverCuts</A>
+<LI><A NAME="tex2html695"
+  HREF="node680.html">FlowPathCuts</A>
+<LI><A NAME="tex2html696"
+  HREF="node681.html">GomoryPasses</A>
+<LI><A NAME="tex2html697"
+  HREF="node682.html">GUBCoverCuts</A>
+<LI><A NAME="tex2html698"
+  HREF="node683.html">Heuristics</A>
+<LI><A NAME="tex2html699"
+  HREF="node684.html">IISMethod</A>
+<LI><A NAME="tex2html700"
+  HREF="node685.html">ImpliedCuts</A>
+<LI><A NAME="tex2html701"
+  HREF="node686.html">ImproveStartGap</A>
+<LI><A NAME="tex2html702"
+  HREF="node687.html">ImproveStartTime</A>
+<LI><A NAME="tex2html703"
+  HREF="node688.html">InfUnbdInfo</A>
+<LI><A NAME="tex2html704"
+  HREF="node689.html">IntFeasTol</A>
+<LI><A NAME="tex2html705"
+  HREF="node690.html">IterationLimit</A>
+<LI><A NAME="tex2html706"
+  HREF="node691.html">LogFile</A>
+<LI><A NAME="tex2html707"
+  HREF="node692.html">LogToConsole</A>
+<LI><A NAME="tex2html708"
+  HREF="node693.html">MarkowitzTol</A>
+<LI><A NAME="tex2html709"
+  HREF="node694.html">Method</A>
+<LI><A NAME="tex2html710"
+  HREF="node695.html">MinRelNodes</A>
+<LI><A NAME="tex2html711"
+  HREF="node696.html">MIPFocus</A>
+<LI><A NAME="tex2html712"
+  HREF="node697.html">MIPGap</A>
+<LI><A NAME="tex2html713"
+  HREF="node698.html">MIPGapAbs</A>
+<LI><A NAME="tex2html714"
+  HREF="node699.html">MIPSepCuts</A>
+<LI><A NAME="tex2html715"
+  HREF="node700.html">MIQCPMethod</A>
+<LI><A NAME="tex2html716"
+  HREF="node701.html">MIRCuts</A>
+<LI><A NAME="tex2html717"
+  HREF="node702.html">ModKCuts</A>
+<LI><A NAME="tex2html718"
+  HREF="node703.html">NetworkCuts</A>
+<LI><A NAME="tex2html719"
+  HREF="node704.html">NodefileDir</A>
+<LI><A NAME="tex2html720"
+  HREF="node705.html">NodefileStart</A>
+<LI><A NAME="tex2html721"
+  HREF="node706.html">NodeLimit</A>
+<LI><A NAME="tex2html722"
+  HREF="node707.html">NodeMethod</A>
+<LI><A NAME="tex2html723"
+  HREF="node708.html">NormAdjust</A>
+<LI><A NAME="tex2html724"
+  HREF="node709.html">ObjScale</A>
+<LI><A NAME="tex2html725"
+  HREF="node710.html">OptimalityTol</A>
+<LI><A NAME="tex2html726"
+  HREF="node711.html">OutputFlag</A>
+<LI><A NAME="tex2html727"
+  HREF="node712.html">PerturbValue</A>
+<LI><A NAME="tex2html728"
+  HREF="node713.html">PreCrush</A>
+<LI><A NAME="tex2html729"
+  HREF="node714.html">PreDepRow</A>
+<LI><A NAME="tex2html730"
+  HREF="node715.html">PreDual</A>
+<LI><A NAME="tex2html731"
+  HREF="node716.html">PrePasses</A>
+<LI><A NAME="tex2html732"
+  HREF="node717.html">PreQLinearize</A>
+<LI><A NAME="tex2html733"
+  HREF="node718.html">Presolve</A>
+<LI><A NAME="tex2html734"
+  HREF="node719.html">PreSparsify</A>
+<LI><A NAME="tex2html735"
+  HREF="node720.html">PSDTol</A>
+<LI><A NAME="tex2html736"
+  HREF="node721.html">PumpPasses</A>
+<LI><A NAME="tex2html737"
+  HREF="node722.html">QCPDual</A>
+<LI><A NAME="tex2html738"
+  HREF="node723.html">Quad</A>
+<LI><A NAME="tex2html739"
+  HREF="node724.html">ResultFile</A>
+<LI><A NAME="tex2html740"
+  HREF="node725.html">RINS</A>
+<LI><A NAME="tex2html741"
+  HREF="node726.html">ScaleFlag</A>
+<LI><A NAME="tex2html742"
+  HREF="node727.html">Sifting</A>
+<LI><A NAME="tex2html743"
+  HREF="node728.html">SiftMethod</A>
+<LI><A NAME="tex2html744"
+  HREF="node729.html">SimplexPricing</A>
+<LI><A NAME="tex2html745"
+  HREF="node730.html">SolutionLimit</A>
+<LI><A NAME="tex2html746"
+  HREF="node731.html">SolutionNumber</A>
+<LI><A NAME="tex2html747"
+  HREF="node732.html">SubMIPCuts</A>
+<LI><A NAME="tex2html748"
+  HREF="node733.html">SubMIPNodes</A>
+<LI><A NAME="tex2html749"
+  HREF="node734.html">Symmetry</A>
+<LI><A NAME="tex2html750"
+  HREF="node735.html">Threads</A>
+<LI><A NAME="tex2html751"
+  HREF="node736.html">TimeLimit</A>
+<LI><A NAME="tex2html752"
+  HREF="node737.html">VarBranch</A>
+<LI><A NAME="tex2html753"
+  HREF="node738.html">ZeroHalfCuts</A>
+<LI><A NAME="tex2html754"
+  HREF="node739.html">ZeroObjNodes</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html755"
+  HREF="node740.html">Optimization Status Codes</A>
+<LI><A NAME="tex2html756"
+  HREF="node741.html">Callback Codes</A>
+<LI><A NAME="tex2html757"
+  HREF="node742.html">Error Codes</A>
+<LI><A NAME="tex2html758"
+  HREF="node743.html">File Formats</A>
+<UL>
+<LI><A NAME="tex2html759"
+  HREF="node744.html">MPS format</A>
+<LI><A NAME="tex2html760"
+  HREF="node745.html">REW format</A>
+<LI><A NAME="tex2html761"
+  HREF="node746.html">LP format</A>
+<LI><A NAME="tex2html762"
+  HREF="node747.html">RLP format</A>
+<LI><A NAME="tex2html763"
+  HREF="node748.html">ILP format</A>
+<LI><A NAME="tex2html764"
+  HREF="node749.html">MST format</A>
+<LI><A NAME="tex2html765"
+  HREF="node750.html">ORD format</A>
+<LI><A NAME="tex2html766"
+  HREF="node751.html">BAS format</A>
+<LI><A NAME="tex2html767"
+  HREF="node752.html">SOL format</A>
+<LI><A NAME="tex2html768"
+  HREF="node753.html">PRM format</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html769"
+  HREF="node754.html">Logging</A>
+<UL>
+<LI><A NAME="tex2html770"
+  HREF="node755.html">Simplex Logging</A>
+<LI><A NAME="tex2html771"
+  HREF="node756.html">Barrier Logging</A>
+<LI><A NAME="tex2html772"
+  HREF="node757.html">Sifting Logging</A>
+<LI><A NAME="tex2html773"
+  HREF="node758.html">MIP Logging</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html14"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html15"
+  HREF="node1.html">C Reference Manual</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

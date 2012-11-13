@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>tsp_cs.cs</TITLE>
+<META NAME="description" CONTENT="tsp_cs.cs">
+<META NAME="keywords" CONTENT="examples">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="examples.css">
+
+<LINK REL="next" HREF="node99.html">
+<LINK REL="previous" HREF="node97.html">
+<LINK REL="up" HREF="node80.html">
+<LINK REL="next" HREF="node99.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html1398"
+  HREF="node99.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1396"
+  HREF="node80.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1390"
+  HREF="node97.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1399"
+  HREF="node99.html">workforce1_cs.cs</A>
+<B> Up:</B> <A NAME="tex2html1397"
+  HREF="node80.html">C# Examples</A>
+<B> Previous:</B> <A NAME="tex2html1391"
+  HREF="node97.html">sudoku_cs.cs</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION000241800000000000000"></A>
+<A NAME="subsubsection:tsp_cs.cs"></A>
+<BR>
+tsp_cs.cs
+</H3>
+
+<P>
+<BR>
+<PRE  CLASS="verbatim">/* Copyright 2012, Gurobi Optimization, Inc. */
+
+// Solve a traveling salesman problem on a randomly generated set of
+// points using lazy constraints.   The base MIP model only includes
+// 'degree-2' constraints, requiring each node to have exactly
+// two incident edges.  Solutions to this model may contain subtours -
+// tours that don't visit every node.  The lazy constraint callback
+// adds new constraints to cut them off.
+
+using System;
+using Gurobi;
+
+class tsp_cs : GRBCallback {
+  private GRBVar[,] vars;
+
+  public tsp_cs(GRBVar[,] xvars) {
+    vars = xvars;
+  }
+
+  // Subtour elimination callback.  Whenever a feasible solution is found,
+  // find the subtour that contains node 0, and add a subtour elimination
+  // constraint if the tour doesn't visit every node.
+
+  protected override void Callback() {
+    try {
+      if (where == GRB.Callback.MIPSOL) {
+        // Found an integer feasible solution - does it visit every node?
+
+        int n = vars.GetLength(0);
+        int[] tour = findsubtour(GetSolution(vars));
+
+        if (tour.Length &lt; n) {
+          // Add subtour elimination constraint
+          GRBLinExpr expr = 0;
+          for (int i = 0; i &lt; tour.Length-1; i++)
+            expr += vars[tour[i], tour[i+1]];
+          expr += vars[tour[tour.Length-1], tour[0]];
+          AddLazy(expr &lt;= tour.Length-1);
+        }
+      }
+    } catch (GRBException e) {
+      Console.WriteLine("Error code: " + e.ErrorCode + ". " + e.Message);
+      Console.WriteLine(e.StackTrace);
+    }
+  }
+
+  // Given an integer-feasible solution 'sol', find the sub-tour that
+  // contains node 0.  Result is returned in 'tour', and length is
+  // returned in 'tourlenP'.
+
+  protected static int[] findsubtour(double[,] sol)
+  {
+    int n = sol.GetLength(0);
+    bool[] seen = new bool[n];
+    int[] tour = new int[n];
+    int i, index, node;
+
+    for (i = 0; i &lt; n; i++)
+      seen[i] = false;
+
+    node = 0;
+    for (index = 0; index &lt; n; index++) {
+      tour[index] = node;
+      seen[node] = true;
+      for (i = 0; i &lt; n; i++)
+        if (sol[node, i] &gt; 0.5 &amp;&amp; !seen[i]) {
+          node = i;
+          break;
+        }
+      if (i == n)
+        break;
+    }
+    System.Array.Resize(ref tour, index+1);
+
+    return tour;
+  }
+
+  // Euclidean distance between points 'i' and 'j'
+
+  protected static double distance(double[] x,
+                                   double[] y,
+                                   int      i,
+                                   int      j) {
+    double dx = x[i]-x[j];
+    double dy = y[i]-y[j];
+    return Math.Sqrt(dx*dx+dy*dy);
+  }
+
+  public static void Main(String[] args) {
+
+    if (args.Length &lt; 1) {
+      Console.WriteLine("Usage: tsp_cs nnodes");
+      return;
+    }
+
+    int n = Convert.ToInt32(args[0]);
+
+    try {
+      GRBEnv   env   = new GRBEnv();
+      GRBModel model = new GRBModel(env);
+
+      // Must disable dual reductions when using lazy constraints
+
+      model.GetEnv().Set(GRB.IntParam.DualReductions, 0);
+
+      double[] x = new double[n];
+      double[] y = new double[n];
+
+      Random r = new Random();
+      for (int i = 0; i &lt; n; i++) {
+        x[i] = r.NextDouble();
+        y[i] = r.NextDouble();
+      }
+
+      // Create variables
+
+      GRBVar[,] vars = new GRBVar[n, n];
+
+      for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt; n; j++)
+          vars[i, j] = model.AddVar(0.0, 1.0, distance(x, y, i, j),
+                                    GRB.BINARY, "x"+i+"_"+j);
+
+      // Integrate variables
+
+      model.Update();
+
+      // Degree-2 constraints
+
+      for (int i = 0; i &lt; n; i++) {
+        GRBLinExpr expr = 0;
+        for (int j = 0; j &lt; n; j++)
+          expr += vars[i, j];
+        model.AddConstr(expr == 2.0, "deg2_"+i);
+      }
+
+      // Forbid edge from node back to itself
+
+      for (int i = 0; i &lt; n; i++)
+        vars[i, i].Set(GRB.DoubleAttr.UB, 0.0);
+
+      // Symmetric TSP
+
+      for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt; i; j++)
+          model.AddConstr(vars[i, j]== vars[j, i], "");
+
+      model.SetCallback(new tsp_cs(vars));
+      model.Optimize();
+
+      if (model.Get(GRB.IntAttr.SolCount) &gt; 0) {
+        int[] tour = findsubtour(model.Get(GRB.DoubleAttr.X, vars));
+
+        Console.Write("Tour: ");
+        for (int i = 0; i &lt; tour.Length; i++)
+          Console.Write(tour[i] + " ");
+        Console.WriteLine();
+      }
+
+      // Dispose of model and environment
+      model.Dispose();
+      env.Dispose();
+
+    } catch (GRBException e) {
+      Console.WriteLine("Error code: " + e.ErrorCode + ". " + e.Message);
+      Console.WriteLine(e.StackTrace);
+    }
+  }
+}
+</PRE>
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1398"
+  HREF="node99.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1396"
+  HREF="node80.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1390"
+  HREF="node97.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1399"
+  HREF="node99.html">workforce1_cs.cs</A>
+<B> Up:</B> <A NAME="tex2html1397"
+  HREF="node80.html">C# Examples</A>
+<B> Previous:</B> <A NAME="tex2html1391"
+  HREF="node97.html">sudoku_cs.cs</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

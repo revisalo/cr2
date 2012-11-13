@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Academic validation troubleshooting</TITLE>
+<META NAME="description" CONTENT="Academic validation troubleshooting">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html85"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html83"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html77"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html86"
+  HREF="node4.html">Setting up a token</A>
+<B> Up:</B> <A NAME="tex2html84"
+  HREF="node2.html">How to Obtain and</A>
+<B> Previous:</B> <A NAME="tex2html78"
+  HREF="node2.html">How to Obtain and</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00021000000000000000"></A>
+<A NAME="subsection:troubleshooting"></A>
+<BR>
+Academic validation troubleshooting
+</H2>
+
+<P>
+While most academic domain validations proceed without issue, we've
+run into a few validation issues that may require some action on your
+end.
+
+<P>
+<B>No reverse DNS information</B>
+
+<P>
+If <EM>grbgetkey</EM> produces a message that looks like this...
+<PRE>
+  ERROR: Unable to determine hostname for IP address 234.28.234.12.
+</PRE>
+...it means that your machine has no reverse DNS information.  This
+usually happens when you are connecting to the Internet through a DHCP
+server that does NAT (network address translation) or PAT (port
+address translation), but does not provide DNS information for its
+clients.  The simplest way to resolve this issue is to ask your
+network administrator to add a DNS entry (a <EM>PTR record</EM>, to be
+more specific) for the DHCP device itself.
+
+<P>
+Note that there is unfortunately no way for us to validate your
+academic license without reverse DNS information.  You can
+visit <A NAME="tex2html8"
+  HREF="http://www.gurobi.com/dns">this site</A>
+to check DNS information for your IP address and to
+obtain for more information about reverse DNS.
+
+<P>
+<B>Not a recognized academic domain</B>
+
+<P>
+If <EM>grbgetkey</EM> produces a message that looks like this...
+<PRE>
+  ERROR: your hostname (mymachine.mydomain)
+  was not recognized as belonging to an academic domain.
+</PRE>
+...it means that your domain isn't on our academic domain list.
+Please make sure you are connected to your university network.  If the
+reported host name is a valid university address, please send the
+specific error message you receive to <EM>support@gurobi.com</EM> and
+we'll add your domain.
+
+<P>
+Connecting to your academic domain through a VPN will typically not
+present a problem for validation, since the request will appear to
+originate from inside your academic domain.  However, some VPNs are
+configured to use <EM>split tunneling</EM>, where traffic to public
+internet sites is routed through your ISP.  Split tunneling introduces
+a major security hole into the private network, so it is not that
+common.  If you find that your validation request is rejected when you
+are connected to your VPN, you should ask your network administrator
+whether the VPN can be configured to route traffic to
+<EM>gurobi.com</EM> through the private network.
+
+<P>
+Some machines connect to the internet through a proxy server.
+Unfortunately, such configurations are incompatible with our academic
+validation process.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html85"
+  HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html83"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html77"
+  HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html86"
+  HREF="node4.html">Setting up a token</A>
+<B> Up:</B> <A NAME="tex2html84"
+  HREF="node2.html">How to Obtain and</A>
+<B> Previous:</B> <A NAME="tex2html78"
+  HREF="node2.html">How to Obtain and</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

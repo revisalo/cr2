@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>How to Obtain and Install a Gurobi License</TITLE>
+<META NAME="description" CONTENT="How to Obtain and Install a Gurobi License">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html73"
+  HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html71"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html65"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html74"
+  HREF="node3.html">Academic validation troubleshooting</A>
+<B> Up:</B> <A NAME="tex2html72"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html66"
+  HREF="node1.html">Installation</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00020000000000000000"></A>
+<A NAME="section:License"></A>
+<BR>
+How to Obtain and Install a Gurobi License
+</H1>
+
+<P>
+Obtaining a new Gurobi license key involves two steps.  The first is
+to create a new license on our Web site.  The second is to generate a
+license key that associates the license on our Web site with your
+machine.  We'll discuss each step in turn:
+
+<P>
+<B>Creating a new license</B>
+
+<P>
+The process for creating a new license depends on the license type:
+
+<P>
+
+<UL>
+<LI><B>Trial or academic license</B>: You can create trial or
+  academic licenses yourself from our Web site.  To do so, visit either
+  the <EM>Free Trial</EM> or the <EM>Free Academic</EM> tab on the
+  <EM>Licenses</EM> page (under the <EM>Download</EM> menu)
+  at <EM>www.gurobi.com</EM>.
+  First accept the license agreement, and then click on
+  <EM>Request License</EM>.
+  Your new license will be visible immediately, under the
+  <EM>Current</EM> tab.  You can create as many trial or
+  academic licenses as you like.
+
+<P>
+</LI>
+<LI><B>Commercial licenses</B>: For commercial licenses,
+  you should contact us at <EM>license@gurobi.com</EM> to arrange
+  for payment.  We will contact you once payment is received, at
+  which point your new licenses will be visible under the
+  <EM>Current</EM> tab of the <EM>Licenses</EM> page.
+</LI>
+</UL>
+
+<P>
+Once a new license is visible under <EM>Current</EM>,
+clicking on the <EM>License ID</EM> will produce a page
+like the following:
+
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="726" HEIGHT="784" ALIGN="BOTTOM" BORDER="0"
+ SRC="./license.png"
+ ALT="Image license">
+
+</DIV>
+The next step is to associate this new license with your machine
+by obtaining a <EM>License Key</EM>.
+
+<P>
+<B>Getting a license key</B>
+
+<P>
+To obtain a Gurobi license key for your machine, you'll need to run
+the <EM>grbgetkey</EM> command on the machine on which you would like
+to run the Gurobi Optimizer while that machine is connected to the
+Internet.  If you are using a free academic license, your machine must
+be connected from a recognized academic domain. Note that an Internet
+connection is not required once you have obtained your license key.
+
+<P>
+The exact command to run for a specific
+license is indicated at the bottom of the license page (e.g.,
+<EM>grbgetkey 253e22f3-...</EM>).  We recommend that you use copy-paste to
+grab the entire <EM>grbgetkey</EM> command from our Web site.  On a
+Windows system, you can paste the command directly into the
+Windows <EM>Search</EM> box (known as the <EM>Run</EM> box in Windows XP).
+This is demonstrated in the Windows 7 example shown here:
+
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="409" HEIGHT="183" ALIGN="BOTTOM" BORDER="0"
+ SRC="./startrun.png"
+ ALT="Image startrun">
+
+</DIV>
+On a Linux machine, you would paste this command into a shell window.
+On a Mac system, you would paste the command into a <EM>Terminal</EM>
+window.
+
+<P>
+The <EM>grbgetkey</EM> program passes identifying information about
+your machine back to our Web site, and the Web site responds with your
+license key.  Once this exchange has occured, <EM>grbgetkey</EM> will
+ask you for the name of the directory in which to store your license
+key file.  You can store this file anywhere, but we recommend that you
+accept the default location (by simply hitting <EM>Enter</EM>).
+
+<P>
+If you are installing a paid license and your computer isn't connected
+to the Internet, we also offer a manual installation process.
+You'll find manual installation instructions at the bottom
+of the license page (by following the link labeled <EM>click
+here for additional instructions</EM>).
+
+<P>
+<B>Where to store your license key file</B>
+<A NAME="subsection:licensefilelocation"></A>
+<P>
+When you run the Gurobi Optimizer, it will look for the
+<EM>gurobi.lic</EM> key file in three different default locations.  It
+will always look in your home directory.  In
+addition, on a Windows system, Gurobi Optimizer 5.0.0 will also look
+in <EM>c:&#92;gurobi500</EM> and
+<EM>c:&#92;gurobi50</EM>.
+On a Linux system, it will also look in
+<EM>/opt/gurobi500</EM> and <EM>/opt/gurobi50</EM>.
+On a Mac system, it will also look in
+<EM>/Library/gurobi500</EM> and <EM>/Library/gurobi50</EM>.
+Note that these
+default paths are absolute, so for example Gurobi will look for the
+license key file in <EM>c:&#92;gurobi500</EM>, even if the
+software is installed in <EM>d:&#92;gurobi500</EM>.
+
+<P>
+If you would like to store your license in a non-default location, you
+must set environment variable <EM>GRB_LICENSE_FILE</EM>
+to point to the license key file.  <EM>Important note: the environment
+  variable should point to the license key file itself, not to the directory
+  that contains the file.</EM>
+
+<P>
+On Windows systems, environment variables are created and modified
+through the Control Panel.  In Windows Vista&#174; or
+Windows 7, searching for <EM>Environment Variables</EM> in the Control
+Panel search box will lead you to the appropriate screen.  In Windows
+XP&#174;, the <EM>Environment Variables</EM> screen is
+accessed through the <EM>Environment Variables</EM> button on the
+<EM>Advanced</EM> tab of the <EM>System</EM> screen of the Control Panel.
+If you wish to put the license key file in a non-default location, you
+should add a new <EM>System variable</EM> named
+<EM>GRB_LICENSE_FILE</EM>, and set it to the location of your license
+file.
+
+<P>
+On Linux systems, if you choose to put the license key file in a
+non-default location, you should add a line like the following to your
+<EM>.bashrc</EM> file:
+<PRE>
+  export GRB_LICENSE_FILE=/usr/home/jones/gurobi.lic
+</PRE>
+For Linux <EM>csh</EM> shell users, you should add the following to
+your <EM>.cshrc</EM> file:
+<PRE>
+  setenv GRB_LICENSE_FILE /usr/home/jones/gurobi.lic
+</PRE>
+You should of course set the variable to point to the actual location
+of your license key file.
+
+<P>
+On Mac systems, you can set the optional <EM>GRB_LICENSE_FILE</EM>
+environment variable through <EM>environment.plist</EM>, as explained
+in <A NAME="tex2html6"
+  HREF="
+  https://developer.apple.com/mac/library/documentation/MacOSX/Conceptual/BPRuntimeConfig/Articles/EnvironmentVars.html">Apple's Runtime configuration Guidelines</A>
+or in <A NAME="tex2html7"
+  HREF="
+  http://developer.apple.com/mac/library/qa/qa2001/qa1067.html">Apple Technical Q&amp;A 1067</A>.
+
+<P>
+<B>Final steps</B>
+
+<P>
+Most users will be ready to use their licenses at this point.  The two
+exceptions are those using free academic licenses, and those using
+floating or single-use licenses.
+
+<P>
+If you are using a free academic license, once <EM>grbgetkey</EM> has
+obtained your license key, it will proceed to an academic validation
+step.  This step checks your domain name against our list of known
+academic domains.  If this step doesn't succeed, please refer to
+<A HREF="node3.html#subsection:troubleshooting">Validation troubleshooting</A>
+for information on how to proceed.
+
+<P>
+If you are using a floating or single-use license you'll need to
+<A HREF="node4.html#subsection:tokenserver">set up a Gurobi token server</A>.
+
+<P>
+<B>Testing the license</B>
+<A NAME="subsection:testlicense"></A>
+<P>
+Once you have obtained a license key for your machine, you are ready
+to launch the Gurobi shell.  On Windows systems, double-click on the
+Gurobi icon on your desktop (or type <EM>gurobi.bat</EM> from a
+<EM>cmd</EM> window).  On Linux or Mac OS systems, type <EM>gurobi.sh</EM>
+in a <EM>Terminal</EM> window.  The shell should produce the following
+output:
+<PRE>
+Gurobi Interactive Shell, Version 5.0.0
+Copyright (c) 2012, Gurobi Optimization, Inc.
+Type "help()" for help
+
+gurobi&gt;
+</PRE>
+
+<P>
+If you are using a token license, you can also verify that everything
+is set up correctly using the Gurobi command-line optimizer.
+The following command...
+<PRE>
+&gt; gurobi_cl --tokens
+</PRE>
+...will return the state of the token server, as well a list of the
+clients who are currently using tokens.
+
+<P>
+You are now ready to use the Gurobi interactive interface.
+
+<P>
+Some Windows users have reported that they were unable to launch the
+Gurobi shell after running the installer.  You may need
+to log off and log back in again in order for the environment variable
+changes made by the installer to take effect.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html75"
+  HREF="node3.html">Academic validation troubleshooting</A>
+<LI><A NAME="tex2html76"
+  HREF="node4.html">Setting up a token server</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html73"
+  HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html71"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html65"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html74"
+  HREF="node3.html">Academic validation troubleshooting</A>
+<B> Up:</B> <A NAME="tex2html72"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html66"
+  HREF="node1.html">Installation</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

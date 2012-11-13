@@ -1,0 +1,749 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Interactive Shell</TITLE>
+<META NAME="description" CONTENT="Interactive Shell">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html103"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html101"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html95"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html104"
+  HREF="node6.html">Attributes</A>
+<B> Up:</B> <A NAME="tex2html102"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html96"
+  HREF="node4.html">Setting up a token</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00030000000000000000"></A>
+<A NAME="section:Shell"></A>
+<BR>
+Interactive Shell
+</H1>
+
+<P>
+The Gurobi interactive shell allows you to perform hands-on
+interaction and experimentation with optimization models.  You can
+read models from files, perform complete or partial optimization runs
+on them, change parameters, modify the models, reoptimize, and so on.
+The Gurobi shell is actually a set of extensions to the
+<A NAME="tex2html9"
+  HREF="http://python.org">Python</A>
+shell.  Python is a rich
+and flexible programming language, and any capabilities that are
+available from Python are also available from the Gurobi shell.  We'll
+touch on these capabilities here, but we encourage you to explore the
+help system and experiment with the interface in order to gain a
+better understanding of what is possible.
+
+<P>
+Note that we also provide a lightweight <A HREF="#subsection:cl">command
+  line</A> to allow you to run quick and easy tests.
+
+<P>
+<B>Important note for AIX users:</B> due to limited Python support on
+AIX, our AIX port does not include the Interactive Shell or the Python
+interface.  You can use the command line, or the C, C++, or Java
+interfaces.
+
+<P>
+We will now work through a few simple examples of how the Gurobi shell
+might be used, in order to give you a quick introduction to its
+capabilities.  More thorough documentation on this and other
+interfaces is available in the <A NAME="tex2html10"
+  HREF="../refman/refman.html">Gurobi Reference
+  Manual</A>.
+
+<P>
+<B>Reading and optimizing a model</B>
+
+<P>
+There are three ways to start the Gurobi Interactive Shell from Windows:
+
+<UL>
+<LI>Double-click on the Gurobi desktop shortcut.
+</LI>
+<LI>Select the Gurobi Interactive Shell from the Start Menu.
+</LI>
+<LI>Open a DOS command shell and type <EM>gurobi.bat</EM>.
+</LI>
+</UL>
+From Linux or Mac OS, you simply type <EM>gurobi.sh</EM> from the
+command prompt.  Once the optimizer has started, you are ready to load
+and optimize a model.  We'll consider model <EM>p0033.mps</EM> from
+<EM>&lt;installdir&gt;/examples/data</EM>...
+
+<P>
+<PRE>
+&gt; gurobi.bat (or gurobi.sh for Linux or Mac OS)
+
+Gurobi Interactive Shell, Version 5.0.0
+Copyright (c) 2012, Gurobi Optimization, Inc.
+Type "help()" for help
+
+gurobi&gt; m = read('c:/gurobi500/win64/examples/data/p0033.mps')
+Read MPS format model from file c:/gurobi500/win64/examples/data/p0033.mps
+Reading time = 0.00 seconds
+P0033: 16 Rows, 33 Columns, 98 NonZeros
+
+gurobi&gt; m.optimize()
+Optimize a model with 16 Rows, 33 Columns and 98 NonZeros
+Presolve removed 3 rows and 5 columns
+Presolve time: 0.00s
+Presolved: 13 Rows, 28 Columns, 91 Nonzeros
+Objective GCD is 1
+Found heuristic solution: objective 3412.0000000
+
+Root relaxation: objective 2.838547e+03, 24 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 2838.54674    0    6 3412.00000 2838.54674  16.8%     -    0s
+H    0     0                    3347.0000000 2838.54674  15.2%     -    0s
+     0     0 2928.65799    0    8 3347.00000 2928.65799  12.5%     -    0s
+H    0     0                    3095.0000000 2928.65799  5.37%     -    0s
+     0     0 2954.18420    0   15 3095.00000 2954.18420  4.55%     -    0s
+     0     0 3008.37500    0   12 3095.00000 3008.37500  2.80%     -    0s
+     0     0 3017.50000    0   10 3095.00000 3017.50000  2.50%     -    0s
+     0     0 3023.52381    0    6 3095.00000 3023.52381  2.31%     -    0s
+     0     0 3023.52381    0    6 3095.00000 3023.52381  2.31%     -    0s
+     0     0 3023.52381    0    6 3095.00000 3023.52381  2.31%     -    0s
+*    3     0               2    3089.0000000 3089.00000   0.0%   3.3    0s
+
+Cutting planes:
+  Cover: 5
+  MIR: 4
+
+Explored 4 nodes (74 simplex iterations) in 0.02 seconds
+Thread count was 8 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.0890000000e+03, best bound 3.0890000000e+03, gap 0.0%
+</PRE>
+
+<P>
+The <EM>read()</EM> command reads a model from a file and returns a
+<EM>Model</EM> object.  In the example, that object is placed into
+variable <EM>m</EM>.  There is no need to declare variables in the
+Python language; you simply assign a value to a variable.
+
+<P>
+Note that <EM>read()</EM> accepts wildcard characters, so you could
+also have said:
+<PRE>
+gurobi&gt; m = read('c:/gurobi500/win64/*/*/p0033*')
+</PRE>
+
+<P>
+Note also that Gurobi commands that read or write files will also
+function correctly with compressed files.  If <EM>gzip</EM>,
+<EM>bzip2</EM>, or <EM>7zip</EM> are installed on your machine and
+available in your default path, then you simply need to add the
+appropriate suffix (<EM>.gz</EM>, <EM>.bz2</EM>, <EM>.zip</EM>, or <EM>.7z</EM>)
+to the file name to read or write compressed versions.
+
+<P>
+The next statement in the example, <EM>m.optimize()</EM>, invokes the
+<EM>optimize</EM> method on the <EM>Model</EM> object (you can obtain a
+list of all methods on <EM>Model</EM> objects by typing
+<EM>help(Model)</EM> or <EM>help(m)</EM>).  The Gurobi optimization engine
+finds an optimal solution with objective 3089.
+
+<P>
+<B>Inspecting the solution</B>
+
+<P>
+Once a model has been solved, you can inspect the values of the
+model variables in the optimal solution with the <EM>printAttr()</EM>
+method on the <EM>Model</EM> object:
+<PRE>
+gurobi&gt; m.printAttr('X')
+
+  Variable          X
+---------------------
+      C157          1
+      C163          1
+      C164          1
+      C166          1
+      C170          1
+      C174          1
+      C177          1
+      C178          1
+      C180          1
+      C181          1
+      C182          1
+      C183          1
+      C184          1
+      C185          1
+      C186          1
+</PRE>
+This routine prints all non-zero values of the specified attribute
+<EM>X</EM>.  Attributes play a major role in the Gurobi optimizer.
+We'll discuss them in more detail shortly.
+
+<P>
+You can also inspect the results of the optimization at a finer grain
+by retrieving a list of all the variables in the model using the
+<EM>getVars()</EM> method on the <EM>Model</EM> object
+(<EM>m.getVars()</EM> in our example):
+<PRE>
+gurobi&gt; v = m.getVars()
+gurobi&gt; print len(v)
+33
+</PRE>
+The first command assigns the list of all <EM>Var</EM> objects in model
+<EM>m</EM> to variable <EM>v</EM>.  The Python <EM>len()</EM> command
+gives the length of the array (our example model <EM>p0033</EM> has 33
+variables).  You can then query various attributes of the individual
+variables in the list.  For example, to obtain the variable name and
+solution value for the first variable in list <EM>v</EM>, you would
+issue the following command:
+<PRE>
+gurobi&gt; print v[0].VarName, v[0].X
+C157 1.0
+</PRE>
+You can type <EM>help(Var)</EM> or <EM>help(v[0])</EM> to get a list of
+all methods on a <EM>Var</EM> object.  You can type <EM>help(GRB.Attr)</EM>
+to get a list of all attributes.
+
+<P>
+<B>Simple model modification</B>
+
+<P>
+We will now demonstrate a simple model modification.  Imagine that you
+only want to consider solutions where variable <EM>C157</EM> takes
+value 0.0.  You can find a solution that satisfies this additional
+constraint by tightening the upper bound of the first variable to 0.0.
+This is done by setting the <EM>ub</EM> attribute on the variable...
+<PRE>
+gurobi&gt; v = m.getVars()
+gurobi&gt; v[0].ub = 0
+</PRE>
+
+<P>
+The Gurobi optimizer keeps track of the state of the model, so it
+knows that the currently loaded solution is not necessarily optimal
+for the modified model.  When you invoke the <EM>optimize()</EM> method
+again, it performs a new optimization on the modified model...
+<PRE>
+gurobi&gt; m.optimize()
+Optimize a model with 16 Rows, 33 Columns and 98 NonZeros
+Presolve removed 3 rows and 6 columns
+Presolve time: 0.00s
+Presolved: 13 Rows, 27 Columns, 88 Nonzeros
+Objective GCD is 1
+
+Root relaxation: objective 2.839492e+03, 21 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 2839.49184    0    5          - 2839.49184     -      -    0s
+     0     0 2953.32500    0    2          - 2953.32500     -      -    0s
+     0     0 2994.81212    0   11          - 2994.81212     -      -    0s
+     0     0 3060.38462    0    2          - 3060.38462     -      -    0s
+H    0     0                    3095.0000000 3060.38462  1.12%     -    0s
+     0     0 infeasible    0      3095.00000 3094.00310  0.03%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  Cover: 5
+  MIR: 5
+
+Explored 0 nodes (46 simplex iterations) in 0.01 seconds
+Thread count was 8 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.0950000000e+03, best bound 3.0950000000e+03, gap 0.0%
+</PRE>
+
+<P>
+When variable <EM>C157</EM> is forced to take a value of zero, the
+minimum possible objective value for the model increases from 3089 to
+3095.  A simple check confirms that the new upper bound is respected:
+<PRE>
+gurobi&gt; print v[0].x
+0.0
+</PRE>
+
+<P>
+<B>Simple experimentation with a more difficult model</B>
+
+<P>
+Let us now consider a more difficult model, <EM>glass4.mps</EM>.
+Again, we read the model and begin the optimization:
+<PRE>
+gurobi&gt; m = read('c:/gurobi500/win64/examples/data/glass4')
+Read MPS format model from file c:/gurobi500/win64/examples/data/glass4.mps
+Reading time = 0.00 seconds
+glass4: 396 Rows, 322 Columns, 1815 NonZeros
+gurobi&gt; m.optimize()
+Optimize a model with 396 Rows, 322 Columns and 1815 NonZeros
+Presolve removed 4 rows and 5 columns
+Presolve time: 0.00s
+Presolved: 392 Rows, 317 Columns, 1815 Nonzeros
+Found heuristic solution: objective 3.691696e+09
+
+Root relaxation: objective 8.000024e+08, 72 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     2 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+H  769   732                    2.800024e+09 8.0000e+08  71.4%   5.2    0s
+H  834   781                    2.666693e+09 8.0000e+08  70.0%   5.3    0s
+H 1091   984                    2.475023e+09 8.0000e+08  67.7%   5.1    0s
+H 1092   986                    2.400020e+09 8.0000e+08  66.7%   5.1    0s
+H 1092   984                    2.380021e+09 8.0000e+08  66.4%   5.1    0s
+H 1095   988                    2.350020e+09 8.0000e+08  66.0%   5.1    0s
+* 1845  1543              94    2.316685e+09 8.0000e+08  65.5%   4.9    0s
+* 2131  1627             126    2.150018e+09 8.0000e+08  62.8%   4.8    0s
+H 2244  1580                    2.100019e+09 8.0000e+08  61.9%   4.8    0s
+H 2248  1341                    1.900018e+09 8.0000e+08  57.9%   5.0    0s
+H 3345  1816                    1.900018e+09 8.0000e+08  57.9%   4.1    0s
+H 3346  1744                    1.900017e+09 8.0000e+08  57.9%   4.1    0s
+H15979 10383                    1.900017e+09 8.0000e+08  57.9%   2.5    1s
+H19540 13051                    1.900016e+09 8.0000e+08  57.9%   2.4    1s
+*21124 13489             101    1.866683e+09 8.0000e+08  57.1%   2.4    1s
+*23011 14690             100    1.850015e+09 8.0000e+08  56.8%   2.3    1s
+*25630 15679             143    1.800016e+09 8.0000e+08  55.6%   2.3    1s
+*28365 15421             113    1.700015e+09 8.0000e+08  52.9%   2.3    1s
+H29910 16333                    1.700014e+09 8.0000e+08  52.9%   2.3    1s
+*30582 16765             124    1.700014e+09 8.0000e+08  52.9%   2.3    1s
+*33238 16251              92    1.677794e+09 8.0000e+08  52.3%   2.3    1s
+*37319 18258              85    1.633349e+09 8.0000e+08  51.0%   2.2    1s
+H40623 19584                    1.600015e+09 8.0000e+08  50.0%   2.3    2s
+ 81781 42951 1.1000e+09   49   51 1.6000e+09 8.0001e+08  50.0%   2.2    5s
+ 199990 100088 1.6000e+09   82   28 1.6000e+09 8.0001e+08  50.0%   2.3   10s
+*242810 116891              97    1.600015e+09 8.2001e+08  48.8%   2.3   11s
+*243703 116786              95    1.600014e+09 8.2001e+08  48.8%   2.3   11s
+
+Interrupt request received
+
+Explored 255558 nodes (588336 simplex iterations) in 12.36 seconds
+Thread count was 8 (of 8 available processors)
+
+Solve interrupted
+Best objective 1.6000142000e+09, best bound 8.5000490000e+08, gap 46.8752%
+</PRE>
+
+<P>
+It quickly becomes apparent that this model is quite a bit more
+difficult than <EM>p0033</EM>.  The optimal solution is actually
+<EM>1,200,000,000</EM>, but finding that solution takes a while.  After
+letting the model run for 10 seconds, we interrupt the run (by hitting
+CTRL-C, which produces the <EM>Interrupt request received</EM> message)
+and consider our options.  Typing <EM>m.optimize()</EM> would resume
+the run from the point at which it was interrupted.
+
+<P>
+<B>Changing parameters</B>
+
+<P>
+Rather than continuing optimization on a difficult model like
+<EM>glass4</EM>, it is sometimes useful to try different parameter
+settings.  When the lower bound moves slowly, as it does on this
+model, one potentially useful parameter is <EM>MIPFocus</EM>, which
+adjusts the high-level MIP solution strategy.  Let us now set this
+parameter to value 1, which changes the focus of the MIP search to
+finding good feasible solutions.  There are two ways to change the
+parameter value.  You can either use method <EM>m.setParam()</EM>:
+<PRE>
+gurobi&gt; m.setParam('MIPFocus', 1)
+Changed value of parameter MIPFocus to 1
+   Prev: 0   Min: 0   Max: 3   Default: 0
+</PRE>
+...or you can use the <EM>m.Params</EM> class...
+<PRE>
+gurobi&gt; m.params.MIPFocus = 1
+Changed value of parameter MIPFocus to 1
+   Prev: 0   Min: 0   Max: 3   Default: 0
+</PRE>
+Once the parameter has been changed, we call
+<EM>m.reset()</EM> to reset the optimization on our model and then
+<EM>m.optimize()</EM> to start a new optimization run:
+<PRE>
+gurobi&gt; m.reset()
+gurobi&gt; m.optimize()
+Optimize a model with 396 Rows, 322 Columns and 1815 NonZeros
+Presolve removed 4 rows and 5 columns
+Presolve time: 0.00s
+Presolved: 392 Rows, 317 Columns, 1815 Nonzeros
+Found heuristic solution: objective 3.691696e+09
+
+Root relaxation: objective 8.000024e+08, 72 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     0 8.0000e+08    0   72 3.6917e+09 8.0000e+08  78.3%     -    0s
+     0     0 8.0000e+08    0   73 3.6917e+09 8.0000e+08  78.3%     -    0s
+H    0     0                    3.075022e+09 8.0000e+08  74.0%     -    0s
+H    0     0                    3.020023e+09 8.0000e+08  73.5%     -    0s
+     0     0 8.0000e+08    0   76 3.0200e+09 8.0000e+08  73.5%     -    0s
+     0     0 8.0000e+08    0   75 3.0200e+09 8.0000e+08  73.5%     -    0s
+H    0     0                    2.550024e+09 8.0000e+08  68.6%     -    0s
+H    0     2                    2.175020e+09 8.0000e+08  63.2%     -    0s
+     0     2 8.0000e+08    0   75 2.1750e+09 8.0000e+08  63.2%     -    0s
+H   95    98                    2.150020e+09 8.0000e+08  62.8%   4.6    0s
+H   96    98                    2.120018e+09 8.0000e+08  62.3%   4.6    0s
+H  101   103                    2.116687e+09 8.0000e+08  62.2%   4.5    0s
+H  110   103                    2.100017e+09 8.0000e+08  61.9%   4.3    0s
+H  352   325                    2.000018e+09 8.0000e+08  60.0%   4.2    0s
+H  406   375                    1.991686e+09 8.0000e+08  59.8%   4.0    0s
+H 1074   888                    1.981836e+09 8.0000e+08  59.6%   3.5    0s
+H 1078   889                    1.966686e+09 8.0000e+08  59.3%   3.5    0s
+H 1107   878                    1.900018e+09 8.0000e+08  57.9%   3.5    0s
+H 1696  1125                    1.800017e+09 8.0000e+08  55.6%   3.4    0s
+H 1845  1146                    1.800017e+09 8.0000e+08  55.6%   4.2    1s
+H 1863  1087                    1.733350e+09 8.0000e+08  53.8%   4.3    1s
+H 2353  1273                    1.733350e+09 8.0000e+08  53.8%   4.3    1s
+H 2517  1299                    1.700016e+09 8.0000e+08  52.9%   4.3    1s
+H 2598  1248                    1.666682e+09 8.0000e+08  52.0%   4.3    1s
+H 2733  1252                    1.633349e+09 8.0000e+08  51.0%   4.2    1s
+ 14259  7927 1.5000e+09   85   28 1.6333e+09 8.0000e+08  51.0%   3.5    5s
+ 24846 14278 1.1000e+09   49   55 1.6333e+09 8.0001e+08  51.0%   3.5   10s
+H25035 13985                    1.600016e+09 8.0001e+08  50.0%   3.5   10s
+H25066 14020                    1.600016e+09 8.0001e+08  50.0%   3.5   10s
+H25072 13532                    1.583350e+09 8.0001e+08  49.5%   3.5   10s
+H26218 14083                    1.575016e+09 8.0001e+08  49.2%   3.5   10s
+H26326 14118                    1.566682e+09 8.0001e+08  48.9%   3.5   10s
+H26577 13650                    1.525016e+09 8.0001e+08  47.5%   3.5   10s
+
+Interrupt request received
+
+Cutting planes:
+  Gomory: 6
+  Implied bound: 26
+  MIR: 60
+
+Explored 30546 nodes (107810 simplex iterations) in 11.81 seconds
+Thread count was 8 (of 8 available processors)
+
+Solve interrupted
+Best objective 1.5250155750e+09, best bound 8.0000520000e+08, gap 47.5412%
+</PRE>
+
+<P>
+Results are consistent with our expectations.  We find a better
+solution sooner by shifting the focus towards finding feasible
+solutions (objective value <EM>1.525e9</EM> versus <EM>1.6e9</EM>).
+
+<P>
+The <EM>setParam()</EM> method is designed to be quite flexible and
+forgiving.  It accepts wildcards as arguments, and it ignores
+character case.  Thus, the following commands are all equivalent:
+<PRE>
+gurobi&gt; m.setParam('NODELIMIT', 100)
+gurobi&gt; m.setParam('NodeLimit', 100)
+gurobi&gt; m.setParam('Node*', 100)
+gurobi&gt; m.setParam('N???Limit, 100)
+</PRE>
+You can use wildcards to get a list of matching parameters:
+<PRE>
+gurobi&gt; m.setParam('*Cuts', 2)
+Matching parameters: ['Cuts', 'CliqueCuts', 'CoverCuts', 'FlowCoverCuts', 'FlowP
+athCuts', 'GUBCoverCuts', 'ImpliedCuts', 'MIPSepCuts', 'MIRCuts', 'ModKCuts', 'NetworkCuts', 'SubMIPCuts', 'ZeroHalfCuts']
+</PRE>
+
+<P>
+Note that <EM>Model.Params</EM> is a bit less forgiving than
+<EM>setParam()</EM>.  In particular, wildcards are not allowed
+with this approach.  You don't have to worry about capitalization of
+parameter names in either approach, though, so
+<EM>m.params.Heuristics</EM> and <EM>m.params.heuristics</EM> are
+equivalent.
+
+<P>
+The full set of available parameters can be browsed using the
+<EM>paramHelp()</EM> command.  You can obtain further information on a
+specific parameter (e.g., <EM>MIPGap</EM>) by typing
+<EM>paramHelp('MIPGap')</EM>.
+
+<P>
+<B>Working with multiple models</B>
+
+<P>
+The Gurobi shell allows you to work with multiple models
+simultaneously.  For example...
+<PRE>
+gurobi&gt; a = read('c:/gurobi500/win64/examples/data/p0033')
+Read MPS format model from file c:/gurobi500/win64/examples/data/p0033.mps
+Reading time = 0.00 seconds
+P0033: 16 Rows, 33 Columns, 98 NonZeros.
+gurobi&gt; b = read('c:/gurobi500/win64/examples/data/stein9')
+Read MPS format model from file c:/gurobi500/win64/examples/data/stein9.mps
+Reading time = 0.00 seconds
+STEIN9: 13 Rows, 9 Columns, 45 NonZeros.
+</PRE>
+The <EM>models()</EM> command gives a list of all active models.
+<PRE>
+gurobi&gt; models()
+Currently loaded models:
+a : &lt;gurobi.Model MIP instance P0033: 16 constrs, 33 vars&gt;
+b : &lt;gurobi.Model MIP instance STEIN9: 13 constrs, 9 vars&gt;
+</PRE>
+
+<P>
+Note that parameters can be set for a
+particular model with the <EM>Model.setParam()</EM> method or the
+<EM>Model.Params</EM> class, or they can be changed for all models in the
+Gurobi shell by using the global <EM>setParam()</EM> method.
+
+<P>
+<B>Help</B>
+
+<P>
+The interactive shell includes an extensive help facility.  To access
+it, simply type <EM>help()</EM> at the prompt.  As previously
+mentioned, help is available for all of the important objects in the
+interface. For example, as explained in the help facility, you can
+type <EM>help(Model)</EM>, <EM>help(Var)</EM>, or <EM>help(Constr)</EM>.
+You can also obtain detailed help on any of the available methods on
+these objects.  For example, <EM>help(Model.setParam)</EM> gives help
+on setting model parameters.  You can also use a variable, or a method
+on a variable, to ask for help.  For example, if variable <EM>m</EM>
+contains a Model object, then <EM>help(m)</EM> is equivalent to
+<EM>help(Model)</EM>, and <EM>help(m.setParam)</EM> is equivalent to
+<EM>help(Model.setParam)</EM>.
+
+<P>
+<B>Interface customization</B>
+
+<P>
+The Gurobi interactive shell lives within a full featured scripting
+language.  This allows you to perform a wide range of customizations
+to suit your particular needs.  Creating custom functions requires
+some knowledge of the Python language, but you can achieve a lot by
+using a very limited set of language features.
+
+<P>
+Let us consider a simple example.  Imagine that you store your models
+in a certain directory on your disk.  Rather than having to type the
+full path whenever you read a model, you can create your own custom
+<EM>read</EM> method:
+<PRE>
+gurobi&gt; def myread(filename):
+.......   return read('/home/john/models/'+filename)
+</PRE>
+Note that the indentation of the second line is required.
+
+<P>
+Defining this function allows you to do the following:
+<PRE>
+gurobi&gt; m = myread('stein9')
+Read MPS format model from file /home/john/models/stein9.mps
+</PRE>
+
+<P>
+If you don't want to type this function in each time you start the Gurobi
+shell, you can store it in a file.  The file would look like the following:
+<PRE>
+from gurobipy import *
+
+def myread(filename):
+  return read('/home/john/models/'+filename)
+</PRE>
+The <EM>from gurobipy import *</EM> line is required in order to allow
+you to use the <EM>read</EM> method from the Gurobi shell in your
+custom function.  The name of your customization file must end with a
+<EM>.py</EM> suffix.  If the file is named <EM>custom.py</EM>, you would
+then type:
+<PRE>
+gurobi&gt; from custom import *
+</PRE>
+in order to import this function.  One file can contain as many custom
+functions as you'd like (see <EM>custom.py</EM> in <EM>  &lt;installdir&gt;/examples/python</EM> for an example).  If you wish to
+make site-wide customizations, you can also customize the
+<EM>gurobi.py</EM> file that is included in <EM>&lt;installdir&gt;/lib</EM>.
+
+<P>
+<B>Customization through callbacks</B>
+
+<P>
+Another type of customization we'd like to touch on briefly can be
+achieved through Gurobi callbacks.  Callbacks allow you to track the
+progress of the optimization process.  For the sake of our example,
+let's say you want the MIP optimizer to run for 10 seconds before
+quitting, but you don't want it to terminate before it finds a
+feasible solution.  The following callback method would implement this
+condition:
+<PRE>
+from gurobipy import *
+
+def mycallback(model, where):
+  if where == GRB.Callback.MIP:
+    time = model.cbGet(GRB.Callback.RUNTIME)
+    best = model.cbGet(GRB.Callback.MIP_OBJBST)
+    if time &gt; 10 and best &lt; GRB.INFINITY:
+      model.terminate()
+</PRE>
+
+<P>
+Once you import this function (<EM>'from custom import *'</EM>), you
+can then say <EM>m.optimize(mycallback)</EM> to obtain the desired
+termination behavior.  Alternatively, you could define your own custom
+optimize method that always invokes the callback:
+<PRE>
+def myopt(model):
+  model.optimize(mycallback)
+</PRE>
+This would allow you to say <EM>myopt(m)</EM>.
+
+<P>
+You can pass arbitrary data into your callback through the model
+object.  For example, if you set <EM>m._mydata = 1</EM> before calling
+<EM>optimize()</EM>, you can query <EM>m._mydata</EM> inside your
+callback function.  Note that the names of user data fields must begin
+with an underscore.
+
+<P>
+This callback example is included in
+<EM>&lt;installdir&gt;/examples/python/custom.py</EM>.
+Type <EM>from custom import *</EM> to import the callback and the
+<EM>myopt()</EM> function.
+
+<P>
+You can type <EM>help(GRB.Callback)</EM> for more information on
+callbacks.  You can also refer to the <EM>Callback</EM> class
+documentation in the <A NAME="tex2html11"
+  HREF="../refman/refman.html">Gurobi Reference
+  Manual</A>.
+
+<P>
+<B>The Gurobi Python Interface for Python Users</B>
+<A NAME="subsection:setup.py"></A>
+<P>
+While the Gurobi installation includes everything you need to use
+Gurobi from within Python, we understand that some users would prefer
+to use Gurobi from within their own Python environment.  To install
+the <EM>gurobipy</EM> module directly into your Python environment,
+open a <EM>cmd</EM> prompt in Windows or a terminal window in Linux or
+Mac OS, change your current directory to the Gurobi
+<EM>&lt;installdir&gt;</EM> (the directory that contains the file
+<EM>setup.py</EM>), and issue the following command:
+<PRE>
+  python setup.py install
+</PRE>
+On Linux or Mac OS systems, unless you are using your own private
+Python installation, you will need to run this command as super-user.
+Once <EM>gurobipy</EM> is successfully installed, you can type
+<EM>import gurobipy</EM> or <EM>from gurobipy import *</EM> from your
+Python shell and access all of the Gurobi classes and methods.
+
+<P>
+Note that for this installation to succeed, your Python environment
+must be compatible with the Gurobi Python module.  You should only
+install 32-bit Gurobi libraries into a 32-bit Python shell (similarly
+for 64-bit versions).  In addition, your Python version must be
+compatible.  With this release, <EM>gurobipy</EM> can be used with
+Python 2.6, or 2.7 on Windows and Linux, and with Python 2.6 on Mac OS.
+
+<P>
+<B>Simple command-line use</B>
+<A NAME="subsection:cl"></A>
+<P>
+An interactive interface can be too heavy if you simply want to
+optimize a model stored in a file.  We also provide a simple
+command-line optimizer, <EM>gurobi_cl</EM>, for doing quick testing.
+This program allows you to modify Gurobi parameters and save
+the solution of the problem to a file.
+
+<P>
+Parameter changes can be specified in two ways.  The first approach is
+to include one or more <EM>ParamName=NewValue</EM> commands on the
+command line.  The last argument to <EM>gurobi_cl</EM> should always
+be the file name.  For example, to solve model <EM>stein9.mps</EM> on
+one thread and put the solution to file <EM>stein9.sol</EM>, you would
+use the following command:
+<PRE>
+  gurobi_cl Threads=1 ResultFile=stein9.sol stein9.mps.gz
+</PRE>
+
+<P>
+The second approach is to place parameter changes in file
+<EM>gurobi.env</EM> in the current working directory.  Before performing
+the optimization, <EM>gurobi_cl</EM> looks for this file and reads any
+parameter changes contained therein.  Parameter settings are stored
+one per line, with the parameter name first, followed by at least one
+space, followed by the desired value.  Lines beginning with the
+<EM>#</EM> sign are comments and are ignored.  To give an example, the
+following (Linux) commands:
+<PRE>
+  echo "Threads 1" &gt; gurobi.env
+  gurobi_cl stein9.mps.gz
+</PRE>
+would read the new value of the <EM>Threads</EM> parameter from file
+<EM>gurobi.env</EM> and then optimize model <EM>stein9.mps</EM> using
+one thread.  Note that if the same parameter is modified on the
+command line and in <EM>gurobi.env</EM>, the command line value will be
+used.
+
+<P>
+The distribution includes a sample <EM>gurobi.env</EM> file (in the
+<EM>bin</EM> directory).  The sample includes every parameter, with the
+default value for each, but with all settings commented out.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html103"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html101"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html95"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html104"
+  HREF="node6.html">Attributes</A>
+<B> Up:</B> <A NAME="tex2html102"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html96"
+  HREF="node4.html">Setting up a token</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

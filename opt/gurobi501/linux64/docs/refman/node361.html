@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBCallback.addLazy()</TITLE>
+<META NAME="description" CONTENT="GRBCallback.addLazy()">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node362.html">
+<LINK REL="previous" HREF="node360.html">
+<LINK REL="up" HREF="node357.html">
+<LINK REL="next" HREF="node362.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html5011"
+  HREF="node362.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html5009"
+  HREF="node357.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html5003"
+  HREF="node360.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html5012"
+  HREF="node362.html">GRBCallback.getDoubleInfo()</A>
+<B> Up:</B> <A NAME="tex2html5010"
+  HREF="node357.html">GRBCallback</A>
+<B> Previous:</B> <A NAME="tex2html5004"
+  HREF="node360.html">GRBCallback.addCut()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION000311400000000000000"></A>
+<A NAME="javamethod:GRBCallback.addLazy"></A>
+<BR>
+GRBCallback.addLazy()
+</H3>
+
+<P>
+Add a lazy constraint to the MIP model from within a callback function.
+Note that this method can only be invoked when the <EM>where</EM>
+member variable is equal to GRB.CB_MIPNODE or GRB.CB_MIPSOL
+(see the
+<A HREF="node741.html#sec:CallbackCodes">Callback Codes</A> section for more
+information).
+
+<P>
+Lazy constraints are typically used when the full set of constraints
+for a MIP model is too large to represent explicitly.  By only
+including the constraints that are actually violated by solutions
+found during the branch-and-cut search, it is sometimes possible to
+find a proven optimal solution while only adding a fraction of the
+full set of constraints.
+
+<P>
+You would typically add a lazy constraint by first querying the
+current node solution (by calling
+<A HREF="node365.html#javamethod:GRBCallback.getSolution">getSolution</A> from a
+GRB.CB_MIPSOL callback, or
+<A HREF="node364.html#javamethod:GRBCallback.getNodeRel">getNodeRel</A> from a
+GRB.CB_MIPNODE callback), and then calling <EM>addLazy()</EM> to add a
+constraint that cuts off the solution.  Gurobi guarantees that you
+will have the opportunity to cut off any solutions that would
+otherwise be considered feasible.
+
+<P>
+Note that you must disable dual reductions (using the
+<EM>DualReductions</EM> parameter) if you want to use lazy constraints.
+
+<P>
+
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">void</TD>
+<TD ALIGN="LEFT"><BIG CLASS="LARGE"><FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">addLazy</SPAN></FONT></BIG> (</TD>
+<TD ALIGN="LEFT">GRBLinExpr</TD>
+<TD ALIGN="LEFT">lhsExpr,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">char</TD>
+<TD ALIGN="LEFT">sense,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">rhsVal )</TD>
+</TR>
+</TABLE>
+
+<UL>
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">lhsExpr</SPAN>: Left-hand side expression for new lazy constraint.
+
+<P>
+ <SPAN  CLASS="textbf">sense</SPAN>: Sense for new lazy constraint (GRB.LESS_EQUAL,
+  GRB.EQUAL, or GRB.GREATER_EQUAL).
+
+<P>
+ <SPAN  CLASS="textbf">rhsVal</SPAN>: Right-hand side value for new lazy constraint.
+
+<P>
+</LI>
+</UL>
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html5011"
+  HREF="node362.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html5009"
+  HREF="node357.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html5003"
+  HREF="node360.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html5012"
+  HREF="node362.html">GRBCallback.getDoubleInfo()</A>
+<B> Up:</B> <A NAME="tex2html5010"
+  HREF="node357.html">GRBCallback</A>
+<B> Previous:</B> <A NAME="tex2html5004"
+  HREF="node360.html">GRBCallback.addCut()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,11 @@
+# License ID 29561
+# Gurobi license for Universidad de los Andes
+ORGANIZATION=Universidad de los Andes
+TYPE=TRIAL
+HOSTNAME=ubuntu
+HOSTID=294a550e
+SOCKETS=2
+USERNAME=root
+EXPIRATION=2013-04-05
+VERSION=5
+KEY=3NQZ2VD7

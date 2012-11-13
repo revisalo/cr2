@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C Interface</TITLE>
+<META NAME="description" CONTENT="C Interface">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html123"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html121"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html115"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html124"
+  HREF="node8.html">C++ Interface</A>
+<B> Up:</B> <A NAME="tex2html122"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html116"
+  HREF="node6.html">Attributes</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00050000000000000000"></A>
+<A NAME="section:C"></A>
+<BR>
+C Interface
+</H1>
+
+<P>
+This section will work through a simple C example in order to
+illustrate the use of the Gurobi C interface.  The example builds a
+simple Mixed Integer Programming model, optimizes it, and outputs the
+optimal objective value.  This section assumes that you are already
+familiar with the C programming language.  If not, a variety of books
+are available for learning the language (for example,
+<EM>The C Programming Language</EM>, by Kernighan and Ritchie).
+
+<P>
+Our example optimizes the following model:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="RIGHT"><B>maximize</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 z</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="RIGHT"><B>subject to</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">3 z</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\leq$"></SPAN></TD>
+<TD ALIGN="RIGHT">4</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$\geq$"></SPAN></TD>
+<TD ALIGN="RIGHT">1</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" COLSPAN=6><SPAN>x, y, z binary</SPAN></TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<B>Example mip1_c.c</B>
+
+<P>
+This is the complete source code for our example (also available as
+<EM>&lt;installdir&gt;/examples/c/mip1_c.c</EM>)...
+
+<P>
+<PRE>
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include "gurobi_c.h"
+
+int
+main(int   argc,
+     char *argv[])
+{
+  GRBenv   *env   = NULL;
+  GRBmodel *model = NULL;
+  int       error = 0;
+  double    sol[3];
+  int       ind[3];
+  double    val[3];
+  double    obj[3];
+  char      vtype[3];
+  int       optimstatus;
+  double    objval;
+  int       zero = 0;
+
+  /* Create environment */
+
+  error = GRBloadenv(&amp;env, "mip1.log");
+  if (error || env == NULL) {
+    fprintf(stderr, "Error: could not create environment\n");
+    exit(1);
+  }
+
+  /* Create an empty model */
+
+  error = GRBnewmodel(env, &amp;model, "mip1", 0, NULL, NULL, NULL, NULL, NULL);
+  if (error) goto QUIT;
+
+
+  /* Add variables */
+
+  obj[0] = -1; obj[1] = -1; obj[2] = -2;
+  vtype[0] = GRB_BINARY; vtype[1] = GRB_BINARY; vtype[2] = GRB_BINARY;
+  error = GRBaddvars(model, 3, 0, NULL, NULL, NULL, obj, NULL, NULL, vtype,
+                     NULL);
+  if (error) goto QUIT;
+
+  /* Integrate new variables */
+
+  error = GRBupdatemodel(model);
+  if (error) goto QUIT;
+
+
+  /* First constraint: x + 2 y + 3 z &lt;= 4 */
+
+  ind[0] = 0; ind[1] = 1; ind[2] = 2;
+  val[0] = 1; val[1] = 2; val[2] = 3;
+
+  error = GRBaddconstr(model, 3, ind, val, GRB_LESS_EQUAL, 4.0, NULL);
+  if (error) goto QUIT;
+
+  /* Second constraint: x + y &gt;= 1 */
+
+  ind[0] = 0; ind[1] = 1;
+  val[0] = 1; val[1] = 1;
+
+  error = GRBaddconstr(model, 2, ind, val, GRB_GREATER_EQUAL, 1.0, NULL);
+  if (error) goto QUIT;
+
+  /* Optimize model */
+
+  error = GRBoptimize(model);
+  if (error) goto QUIT;
+
+  /* Write model to 'mip1.lp' */
+
+  error = GRBwrite(model, "mip1.lp");
+  if (error) goto QUIT;
+
+  /* Capture solution information */
+
+  error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &amp;optimstatus);
+  if (error) goto QUIT;
+
+  error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, &amp;objval);
+  if (error) goto QUIT;
+
+  error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, 3, sol);
+  if (error) goto QUIT;
+
+  printf("\nOptimization complete\n");
+  if (optimstatus == GRB_OPTIMAL) {
+    printf("Optimal objective: %.4e\n", objval);
+
+    printf("  x=%.0f, y=%.0f, z=%.0f\n", sol[0], sol[1], sol[2]);
+  } else if (optimstatus == GRB_INF_OR_UNBD) {
+    printf("Model is infeasible or unbounded\n");
+  } else {
+    printf("Optimization was stopped early\n");
+  }
+
+QUIT:
+
+  /* Error reporting */
+
+  if (error) {
+    printf("ERROR: %s\n", GRBgeterrormsg(env));
+    exit(1);
+  }
+
+  /* Free model */
+
+  GRBfreemodel(model);
+
+  /* Free environment */
+
+  GRBfreeenv(env);
+
+  return 0;
+}
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of optimizing the indicated model.
+
+<P>
+The example begins by including a few include files.  Gurobi C
+applications should always start by including <EM>gurobi_c.h</EM>,
+along with the standard C include files (<EM>stdlib.h</EM> and
+<EM>stdio.h</EM>).
+
+<P>
+<B>Creating the environment</B>
+
+<P>
+After declaring the necessary program variables, the example continues
+by creating an environment:
+<PRE>
+  error = GRBloadenv(&amp;env, "mip1.log");
+  if (error || env == NULL) {
+    fprintf(stderr, "Error: could not create environment\n");
+    exit(1);
+  }
+</PRE>
+Later attempts to create optimization models will always require an
+environment, so environment creation should always be the first step
+when using the Gurobi optimizer.  The second argument to
+<EM>GRBloadenv()</EM> provides the name of the Gurobi log file.  If the
+argument is an empty string or NULL, no log file will be written.
+
+<P>
+Note that environment creation may fail, so you should check the
+return value of the call.
+
+<P>
+<B>Creating the model</B>
+
+<P>
+Once an environment has been created, the next step is to create a
+model.  A Gurobi model holds a single optimization problem.  It
+consists of a set of variables, a set of constraints, and the
+associated attributes (variable bounds, objective coefficients,
+variable integrality types, constraint senses, constraint right-hand
+side values, etc.).  The first step towards building a model that
+contains all of this information is to create an empty model object:
+<PRE>
+  /* Create an empty model */
+  error = GRBnewmodel(env, &amp;model, "mip1", 0, NULL, NULL, NULL, NULL, NULL);
+  if (error) goto QUIT;
+</PRE>
+The first argument to <EM>GRBnewmodel()</EM> is the previously created
+environment.  The second is a pointer to the location where the
+pointer to the new model should be stored.  The third is the name of
+the model.  The fourth is the number of variables to initially add to
+the model.  Since we're creating an empty model, the number of initial
+variables is 0.  The remaining arguments would describe the initial
+variables (lower bounds, upper bounds, variable types, etc.), had they
+been present.
+
+<P>
+<B>Adding variables to the model</B>
+
+<P>
+Once we create a Gurobi model, we can start adding variables and
+constraints to it.  In our example, we'll begin by adding variables:
+<PRE>
+  /* Add variables */
+  obj[0] = -1; obj[1] = -1; obj[2] = -2;
+  vtype[0] = GRB_BINARY; vtype[1] = GRB_BINARY; vtype[2] = GRB_BINARY;
+  error = GRBaddvars(model, 3, 0, NULL, NULL, NULL, obj, NULL, NULL, vtype,
+                     NULL);
+</PRE>
+The first argument to <EM>GRBaddvars()</EM> is the model to which the
+variables are being added.  The second is the number of added
+variables (3 in our example).
+
+<P>
+Arguments three through six describe the constraint matrix
+coefficients associated with the new variables.  The third argument
+gives the number of non-zero constraint matrix entries associated with
+the new variables, and the next three arguments give details on these
+non-zeros.  In our example, we'll be adding these non-zeros when we
+add the constraints. Thus, the non-zero count here is zero, and the
+following three arguments are all NULL.
+
+<P>
+The seventh argument to <EM>GRBaddvars()</EM> is the linear objective
+coefficient for each new variable.  The default sense of the objective
+is minimization, so we have negated the coefficients from our
+maximization objective here.  We could also have used unmodified
+maximization coefficients and changed the objective sense to
+maximization (by changing the <EM>ModelSense</EM> attribute of the
+model).
+
+<P>
+The next two arguments specify the lower and upper bounds of the
+variables, respectively.  The NULL values indicate that these
+variables should take their default values (0.0 and 1.0 for binary
+variables).
+
+<P>
+The tenth argument specifies the types of the variables.  In this
+example, the variables are all binary (<EM>GRB_BINARY</EM>).
+
+<P>
+The final argument gives the names of the variables.  In this case, we
+allow the variable names to take their default values
+(<EM>X0, X1, and X2</EM>).
+
+<P>
+<B>Updating the model - lazy modification</B>
+
+<P>
+Model modifications in the Gurobi optimizer are done in a <EM>lazy</EM>
+fashion, meaning that the effects of the modifications are not seen
+immediately.  This approach makes it easier to perform a sequence of
+model modifications, since the model doesn't change while it is being
+modified.  However, lazy modifications do require you to manually
+integrate model changes when needed.  This is done with the following
+routine:
+<PRE>
+  /* Integrate new variables */
+  error = GRBupdatemodel(model);
+  if (error) goto QUIT;
+</PRE>
+In our example, the model would contain zero variables immediately
+before the call to <EM>GRBupdatemodel()</EM>, and three immediately
+after.  Later attempts to add constraints to the model without first
+making this call would fail, since the model would contain no
+variables.
+
+<P>
+<B>Adding constraints to the model</B>
+
+<P>
+Once the new variables are integrated into the model, the next step is
+to add our two constraints.  Constraints are added through the
+<EM>GRBaddconstr()</EM> routine.  To add a constraint, you must specify
+several pieces of information, including the non-zero values
+associated with the constraint, the constraint sense, the right-hand
+side value, and the constraint name.  These are all specified as
+arguments to <EM>GRBaddconstr()</EM>:
+<PRE>
+  /* First constraint: x + 2 y + 3 z &lt;= 4 */
+
+  ind[0] = 0; ind[1] = 1; ind[2] = 2;
+  val[0] = 1; val[1] = 2; val[2] = 3;
+
+  error = GRBaddconstr(model, 3, ind, val, GRB_LESS_EQUAL, 4.0, NULL);
+  if (error) goto QUIT;
+</PRE>
+The first argument of <EM>GRBaddconstr()</EM> is the model to which the
+constraint is being added.  The second is the total number of non-zero
+coefficients associated with the new constraint.  The next two
+arguments describe the non-zeros in the new constraint.  Constraint
+coefficients are specified using a list of index-value pairs, one for
+each non-zero value.  In our example, the first constraint to be added
+is <!-- MATH
+ $x + 2y + 3z \leq 4$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="113" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.png"
+ ALT="$x + 2y + 3z \leq 4$"></SPAN>.  We have chosen to make <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img4.png"
+ ALT="$x$"></SPAN> the first
+variable in our constraint matrix, <SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$y$"></SPAN> the second, and <SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.png"
+ ALT="$z$"></SPAN> the third
+(note that this choice is arbitrary). Given our variable ordering
+choice, the index-value pairs that are required for our first
+constraint are (0, 1.0), (1, 2.0), and (2, 3.0).
+These pairs are placed in the <EM>ind</EM> and
+<EM>val</EM> arrays.
+
+<P>
+The fifth argument to <EM>GRBaddconstr()</EM> provides the sense of the
+new constraint.  Possible values are <EM>GRB_LESS_EQUAL</EM>,
+<EM>GRB_GREATER_EQUAL</EM>, or <EM>GRB_EQUAL</EM>.  The sixth argument gives
+the right-hand side value.  The final argument gives the name of the
+constraint (we allow the constraint to take its default name here by
+specifying <EM>NULL</EM> for the argument).
+
+<P>
+The second constraint is added in a similar fashion:
+<PRE>
+  /* Second constraint: x + y &gt;= 1 */
+
+  ind[0] = 0; ind[1] = 1;
+  val[0] = 1; val[1] = 1;
+
+  error = GRBaddconstr(model, 2, ind, val, GRB_GREATER_EQUAL, 1.0, NULL);
+  if (error) goto QUIT;
+</PRE>
+Note that routine <EM>GRBaddconstrs()</EM> would allow you to add both
+constraints in a single call.  The arguments for this routine are much
+more complex, though, without providing any significant advantages, so
+we recommend that you add one constraint at a time.
+
+<P>
+<B>Optimizing the model</B>
+
+<P>
+Now that the model has been built, the next step is to optimize it:
+<PRE>
+  error = GRBoptimize(model);
+  if (error) goto QUIT;
+</PRE>
+This routine performs the optimization and populates several internal
+model attributes, including the status of the optimization, the
+solution, etc.  Once the function returns, we can query the values of
+these attributes.  In particular, we can query the status of the
+optimization process by retrieving the value of the <EM>Status</EM>
+attribute...
+<PRE>
+  error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &amp;optimstatus);
+  if (error) goto QUIT;
+</PRE>
+The optimization status has many possible values.  An optimal solution
+to the model may have been found, or the model have been determined to
+be infeasible or unbounded, or the solution process may have been
+interrupted.  A list of possible statuses can be found in the
+<A NAME="tex2html13"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>.
+For our example, we know that the model is feasible, and we haven't
+modified any parameters that might cause the optimization to stop
+early (e.g., a time limit), so the status will be <EM>GRB_OPTIMAL</EM>.
+
+<P>
+Another important model attribute is the value of the objective function
+for the computed solution.  This is accessed through this call:
+<PRE>
+  error = GRBgetdoubleattr(model, GRB_DBL_ATTR_OBJVAL, &amp;objval);
+  if (error) goto QUIT;
+</PRE>
+Note that this call would return a non-zero error result if no
+solution was found for this model.
+
+<P>
+Once we know that the model was solved, we can extract the <EM>X</EM>
+attribute of the model, which contains the value for each variable in
+the computed solution:
+<PRE>
+  error = GRBgetdoublearrayattr(model, GRB_DBL_ATTR_X, 0, 3, x);
+  if (error) goto QUIT;
+  printf("  x=%.0f, y=%.0f, z=%.0f", x[0], x[1], x[2]);
+</PRE>
+This routine retrieves the values of an array-valued attribute.  The
+third and fourth arguments indicate the index of the first array
+element to be retrieved, and the number of elements to retrieve,
+respectively.  In this example we retrieve entries 0 through 2 (i.e.,
+all three of them)
+
+<P>
+<B>Error reporting</B>
+
+<P>
+We would like to point out one additional aspect of the example.
+Almost all of the Gurobi methods return an error code.  The code will
+typically be zero, indicating that no error was encountered, but it is
+important to check the value of the code in case an error arises.
+
+<P>
+While you may want to print a specialized error code at each point
+where an error may occur, the Gurobi interface provides a more
+flexible facility for reporting errors.  The
+<EM>GRBgeterrormsg()</EM> routine returns a textual description of
+the most recent error associated with an environment:
+<PRE>
+  if (error) {
+    printf("ERROR: %s\n", GRBgeterrormsg(env));
+    exit(1);
+  }
+</PRE>
+
+<P>
+Once the error reporting is done, the only remaining task in our
+example is to release the resources associated with our optimization
+task.  In this case, we populated one model and created one
+environment.  We call <EM>GRBfreemodel(model)</EM> to free the model,
+and <EM>GRBfreeenv(env)</EM> to free the environment.
+
+<P>
+<B>Building and running the example</B>
+
+<P>
+To build and run the example, please refer to the files in
+<EM>&lt;installdir&gt;/examples/build</EM>.  For Windows platforms, this
+directory contains <EM>C_examples_2008.sln</EM> and
+ <EM>C_examples_2010.sln</EM> (Visual Studio 2008 and 2010 solution
+files for the C examples).
+Double-clicking on the solution file will
+bring up Visual Studio.  Clicking on the 'mip1_c' project, and then
+selecting <EM>Run</EM> from the <EM>Build</EM> menu will compile and run
+the example.  For Linux or Mac OS platforms, the
+<EM>&lt;installdir&gt;/examples/build</EM> directory contains an example
+Makefile.  Typing <EM>make mip1_c</EM> will build and run this
+example.
+
+<P>
+The C example directory <EM>&lt;installdir&gt;/examples/c</EM> contains a
+number of examples.  We encourage you to browse and modify them in
+order to become more familiar with the Gurobi C interface. We
+also encourage you to read the
+<A NAME="tex2html14"
+  HREF="../examples/examples.html">Gurobi Example Tour</A>
+for more information.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html123"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html121"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html115"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html124"
+  HREF="node8.html">C++ Interface</A>
+<B> Up:</B> <A NAME="tex2html122"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html116"
+  HREF="node6.html">Attributes</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

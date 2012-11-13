@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBQuadExpr</TITLE>
+<META NAME="description" CONTENT="GRBQuadExpr">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node348.html">
+<LINK REL="previous" HREF="node319.html">
+<LINK REL="up" HREF="node248.html">
+<LINK REL="next" HREF="node334.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html4703"
+  HREF="node334.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4701"
+  HREF="node248.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4695"
+  HREF="node332.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html4704"
+  HREF="node334.html">GRBQuadExpr()</A>
+<B> Up:</B> <A NAME="tex2html4702"
+  HREF="node248.html">Java Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html4696"
+  HREF="node332.html">GRBLinExpr.size()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00039000000000000000"></A>
+<A NAME="javaclass:GRBQuadExpr"></A>
+<BR>
+GRBQuadExpr
+</H2>
+
+<P>
+Gurobi quadratic expression object.  A quadratic expression consists
+of a linear expression, plus a list of coefficient-variable-variable
+triples that capture the quadratic terms.  Quadratic expressions are
+used to build quadratic objective functions and quadratic constraints.
+They are temporary objects that typically have short lifespans.
+
+<P>
+The <EM>GRBQuadExpr</EM> class is a sub-class of the abstract base
+class <A HREF="node317.html#javaclass:GRBExpr">GRBExpr</A>.
+
+<P>
+You generally build quadratic expressions by starting with an empty
+expression (using the
+<A HREF="node334.html#javamethod:GRBQuadExpr">GRBQuadExpr</A> constructor), and
+then adding terms.  Terms can be added individually, using
+<A HREF="node337.html#javamethod:GRBQuadExpr.addTerm">addTerm</A>, or in groups,
+using <A HREF="node338.html#javamethod:GRBQuadExpr.addTerms">addTerms</A>, or
+<A HREF="node345.html#javamethod:GRBQuadExpr.multAdd">multAdd</A>.  Quadratic
+terms can be removed from a quadratic expression using
+<A HREF="node346.html#javamethod:GRBQuadExpr.remove">remove</A>.
+
+<P>
+Individual quadratic terms in a quadratic expression can be queried
+using the <A HREF="node343.html#javamethod:GRBQuadExpr.getVar1">getVar1</A>,
+<A HREF="node344.html#javamethod:GRBQuadExpr.getVar2">getVar2</A>, and
+<A HREF="node340.html#javamethod:GRBQuadExpr.getCoeff">getCoeff</A> methods.  You
+can query the number of quadratic terms in the expression using the
+<A HREF="node347.html#javamethod:GRBQuadExpr.size">size</A> method.  To query the
+constant and linear terms associated with a quadratic expression,
+first obtain the linear portion of the quadratic expression using
+<A HREF="node341.html#javamethod:GRBQuadExpr.getLinExpr">getLinExpr</A>, and then
+use the <A HREF="node326.html#javamethod:GRBLinExpr.getConstant">getConstant</A>,
+<A HREF="node327.html#javamethod:GRBLinExpr.getCoeff">getCoeff</A>, and
+<A HREF="node329.html#javamethod:GRBLinExpr.getVar">getVar</A> methods on the
+resulting <A HREF="node319.html#javaclass:GRBLinExpr">GRBLinExpr</A> object.
+
+<P>
+Note that a quadratic expression may contain multiple terms that
+involve the same variable pair.  These duplicate terms are merged when
+creating the model objective from an expression, but they may be
+visible when inspecting individual quadratic terms in the expression
+(e.g., when using
+<A HREF="node343.html#javamethod:GRBQuadExpr.getVar1">getVar1</A> and
+<A HREF="node344.html#javamethod:GRBQuadExpr.getVar2">getVar2</A>).
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html4705"
+  HREF="node334.html">GRBQuadExpr()</A>
+<LI><A NAME="tex2html4706"
+  HREF="node335.html">GRBQuadExpr.add()</A>
+<LI><A NAME="tex2html4707"
+  HREF="node336.html">GRBQuadExpr.addConstant()</A>
+<LI><A NAME="tex2html4708"
+  HREF="node337.html">GRBQuadExpr.addTerm()</A>
+<LI><A NAME="tex2html4709"
+  HREF="node338.html">GRBQuadExpr.addTerms()</A>
+<LI><A NAME="tex2html4710"
+  HREF="node339.html">GRBQuadExpr.clear()</A>
+<LI><A NAME="tex2html4711"
+  HREF="node340.html">GRBQuadExpr.getCoeff()</A>
+<LI><A NAME="tex2html4712"
+  HREF="node341.html">GRBQuadExpr.getLinExpr()</A>
+<LI><A NAME="tex2html4713"
+  HREF="node342.html">GRBQuadExpr.getValue()</A>
+<LI><A NAME="tex2html4714"
+  HREF="node343.html">GRBQuadExpr.getVar1()</A>
+<LI><A NAME="tex2html4715"
+  HREF="node344.html">GRBQuadExpr.getVar2()</A>
+<LI><A NAME="tex2html4716"
+  HREF="node345.html">GRBQuadExpr.multAdd()</A>
+<LI><A NAME="tex2html4717"
+  HREF="node346.html">GRBQuadExpr.remove()</A>
+<LI><A NAME="tex2html4718"
+  HREF="node347.html">GRBQuadExpr.size()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4703"
+  HREF="node334.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4701"
+  HREF="node248.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4695"
+  HREF="node332.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html4704"
+  HREF="node334.html">GRBQuadExpr()</A>
+<B> Up:</B> <A NAME="tex2html4702"
+  HREF="node248.html">Java Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html4696"
+  HREF="node332.html">GRBLinExpr.size()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

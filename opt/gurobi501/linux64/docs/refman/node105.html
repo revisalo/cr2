@@ -1,0 +1,806 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C++ Reference Manual</TITLE>
+<META NAME="description" CONTENT="C++ Reference Manual">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node248.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="refman.html">
+<LINK REL="next" HREF="node106.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html1996"
+  HREF="node106.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1994"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1988"
+  HREF="node104.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1997"
+  HREF="node106.html">GRBEnv</A>
+<B> Up:</B> <A NAME="tex2html1995"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html1989"
+  HREF="node104.html">GRBgeterrormsg</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00020000000000000000"></A>
+<A NAME="sec:C++"></A>
+<BR>
+C++ Reference Manual
+</H1>
+
+<P>
+This section documents the Gurobi C++ interface.  This manual begins
+with a quick overview of the classes exposed in the interface and the
+most important methods on those classes.  It then continues with a
+comprehensive presentation of all of the available classes and
+methods.
+
+<P>
+If you are new to the Gurobi Optimizer, we suggest that you start with
+the
+<A NAME="tex2html4"
+  HREF="../quickstart/quickstart.html">Quick Start Guide</A>
+or the
+<A NAME="tex2html5"
+  HREF="../examples/examples.html">Example Tour</A>.
+These
+documents provide concrete examples of how to use the classes and
+methods described here.
+
+<P>
+<B>Environments</B>
+
+<P>
+The first step in using the Gurobi C++ interface is to create an
+environment object.  Environments are represented using the
+<A HREF="node106.html#cppclass:GRBEnv">GRBEnv</A> class.  An environment acts as
+the container for all data associated with a set of optimization runs.
+You will generally only need one environment object in your program.
+
+<P>
+<B>Models</B>
+
+<P>
+You can create one or more optimization models within an environment.
+Each model is represented as an object of class
+<A HREF="node116.html#cppclass:GRBModel">GRBModel</A>.  A model consists
+of a set of decision variables (objects of class
+<A HREF="node158.html#cppclass:GRBVar">GRBVar</A>), a linear
+or quadratic objective function on those variables (specified using
+<A HREF="node154.html#cppmethod:GRBModel::setObjective">GRBModel::setObjective</A>),
+and a set of constraints on these variables (objects of class
+<A HREF="node162.html#cppclass:GRBConstr">GRBConstr</A>,
+<A HREF="node166.html#cppclass:GRBQConstr">GRBQConstr</A>,
+or <A HREF="node169.html#cppclass:GRBSOS">GRBSOS</A>).  Each variable has an
+associated lower bound, upper bound, and type (continuous, binary,
+etc.).  Each linear or quadratic constraint has an associated sense
+(less-than-or-equal, greater-than-or-equal, or equal), and right-hand
+side value.
+
+<P>
+Linear constraints are specified by building linear expressions
+(objects of class <A HREF="node173.html#cppclass:GRBLinExpr">GRBLinExpr</A>), and
+then specifying relationships between these expressions (for example,
+requiring that one expression be equal to another).
+Quadratic constraints are built in a similar fashion, but using
+quadratic expressions (objects of class
+<A HREF="node189.html#cppclass:GRBQuadExpr">GRBQuadExpr</A>) instead.
+
+<P>
+An optimization model may be specified all at once, by loading the
+model from a file (using the appropriate
+<A HREF="node117.html#cppmethod:GRBModel">GRBModel</A> constructor), or built
+incrementally, by first constructing an empty object of class
+<A HREF="node116.html#cppclass:GRBModel">GRBModel</A> and then subsequently
+calling <A HREF="node124.html#cppmethod:GRBModel::addVar">GRBModel::addVar</A>
+or <A HREF="node125.html#cppmethod:GRBModel::addVars">GRBModel::addVars</A> to
+add additional variables, and
+<A HREF="node118.html#cppmethod:GRBModel::addConstr">GRBModel::addConstr</A> or
+<A HREF="node120.html#cppmethod:GRBModel::addQConstr">GRBModel::addQConstr</A>
+to add additional constraints.  Models are dynamic entities; you can
+always add or remove variables or constraints.
+
+<P>
+We often refer to the <EM>class</EM> of an optimization model.  A model
+with a linear objective function, linear constraints, and continuous
+variables is a <EM>Linear Program (LP)</EM>.  If the objective is
+quadratic, the model is a <EM>Quadratic Program (QP)</EM>.  If any of the
+constraints are quadratic, the model is a
+<EM>Quadratically-Constrained Program (QCP)</EM>.
+We'll sometimes also discuss a special case of QCP,
+the
+<EM>Second-Order Cone Program (SOCP)</EM>.  If the model contains any
+integer variables, semi-continuous variables, semi-integer variables,
+or Special Ordered Set (SOS) constraints, the model is a
+<EM>Mixed Integer Program (MIP)</EM>.  We'll also sometimes discuss
+special cases of MIP,
+including
+<EM>Mixed Integer Linear Programs (MILP)</EM>,
+<EM>Mixed Integer Quadratic Programs (MIQP)</EM>,
+<EM>Mixed Integer Quadratically-Constrained Programs (MIQCP)</EM>,
+and
+<EM>Mixed Integer Second-Order Cone Programs (MISOCP)</EM>.
+The Gurobi Optimizer handles all of these model classes.
+
+<P>
+<B>Solving a Model</B>
+
+<P>
+Once you have built a model, you can call
+<A HREF="node147.html#cppmethod:GRBModel::optimize">GRBModel::optimize</A> to
+compute a solution.  By default,
+<A HREF="node147.html#cppmethod:GRBModel::optimize">optimize</A>
+will use the concurrent optimizer to solve LP models,
+the barrier algorithm to solve QP and QCP models, and
+the branch-and-cut algorithm to solve mixed integer models.  The
+solution is stored in a set of <EM>attributes</EM> of the model.  These
+attributes can be queried using a set of attribute query methods on
+the
+<A HREF="node116.html#cppclass:GRBModel">GRBModel</A>,
+<A HREF="node158.html#cppclass:GRBVar">GRBVar</A>,
+<A HREF="node162.html#cppclass:GRBConstr">GRBConstr</A>, and
+<A HREF="node166.html#cppclass:GRBQConstr">GRBQConstr</A> classes.
+
+<P>
+The Gurobi algorithms keep careful track of the state of the model, so
+calls to
+<A HREF="node147.html#cppmethod:GRBModel::optimize">GRBModel::optimize</A>
+will only perform further optimization if relevant data has changed
+since the model was last optimized.  If you would like to discard
+previously computed solution information and restart the optimization
+from scratch without changing the model, you can call
+<A HREF="node151.html#cppmethod:GRBModel::reset">GRBModel::reset</A>.
+
+<P>
+After a MIP model has been solved, you can call
+<A HREF="node131.html#cppmethod:GRBModel::fixedModel">GRBModel::fixedModel</A> to
+compute the associated <EM>fixed</EM> model.  This model is identical
+to the input model, except that all integer variables are fixed to
+their values in the MIP solution.  In some applications, it is useful
+to compute information on this continuous version of the MIP model
+(e.g., dual variables, sensitivity information, etc.).
+
+<P>
+<B>Infeasible Models</B>
+
+<P>
+You have a few options if a model is found to be infeasible.  You can
+try to diagnose the cause of the infeasibility, attempt to repair the
+infeasibility, or both.  To obtain information that can be useful for
+diagnosing the cause of an infeasibility, call
+<A HREF="node128.html#cppmethod:GRBModel::computeIIS">GRBModel::computeIIS</A>
+to compute an
+Irreducible Inconsistent Subsystem (IIS).  This method can be used
+for both continuous and MIP models, but you should be aware that the
+MIP version can be quite expensive.  This method populates a set of
+IIS attributes.
+
+<P>
+To attempt to repair an infeasibility, call
+<A HREF="node130.html#cppmethod:GRBModel::feasRelax">GRBModel::feasRelax</A>
+to compute a
+feasibility relaxation for the model.  This relaxation allows you to
+find a solution that minimizes the magnitude of the constraint
+violation.
+
+<P>
+<B>Querying and Modifying Attributes</B>
+
+<P>
+Most of the information associated with a Gurobi model is stored in a
+set of attributes.  Some attributes are associated with the variables
+of the model, some with the constraints of the model, and some with
+the model itself.  To give a simple example, solving an optimization
+model causes the <EM>X</EM> variable attribute to be populated.
+Attributes such as <EM>X</EM> that are computed by the Gurobi optimizer
+cannot be modified directly by the user, while others, such as the
+variable lower bound (the <EM>LB</EM> attribute) can.
+
+<P>
+Attributes are queried using
+<A HREF="node159.html#cppmethod:GRBVar::get">GRBVar::get</A>,
+<A HREF="node163.html#cppmethod:GRBConstr::get">GRBConstr::get</A>,
+<A HREF="node167.html#cppmethod:GRBQConstr::get">GRBQConstr::get</A>, or
+<A HREF="node132.html#cppmethod:GRBModel::get">GRBModel::get</A>,
+and modified using
+<A HREF="node161.html#cppmethod:GRBVar::set">GRBVar::set</A>,
+<A HREF="node165.html#cppmethod:GRBConstr::set">GRBConstr::set</A>,
+<A HREF="node168.html#cppmethod:GRBQConstr::set">GRBQConstr::set</A>, or
+<A HREF="node153.html#cppmethod:GRBModel::set">GRBModel::set</A>.
+Attributes are grouped into a set of enums by type
+(<A HREF="node241.html#cppenum:GRB_CharAttr">GRB_CharAttr</A>,
+<A HREF="node242.html#cppenum:GRB_DoubleAttr">GRB_DoubleAttr</A>,
+<A HREF="node243.html#cppenum:GRB_IntAttr">GRB_IntAttr</A>,
+<A HREF="node244.html#cppenum:GRB_StringAttr">GRB_StringAttr</A>).
+The <EM>get()</EM> and <EM>set()</EM> methods are overloaded, so the
+type of the attribute determines the type of the returned value.
+Thus, <EM>constr.get(GRB.DoubleAttr.RHS)</EM> returns a double,
+while <EM>constr.get(GRB.CharAttr.Sense)</EM> returns a char.
+
+<P>
+If you wish to retrieve attribute values for a set of variables or
+constraints, it is usually more efficient to use the array methods on
+the associated <A HREF="node116.html#cppclass:GRBModel">GRBModel</A> object.
+Method
+<A HREF="node132.html#cppmethod:GRBModel::get">GRBModel::get</A>
+includes signatures that allow you to query or modify attribute values
+for arrays of variables or constraints.
+
+<P>
+The full list of attributes can be found in the
+<A HREF="node652.html#sec:Attributes">Attributes</A> section.
+
+<P>
+<B>Additional Model Modification Information</B>
+
+<P>
+Most modifications to an existing model are done through the attribute
+interface (e.g., changes to variable bounds, constraint right-hand
+sides, etc.).  The main exceptions are modifications to the constraint
+matrix and the objective function.
+
+<P>
+The constraint matrix can be modified in a few ways.  The first is to
+call the
+<A HREF="node127.html#cppmethod:GRBModel::chgCoeffs">chgCoeffs</A> method on a
+<A HREF="node116.html#cppclass:GRBModel">GRBModel</A> object to change individual
+matrix coefficients.  This method can be used to modify the value of an
+existing non-zero, to set an existing non-zero to zero, or to create a
+new non-zero.  The constraint matrix is also modified when you remove
+a variable or constraint from the model (through the
+<A HREF="node150.html#cppmethod:GRBModel::remove">GRBModel::remove</A> method).
+The non-zero values associated with the deleted constraint or
+variable are removed along with the constraint or variable itself.
+
+<P>
+The model objective function can also be modified in a few ways.  The
+easiest is to build an expression that captures the objective function
+(a <A HREF="node173.html#cppclass:GRBLinExpr">GRBLinExpr</A> or
+<A HREF="node189.html#cppclass:GRBQuadExpr">GRBQuadExpr</A> object),
+and then pass that expression to method
+<A HREF="node154.html#cppmethod:GRBModel::setObjective">GRBModel::setObjective</A>.
+If you wish to modify the objective, you can simply call
+<EM>setObjective</EM> again with a new <EM>GRBLinExpr</EM> or
+<EM>GRBQuadExpr</EM> object.
+
+<P>
+For linear objective functions, an alternative to <EM>setObjective</EM>
+is to use the <EM>Obj</EM> variable attribute to modify individual
+linear objective coefficients.
+
+<P>
+<B>Lazy Updates</B>
+
+<P>
+One very important item to note about attribute and model
+modifications in the Gurobi optimizer is that they are performed in a
+<EM>lazy</EM> fashion, meaning that they don't actually affect the
+model until the next call
+to <A HREF="node147.html#cppmethod:GRBModel::optimize">optimize</A> or
+<A HREF="node156.html#cppmethod:GRBModel::update">update</A> on that model
+object.  This approach provides the advantage that the model remains
+unchanged while you are in the process of making multiple
+modifications.  The downside, of course, is that you have to remember
+to call <A HREF="node156.html#cppmethod:GRBModel::update">update</A> in order to
+see the effect of your changes.
+
+<P>
+<B>Managing Parameters</B>
+
+<P>
+The Gurobi optimizer provides a set of parameters to allow you to
+control many of the details of the optimization process.  Factors like
+feasibility and optimality tolerances, choices of algorithms,
+strategies for exploring the MIP search tree, etc., can be controlled
+by modifying Gurobi parameters before beginning the optimization.
+Parameters are set using methods on
+a <A HREF="node106.html#cppclass:GRBEnv">GRBEnv</A> object
+(e.g., <A HREF="node114.html#cppmethod:GRBEnv::set">GRBEnv::set</A>).  Current
+values may also be retrieved with
+<A HREF="node108.html#cppmethod:GRBEnv::get">GRBEnv::get</A>.
+Parameters can be of type <EM>int</EM>, <EM>double</EM>, or <EM>string</EM>.  You can also read a set of parameter settings from a file
+using
+<A HREF="node112.html#cppmethod:GRBEnv::readParams">GRBEnv::readParams</A>,
+or write the set of changed parameters using
+<A HREF="node115.html#cppmethod:GRBEnv::writeParams">GRBEnv::writeParams</A>.
+
+<P>
+One thing we should note is that each model gets its own copy of the
+environment when it is created.  Parameter changes to the original
+environment therefore have no effect on existing models.  Use
+<A HREF="node138.html#cppmethod:GRBModel::getEnv">GRBModel::getEnv</A> to retrieve the
+environment associated with a particular model if you want to change a
+parameter for that model.
+
+<P>
+The full list of Gurobi parameters can be found in the
+<A HREF="node653.html#sec:Parameters">Parameters</A> section.
+
+<P>
+<B>Memory Management</B>
+
+<P>
+Memory management must always be considered in C++ programs.  In
+particular, the Gurobi library and the user program share the same C++
+heap, so the user must be aware of certain aspects of how the Gurobi
+library uses this heap.  The basic rules for managing memory when
+using the Gurobi optimizer are as follows:
+
+<UL>
+<LI>As with other dynamically allocated C++ objects,
+<A HREF="node106.html#cppclass:GRBEnv">GRBEnv</A> or
+ <A HREF="node116.html#cppclass:GRBModel">GRBModel</A> objects should be freed
+using the associated destructors.  In other words, given a <EM>GRBModel</EM> object <EM>m</EM>, you should call <EM>delete m</EM> when
+you are no longer using <EM>m</EM>.
+</LI>
+<LI>Objects that are associated with a model (e.g.,
+<A HREF="node162.html#cppclass:GRBConstr">GRBConstr</A>,
+<A HREF="node169.html#cppclass:GRBSOS">GRBSOS</A>,
+and <A HREF="node158.html#cppclass:GRBVar">GRBVar</A> objects) are managed by the
+model.  In particular, deleting a model will delete all of the
+associated objects.  Similarly, removing an object from a model
+(using <A HREF="node150.html#cppmethod:GRBModel::remove">GRBModel::remove</A>)
+will also delete the object.
+</LI>
+<LI>Some Gurobi methods return an array of objects or values.
+For
+example, <A HREF="node125.html#cppmethod:GRBModel::addVars">GRBModel::addVars</A>
+returns an array of <EM>GRBVar</EM> objects.  It is the user's
+responsibility to free the returned array (using <EM>delete[]</EM>).
+The reference manual indicates when a method returns a heap-allocated
+result.
+</LI>
+</UL>
+
+<P>
+One consequence of these rules is that you must be careful not to use
+an object once it has been freed.  This is no doubt quite clear for
+environments and models, where you call the destructors explicitly,
+but may be less clear for constraints and variables, which are
+implicitly deleted when the associated model is deleted.
+
+<P>
+<B>Monitoring Progress - Logging and Callbacks</B>
+
+<P>
+Progress of the optimization can be monitored through Gurobi logging.
+By default, Gurobi will send output to the screen.  A few simple
+controls are available for modifying the default logging behavior.  If
+you would like to direct output to a file as well as to the screen,
+specify the log file name in the <A HREF="node107.html#cppmethod:GRBEnv">GRBEnv</A> constructor.  You can modify the <EM>LogFile</EM> parameter if you wish to redirect the log to a
+different file after creating the environment object.  The frequency
+of logging output can be controlled with the <EM>DisplayInterval</EM>
+parameter, and logging can be turned off entirely with the <EM>OutputFlag</EM> parameter.  A detailed description of the Gurobi log
+file can be found in the <A HREF="node754.html#sec:Logging">Logging</A> section.
+
+<P>
+More detailed progress monitoring can be done through the
+<A HREF="node217.html#cppclass:GRBCallback">GRBCallback</A> class.
+The
+<A HREF="node152.html#cppmethod:GRBModel::setCallback">GRBModel::setCallback</A> method
+allows you to receive a periodic callback from the Gurobi optimizer.
+You do this by sub-classing
+the <A HREF="node217.html#cppclass:GRBCallback">GRBCallback</A> abstract class,
+and writing your own <EM>callback()</EM> method on this class.  You can
+call
+<A HREF="node222.html#cppmethod:GRBCallback::getDoubleInfo">GRBCallback::getDoubleInfo</A>,
+<A HREF="node223.html#cppmethod:GRBCallback::getIntInfo">GRBCallback::getIntInfo</A>,
+<A HREF="node226.html#cppmethod:GRBCallback::getStringInfo">GRBCallback::getStringInfo</A>,
+or
+<A HREF="node225.html#cppmethod:GRBCallback::getSolution">GRBCallback::getSolution</A>
+from within the callback to obtain additional information about the
+state of the optimization.
+
+<P>
+<B>Modifying Solver Behavior - Callbacks</B>
+
+<P>
+Callbacks can also be used to modify the behavior of the Gurobi
+optimizer.  The simplest control callback is
+<A HREF="node219.html#cppmethod:GRBCallback::abort">GRBCallback::abort</A>,
+which asks the optimizer to terminate at the earliest convenient
+point.  Method
+<A HREF="node227.html#cppmethod:GRBCallback::setSolution">GRBCallback::setSolution</A>
+allows you to inject a feasible solution (or partial solution) during
+the solution of a MIP model.  Methods
+<A HREF="node220.html#cppmethod:GRBCallback::addCut">GRBCallback::addCut</A>
+and
+<A HREF="node221.html#cppmethod:GRBCallback::addLazy">GRBCallback::addLazy</A>
+allow you to add <EM>cutting planes</EM> and <EM>lazy constraints</EM>
+during a MIP optimization, respectively.
+
+<P>
+<B>Error Handling</B>
+
+<P>
+All of the methods in the Gurobi C++ library can throw an exception
+of type <A HREF="node228.html#cppclass:GRBException">GRBException</A>.  When an
+exception occurs, additional information on the error can be obtained
+by retrieving the error code (using method <EM>GRBException::getErrorCode</EM>), or by retrieving the exception message
+(using method <EM>GRBException::getMessage</EM>).
+The list of possible error return codes can be found in
+the <A HREF="node742.html#sec:ErrorCodes">Error Codes</A> section.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1998"
+  HREF="node106.html">GRBEnv</A>
+<UL>
+<LI><A NAME="tex2html1999"
+  HREF="node107.html">GRBEnv()</A>
+<LI><A NAME="tex2html2000"
+  HREF="node108.html">GRBEnv::get()</A>
+<LI><A NAME="tex2html2001"
+  HREF="node109.html">GRBEnv::getErrorMsg()</A>
+<LI><A NAME="tex2html2002"
+  HREF="node110.html">GRBEnv::getParamInfo()</A>
+<LI><A NAME="tex2html2003"
+  HREF="node111.html">GRBEnv::message()</A>
+<LI><A NAME="tex2html2004"
+  HREF="node112.html">GRBEnv::readParams()</A>
+<LI><A NAME="tex2html2005"
+  HREF="node113.html">GRBEnv::resetParams()</A>
+<LI><A NAME="tex2html2006"
+  HREF="node114.html">GRBEnv::set()</A>
+<LI><A NAME="tex2html2007"
+  HREF="node115.html">GRBEnv::writeParams()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2008"
+  HREF="node116.html">GRBModel</A>
+<UL>
+<LI><A NAME="tex2html2009"
+  HREF="node117.html">GRBModel()</A>
+<LI><A NAME="tex2html2010"
+  HREF="node118.html">GRBModel::addConstr()</A>
+<LI><A NAME="tex2html2011"
+  HREF="node119.html">GRBModel::addConstrs()</A>
+<LI><A NAME="tex2html2012"
+  HREF="node120.html">GRBModel::addQConstr()</A>
+<LI><A NAME="tex2html2013"
+  HREF="node121.html">GRBModel::addRange()</A>
+<LI><A NAME="tex2html2014"
+  HREF="node122.html">GRBModel::addRanges()</A>
+<LI><A NAME="tex2html2015"
+  HREF="node123.html">GRBModel::addSOS()</A>
+<LI><A NAME="tex2html2016"
+  HREF="node124.html">GRBModel::addVar()</A>
+<LI><A NAME="tex2html2017"
+  HREF="node125.html">GRBModel::addVars()</A>
+<LI><A NAME="tex2html2018"
+  HREF="node126.html">GRBModel::chgCoeff()</A>
+<LI><A NAME="tex2html2019"
+  HREF="node127.html">GRBModel::chgCoeffs()</A>
+<LI><A NAME="tex2html2020"
+  HREF="node128.html">GRBModel::computeIIS()</A>
+<LI><A NAME="tex2html2021"
+  HREF="node129.html">GRBModel::discardConcurrentEnvs()</A>
+<LI><A NAME="tex2html2022"
+  HREF="node130.html">GRBModel::feasRelax()</A>
+<LI><A NAME="tex2html2023"
+  HREF="node131.html">GRBModel::fixedModel()</A>
+<LI><A NAME="tex2html2024"
+  HREF="node132.html">GRBModel::get()</A>
+<LI><A NAME="tex2html2025"
+  HREF="node133.html">GRBModel::getCoeff()</A>
+<LI><A NAME="tex2html2026"
+  HREF="node134.html">GRBModel::getCol()</A>
+<LI><A NAME="tex2html2027"
+  HREF="node135.html">GRBModel::getConcurrentEnv()</A>
+<LI><A NAME="tex2html2028"
+  HREF="node136.html">GRBModel::getConstrByName()</A>
+<LI><A NAME="tex2html2029"
+  HREF="node137.html">GRBModel::getConstrs()</A>
+<LI><A NAME="tex2html2030"
+  HREF="node138.html">GRBModel::getEnv()</A>
+<LI><A NAME="tex2html2031"
+  HREF="node139.html">GRBModel::getObjective()</A>
+<LI><A NAME="tex2html2032"
+  HREF="node140.html">GRBModel::getQConstr()</A>
+<LI><A NAME="tex2html2033"
+  HREF="node141.html">GRBModel::getQConstrs()</A>
+<LI><A NAME="tex2html2034"
+  HREF="node142.html">GRBModel::getRow()</A>
+<LI><A NAME="tex2html2035"
+  HREF="node143.html">GRBModel::getSOS()</A>
+<LI><A NAME="tex2html2036"
+  HREF="node144.html">GRBModel::getSOSs()</A>
+<LI><A NAME="tex2html2037"
+  HREF="node145.html">GRBModel::getVarByName()</A>
+<LI><A NAME="tex2html2038"
+  HREF="node146.html">GRBModel::getVars()</A>
+<LI><A NAME="tex2html2039"
+  HREF="node147.html">GRBModel::optimize()</A>
+<LI><A NAME="tex2html2040"
+  HREF="node148.html">GRBModel::presolve()</A>
+<LI><A NAME="tex2html2041"
+  HREF="node149.html">GRBModel::read()</A>
+<LI><A NAME="tex2html2042"
+  HREF="node150.html">GRBModel::remove()</A>
+<LI><A NAME="tex2html2043"
+  HREF="node151.html">GRBModel::reset()</A>
+<LI><A NAME="tex2html2044"
+  HREF="node152.html">GRBModel::setCallback()</A>
+<LI><A NAME="tex2html2045"
+  HREF="node153.html">GRBModel::set()</A>
+<LI><A NAME="tex2html2046"
+  HREF="node154.html">GRBModel::setObjective()</A>
+<LI><A NAME="tex2html2047"
+  HREF="node155.html">GRBModel::terminate()</A>
+<LI><A NAME="tex2html2048"
+  HREF="node156.html">GRBModel::update()</A>
+<LI><A NAME="tex2html2049"
+  HREF="node157.html">GRBModel::write()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2050"
+  HREF="node158.html">GRBVar</A>
+<UL>
+<LI><A NAME="tex2html2051"
+  HREF="node159.html">GRBVar::get()</A>
+<LI><A NAME="tex2html2052"
+  HREF="node160.html">GRBVar::sameAs()</A>
+<LI><A NAME="tex2html2053"
+  HREF="node161.html">GRBVar::set()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2054"
+  HREF="node162.html">GRBConstr</A>
+<UL>
+<LI><A NAME="tex2html2055"
+  HREF="node163.html">GRBConstr::get()</A>
+<LI><A NAME="tex2html2056"
+  HREF="node164.html">GRBConstr::sameAs()</A>
+<LI><A NAME="tex2html2057"
+  HREF="node165.html">GRBConstr::set()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2058"
+  HREF="node166.html">GRBQConstr</A>
+<UL>
+<LI><A NAME="tex2html2059"
+  HREF="node167.html">GRBQConstr::get()</A>
+<LI><A NAME="tex2html2060"
+  HREF="node168.html">GRBQConstr::set()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2061"
+  HREF="node169.html">GRBSOS</A>
+<UL>
+<LI><A NAME="tex2html2062"
+  HREF="node170.html">GRBSOS::get()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2063"
+  HREF="node171.html">GRBExpr</A>
+<UL>
+<LI><A NAME="tex2html2064"
+  HREF="node172.html">GRBExpr::getValue()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2065"
+  HREF="node173.html">GRBLinExpr</A>
+<UL>
+<LI><A NAME="tex2html2066"
+  HREF="node174.html">GRBLinExpr()</A>
+<LI><A NAME="tex2html2067"
+  HREF="node175.html">GRBLinExpr::addTerms()</A>
+<LI><A NAME="tex2html2068"
+  HREF="node176.html">GRBLinExpr::clear()</A>
+<LI><A NAME="tex2html2069"
+  HREF="node177.html">GRBLinExpr::getConstant()</A>
+<LI><A NAME="tex2html2070"
+  HREF="node178.html">GRBLinExpr::getCoeff()</A>
+<LI><A NAME="tex2html2071"
+  HREF="node179.html">GRBLinExpr::getValue()</A>
+<LI><A NAME="tex2html2072"
+  HREF="node180.html">GRBLinExpr::getVar()</A>
+<LI><A NAME="tex2html2073"
+  HREF="node181.html">GRBLinExpr::operator=</A>
+<LI><A NAME="tex2html2074"
+  HREF="node182.html">GRBLinExpr::operator+</A>
+<LI><A NAME="tex2html2075"
+  HREF="node183.html">GRBLinExpr::operator-</A>
+<LI><A NAME="tex2html2076"
+  HREF="node184.html">GRBLinExpr::operator+=</A>
+<LI><A NAME="tex2html2077"
+  HREF="node185.html">GRBLinExpr::operator-=</A>
+<LI><A NAME="tex2html2078"
+  HREF="node186.html">GRBLinExpr::operator*=</A>
+<LI><A NAME="tex2html2079"
+  HREF="node187.html">GRBLinExpr::remove()</A>
+<LI><A NAME="tex2html2080"
+  HREF="node188.html">GRBLinExpr::size()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2081"
+  HREF="node189.html">GRBQuadExpr</A>
+<UL>
+<LI><A NAME="tex2html2082"
+  HREF="node190.html">GRBQuadExpr()</A>
+<LI><A NAME="tex2html2083"
+  HREF="node191.html">GRBQuadExpr::addTerm()</A>
+<LI><A NAME="tex2html2084"
+  HREF="node192.html">GRBQuadExpr::addTerms()</A>
+<LI><A NAME="tex2html2085"
+  HREF="node193.html">GRBQuadExpr::clear()</A>
+<LI><A NAME="tex2html2086"
+  HREF="node194.html">GRBQuadExpr::getCoeff()</A>
+<LI><A NAME="tex2html2087"
+  HREF="node195.html">GRBQuadExpr::getLinExpr()</A>
+<LI><A NAME="tex2html2088"
+  HREF="node196.html">GRBQuadExpr::getValue()</A>
+<LI><A NAME="tex2html2089"
+  HREF="node197.html">GRBQuadExpr::getVar1()</A>
+<LI><A NAME="tex2html2090"
+  HREF="node198.html">GRBQuadExpr::getVar2()</A>
+<LI><A NAME="tex2html2091"
+  HREF="node199.html">GRBQuadExpr::operator=</A>
+<LI><A NAME="tex2html2092"
+  HREF="node200.html">GRBQuadExpr::operator+</A>
+<LI><A NAME="tex2html2093"
+  HREF="node201.html">GRBQuadExpr::operator-</A>
+<LI><A NAME="tex2html2094"
+  HREF="node202.html">GRBQuadExpr::operator+=</A>
+<LI><A NAME="tex2html2095"
+  HREF="node203.html">GRBQuadExpr::operator-=</A>
+<LI><A NAME="tex2html2096"
+  HREF="node204.html">GRBQuadExpr::operator*=</A>
+<LI><A NAME="tex2html2097"
+  HREF="node205.html">GRBQuadExpr::remove()</A>
+<LI><A NAME="tex2html2098"
+  HREF="node206.html">GRBQuadExpr::size()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2099"
+  HREF="node207.html">GRBTempConstr</A>
+<LI><A NAME="tex2html2100"
+  HREF="node208.html">GRBColumn</A>
+<UL>
+<LI><A NAME="tex2html2101"
+  HREF="node209.html">GRBColumn()</A>
+<LI><A NAME="tex2html2102"
+  HREF="node210.html">GRBColumn::addTerm()</A>
+<LI><A NAME="tex2html2103"
+  HREF="node211.html">GRBColumn::addTerms()</A>
+<LI><A NAME="tex2html2104"
+  HREF="node212.html">GRBColumn::clear()</A>
+<LI><A NAME="tex2html2105"
+  HREF="node213.html">GRBColumn::getCoeff()</A>
+<LI><A NAME="tex2html2106"
+  HREF="node214.html">GRBColumn::getConstr()</A>
+<LI><A NAME="tex2html2107"
+  HREF="node215.html">GRBColumn::remove()</A>
+<LI><A NAME="tex2html2108"
+  HREF="node216.html">GRBColumn::size()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2109"
+  HREF="node217.html">GRBCallback</A>
+<UL>
+<LI><A NAME="tex2html2110"
+  HREF="node218.html">GRBCallback()</A>
+<LI><A NAME="tex2html2111"
+  HREF="node219.html">GRBCallback::abort()</A>
+<LI><A NAME="tex2html2112"
+  HREF="node220.html">GRBCallback::addCut()</A>
+<LI><A NAME="tex2html2113"
+  HREF="node221.html">GRBCallback::addLazy()</A>
+<LI><A NAME="tex2html2114"
+  HREF="node222.html">GRBCallback::getDoubleInfo()</A>
+<LI><A NAME="tex2html2115"
+  HREF="node223.html">GRBCallback::getIntInfo()</A>
+<LI><A NAME="tex2html2116"
+  HREF="node224.html">GRBCallback::getNodeRel()</A>
+<LI><A NAME="tex2html2117"
+  HREF="node225.html">GRBCallback::getSolution()</A>
+<LI><A NAME="tex2html2118"
+  HREF="node226.html">GRBCallback::getStringInfo()</A>
+<LI><A NAME="tex2html2119"
+  HREF="node227.html">GRBCallback::setSolution()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2120"
+  HREF="node228.html">GRBException</A>
+<UL>
+<LI><A NAME="tex2html2121"
+  HREF="node229.html">GRBException()</A>
+<LI><A NAME="tex2html2122"
+  HREF="node230.html">GRBException::getErrorCode()</A>
+<LI><A NAME="tex2html2123"
+  HREF="node231.html">GRBException::getMessage()</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2124"
+  HREF="node232.html">Non-Member Functions</A>
+<UL>
+<LI><A NAME="tex2html2125"
+  HREF="node233.html">operator==</A>
+<LI><A NAME="tex2html2126"
+  HREF="node234.html">operator&lt;=</A>
+<LI><A NAME="tex2html2127"
+  HREF="node235.html">operator&gt;=</A>
+<LI><A NAME="tex2html2128"
+  HREF="node236.html">operator+</A>
+<LI><A NAME="tex2html2129"
+  HREF="node237.html">operator-</A>
+<LI><A NAME="tex2html2130"
+  HREF="node238.html">operator*</A>
+<LI><A NAME="tex2html2131"
+  HREF="node239.html">operator/</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2132"
+  HREF="node240.html">Attribute Enums</A>
+<UL>
+<LI><A NAME="tex2html2133"
+  HREF="node241.html">GRB_CharAttr</A>
+<LI><A NAME="tex2html2134"
+  HREF="node242.html">GRB_DoubleAttr</A>
+<LI><A NAME="tex2html2135"
+  HREF="node243.html">GRB_IntAttr</A>
+<LI><A NAME="tex2html2136"
+  HREF="node244.html">GRB_StringAttr</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html2137"
+  HREF="node245.html">Parameter Enums</A>
+<UL>
+<LI><A NAME="tex2html2138"
+  HREF="node246.html">GRB_DoubleParam</A>
+<LI><A NAME="tex2html2139"
+  HREF="node247.html">GRB_IntParam</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1996"
+  HREF="node106.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1994"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1988"
+  HREF="node104.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1997"
+  HREF="node106.html">GRBEnv</A>
+<B> Up:</B> <A NAME="tex2html1995"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html1989"
+  HREF="node104.html">GRBgeterrormsg</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

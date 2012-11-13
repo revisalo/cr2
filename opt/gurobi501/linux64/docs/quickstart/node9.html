@@ -1,0 +1,447 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Java Interface</TITLE>
+<META NAME="description" CONTENT="Java Interface">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html143"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html141"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html135"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html144"
+  HREF="node10.html">.NET Interface (C#)</A>
+<B> Up:</B> <A NAME="tex2html142"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html136"
+  HREF="node8.html">C++ Interface</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00070000000000000000"></A>
+<A NAME="section:Java"></A>
+<BR>
+Java Interface
+</H1>
+
+<P>
+This section will work through a simple Java example in order to
+illustrate the use of the Gurobi Java interface.  The example builds a
+model, optimizes it, and outputs the optimal objective value.  This
+section assumes that you are already familiar with the Java
+programming language.  If not, a variety of books and web sites are
+available for learning the language (for example,
+<A NAME="tex2html18"
+  HREF="http://java.sun.com/docs/books/tutorial">the online Java
+  tutorials</A>).
+
+<P>
+Our example optimizes the following model:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="RIGHT"><B>maximize</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 z</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="RIGHT"><B>subject to</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">3 z</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\leq$"></SPAN></TD>
+<TD ALIGN="RIGHT">4</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$\geq$"></SPAN></TD>
+<TD ALIGN="RIGHT">1</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" COLSPAN=6><SPAN>x, y, z binary</SPAN></TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+Note that this is the same model that was modeled and optimized in the
+<A HREF="node7.html#section:C">C Interface</A> section.
+
+<P>
+<B>Example Mip1.java</B>
+
+<P>
+This is the complete source code for our example (also available in
+<EM>&lt;installdir&gt;/examples/java/Mip1.java</EM>)...
+
+<P>
+<PRE>
+import gurobi.*;
+
+public class Mip1 {
+  public static void main(String[] args) {
+    try {
+      GRBEnv    env   = new GRBEnv("mip1.log");
+      GRBModel  model = new GRBModel(env);
+
+      // Create variables
+
+      GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
+      GRBVar y = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
+      GRBVar z = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+
+      // Integrate new variables
+
+      model.update();
+
+      // Set objective: maximize x + y + 2 z
+
+      GRBLinExpr expr = new GRBLinExpr();
+      expr.addTerm(1.0, x); expr.addTerm(1.0, y); expr.addTerm(2.0, z);
+      model.setObjective(expr, GRB.MAXIMIZE);
+
+      // Add constraint: x + 2 y + 3 z &lt;= 4
+
+      expr = new GRBLinExpr();
+      expr.addTerm(1.0, x); expr.addTerm(2.0, y); expr.addTerm(3.0, z);
+      model.addConstr(expr, GRB.LESS_EQUAL, 4.0, "c0");
+
+      // Add constraint: x + y &gt;= 1
+
+      expr = new GRBLinExpr();
+      expr.addTerm(1.0, x); expr.addTerm(1.0, y);
+      model.addConstr(expr, GRB.GREATER_EQUAL, 1.0, "c1");
+
+      // Optimize model
+
+      model.optimize();
+
+      System.out.println(x.get(GRB.StringAttr.VarName)
+                         + " " +x.get(GRB.DoubleAttr.X));
+      System.out.println(y.get(GRB.StringAttr.VarName)
+                         + " " +y.get(GRB.DoubleAttr.X));
+      System.out.println(z.get(GRB.StringAttr.VarName)
+                         + " " +z.get(GRB.DoubleAttr.X));
+
+      System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
+
+      // Dispose of model and environment
+
+      model.dispose();
+      env.dispose();
+
+    } catch (GRBException e) {
+      System.out.println("Error code: " + e.getErrorCode() + ". " +
+                         e.getMessage());
+    }
+  }
+}
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of optimizing the indicated model.
+
+<P>
+The example begins by importing the Gurobi classes
+(<EM>import gurobi.*</EM>).  Gurobi Java applications
+should always start with this line.
+
+<P>
+<B>Creating the environment</B>
+
+<P>
+The first executable statement in our example obtains a Gurobi
+environment (using the <EM>GRBEnv()</EM> constructor):
+<PRE>
+   GRBEnv env = new GRBEnv("mip1.log");
+</PRE>
+Later calls to create an optimization model will always require an
+environment, so environment creation is typically the first step in a
+Gurobi application.  The constructor argument specifies the name of
+the log file.
+
+<P>
+<B>Creating the model</B>
+
+<P>
+Once an environment has been created, the next step is to create a
+model.  A Gurobi model holds a single optimization problem.  It
+consists of a set of variables, a set of constraints, and the
+associated attributes (variable bounds, objective coefficients,
+variable integrality types, constraint senses, constraint right-hand
+side values, etc.).  The first step towards building a model that
+contains all of this information is to create an empty model object:
+<PRE>
+  GRBModel model = new GRBModel(env);
+</PRE>
+The constructor takes the previously created environment as its
+argument.
+
+<P>
+<B>Adding variables to the model</B>
+
+<P>
+The next step in our example is to add variables to the model.
+<PRE>
+  // Create variables
+  GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x");
+  GRBVar y = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "y");
+  GRBVar z = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "z");
+</PRE>
+Variables are added through the <EM>addVar()</EM> method on a model
+object.  A variable is always associated with a particular model.
+
+<P>
+The first and second arguments to the <EM>addVar()</EM> call are the
+variable lower and upper bounds, respectively.  The third argument is
+the linear objective coefficient (zero here - we'll set the objective
+later).  The fourth argument is the variable type.  Our variables are
+all binary in this example.  The final argument is the name of the
+variable.
+
+<P>
+The <EM>addVar()</EM> method has been overloaded to accept several
+different argument lists.  Please refer to the
+<A NAME="tex2html19"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>
+for further details.
+
+<P>
+<B>Updating the model - lazy modification</B>
+
+<P>
+Model modifications in the Gurobi optimizer are done in a <EM>lazy</EM>
+fashion, meaning that the effects of the modifications are not seen
+immediately.  This approach makes it easier to perform a sequence of
+model modifications, since the model doesn't change while it is being
+modified.  However, lazy modifications do require you to manually
+integrate model changes when needed.  This is done with the
+<EM>update</EM> method:
+<PRE>
+  // Integrate new variables
+  model.update();
+</PRE>
+
+<P>
+<B>Setting the objective</B>
+
+<P>
+The next step in the example is to set the optimization
+objective:
+<PRE>
+  // Set objective: maximize x + y + 2 z
+
+  GRBLinExpr expr = new GRBLinExpr();
+  expr.addTerm(1.0, x); expr.addTerm(1.0, y); expr.addTerm(2.0, z);
+  model.setObjective(expr, GRB.MAXIMIZE);
+</PRE>
+The objective must be a linear or quadratic function of the variables
+in the model.  In our example, we build our objective by first
+constructing an empty linear expression and adding three terms to it.
+
+<P>
+The second argument to <EM>setObjective</EM> indicates that the
+optimization sense is maximization.
+
+<P>
+<B>Adding constraints to the model</B>
+
+<P>
+The next step in the example is to add the constraints.  The first
+constraint is added here:
+<PRE>
+  // Add constraint: x + 2 y + 3 z &lt;= 4
+  GRBLinExpr expr;
+
+  expr = new GRBLinExpr();
+  expr.addTerm(1.0, x); expr.addTerm(2.0, y); expr.addTerm(3.0, z);
+  model.addConstr(expr, GRB.LESS_EQUAL, 4.0, "c0");
+</PRE>
+As with variables, constraints are always associated with a specific
+model.  They are created using the <EM>addConstr()</EM> or
+<EM>addConstrs()</EM> methods on the model object.
+
+<P>
+The first argument to <EM>addConstr()</EM> is the left-hand side of the
+constraint.  We built the left-hand side by first creating an empty
+linear expression object, and then adding three terms to it.  The
+second argument is the constraint sense (<EM>GRB_LESS_EQUAL</EM>,
+<EM>GRB_GREATER_EQUAL</EM>, or <EM>GRB_EQUAL</EM>).  The third argument is
+the right-hand side (a constant in our example).  The final argument
+is the constraint name.  Several signatures are available for
+<EM>addConstr()</EM>.  Please consult the <A NAME="tex2html20"
+  HREF="../refman/refman.html">Gurobi
+  Reference Manual</A>
+for details.
+
+<P>
+The second constraint is created in a similar manner:
+<PRE>
+  // Add constraint: x + y &gt;= 1
+
+  expr = new GRBLinExpr();
+  expr.addTerm(1.0, x); expr.addTerm(1.0, y);
+  model.addConstr(expr, GRB.GREATER_EQUAL, 1.0, "c1");
+</PRE>
+
+<P>
+<B>Optimizing the model</B>
+
+<P>
+Now that the model has been built, the next step is to optimize it:
+<PRE>
+  // Optimize model
+  model.optimize();
+</PRE>
+This routine performs the optimization and populates several internal
+model attributes (including the status of the optimization, the
+solution, etc.).
+
+<P>
+<B>Reporting results - attributes</B>
+
+<P>
+Once the optimization is complete, we can query the values of the
+attributes.  In particular, we can query the <EM>VarName</EM> and <EM>X</EM>
+attributes to obtain the name and solution value for each variable:
+<PRE>
+  System.out.println(x.get(GRB.StringAttr.VarName)
+                     + " " +x.get(GRB.DoubleAttr.X));
+  System.out.println(y.get(GRB.StringAttr.VarName)
+                     + " " +y.get(GRB.DoubleAttr.X));
+  System.out.println(z.get(GRB.StringAttr.VarName)
+                     + " " +z.get(GRB.DoubleAttr.X));
+</PRE>
+
+<P>
+We can also query the <EM>ObjVal</EM> attribute on the model
+to obtain the objective value for the current solution:
+<PRE>
+  System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
+</PRE>
+
+<P>
+The names and types of all model, variable, and constraint attributes
+can be found in the <EM>Attributes</EM> section of the
+<A NAME="tex2html21"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>.
+
+<P>
+<B>Cleaning up</B>
+
+<P>
+The example concludes with <EM>dispose</EM> calls:
+<PRE>
+  model.dispose();
+  env.dispose();
+</PRE>
+These reclaim the resources associated with the model and environment.
+Garbage collection would reclaim these eventually, but if your program
+doesn't exit immediately after performing the optimization, it is best
+to reclaim them explicitly.
+
+<P>
+Note that all models associated with an environment must be disposed
+before the environment itself is disposed.
+
+<P>
+<B>Error handling</B>
+
+<P>
+Errors in the Gurobi Java interface are handled through the Java
+exception mechanism.  In the example, all Gurobi statements are
+enclosed inside a <EM>try</EM> block, and any associated errors would be
+caught by the <EM>catch</EM> block.
+
+<P>
+<B>Building and running the example</B>
+
+<P>
+To build and run the example, please refer to the files in
+<EM>&lt;installdir&gt;/examples/build</EM>.  For Windows platforms, this
+directory contains <EM>runjava.bat</EM>, a simple script to compile and
+run a java example.  Say <EM>runjava Mip1</EM> to run this example.
+For Linux or Mac OS platforms, the <EM>&lt;installdir&gt;/examples/build</EM>
+directory contains an example Makefile.  Typing <EM>make Mip1</EM> will
+build and run this example.
+
+<P>
+The Java example directory <EM>&lt;installdir&gt;/examples/java</EM> contains
+a number of examples.  We encourage you to browse and modify them in
+order to become more familiar with the Gurobi Java interface.  We
+also encourage you to read the
+<A NAME="tex2html22"
+  HREF="../examples/examples.html">Gurobi Example Tour</A>
+for more information.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html143"
+  HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html141"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html135"
+  HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html144"
+  HREF="node10.html">.NET Interface (C#)</A>
+<B> Up:</B> <A NAME="tex2html142"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html136"
+  HREF="node8.html">C++ Interface</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

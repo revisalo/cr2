@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Gurobi Optimizer Quick Start Guide</TITLE>
+<META NAME="description" CONTENT="Gurobi Optimizer Quick Start Guide">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html36"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html37"
+  HREF="node1.html">Installation</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<DIV ALIGN="CENTER">
+<IMG
+  WIDTH="237" HEIGHT="70" ALIGN="BOTTOM" BORDER="0"
+ SRC="./logo.png"
+ ALT="Image logo">
+
+</DIV>
+
+<P>
+<H1 ALIGN="CENTER">Gurobi Optimizer Quick Start Guide</H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>Version 5.0, Copyright &#169; 2012, Gurobi Optimization, Inc.</STRONG></P>
+</DIV>
+
+<P>
+This document provides a quick introduction to the
+Gurobi<SUP><SMALL>TM</SMALL></SUP> Optimizer.  It begins with a <A HREF="node1.html#section:Installation">Software
+  Installation</A> guide and information on
+<A HREF="node2.html#section:License">How to Obtain and Install a Gurobi
+  License</A>, and continues with a quick
+introduction to the Gurobi <A HREF="node5.html#section:Shell">Interactive
+  Shell</A>.  We suggest that all users read these
+first three sections.
+
+<P>
+Depending on the programming language from which you intend to use the
+Gurobi Optimizer, you may also wish to read the sections devoted to
+the Gurobi
+<A HREF="node7.html#section:C">C Interface</A>,
+<A HREF="node8.html#section:C++">C++ Interface</A>,
+<A HREF="node9.html#section:Java">Java&#174; Interface</A>,
+<A HREF="node10.html#section:.NET">Microsoft&#174; .NET Interface</A>,
+<A HREF="node11.html#section:Python">Python&#174; Interface</A>,
+<A HREF="node15.html#section:MATLAB">MATLAB&#174; Interface</A>,
+or
+<A HREF="node16.html#section:R">R Interface</A>.
+Our Python interface will be of particular interest to those who
+wish to build models using higher level modeling constructs.
+
+<P>
+This document continues with a <A HREF="node17.html#section:Overview">File
+  Overview</A>, which gives a quick overview of
+the files that are included in the Gurobi distribution.
+
+<P>
+You should consult the <A NAME="tex2html1"
+  HREF="../refman/refman.html">Gurobi Reference
+  Manual</A>
+for more detailed information on any
+of the Gurobi interfaces. You may also consult the
+<A NAME="tex2html2"
+  HREF="../examples/examples.html">Gurobi Example Tour</A>
+for a
+quick tour of the examples provided with the Gurobi distribution.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html38"
+  HREF="node1.html">Installation</A>
+<LI><A NAME="tex2html39"
+  HREF="node2.html">How to Obtain and Install a Gurobi License</A>
+<UL>
+<LI><A NAME="tex2html40"
+  HREF="node3.html">Academic validation troubleshooting</A>
+<LI><A NAME="tex2html41"
+  HREF="node4.html">Setting up a token server</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html42"
+  HREF="node5.html">Interactive Shell</A>
+<LI><A NAME="tex2html43"
+  HREF="node6.html">Attributes</A>
+<LI><A NAME="tex2html44"
+  HREF="node7.html">C Interface</A>
+<LI><A NAME="tex2html45"
+  HREF="node8.html">C++ Interface</A>
+<LI><A NAME="tex2html46"
+  HREF="node9.html">Java Interface</A>
+<LI><A NAME="tex2html47"
+  HREF="node10.html">.NET Interface (C#)</A>
+<LI><A NAME="tex2html48"
+  HREF="node11.html">Python Interface</A>
+<UL>
+<LI><A NAME="tex2html49"
+  HREF="node12.html">Simple Python Example</A>
+<LI><A NAME="tex2html50"
+  HREF="node13.html">Python Dictionary Example</A>
+<LI><A NAME="tex2html51"
+  HREF="node14.html">Building and running the examples</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html52"
+  HREF="node15.html">MATLAB Interface</A>
+<LI><A NAME="tex2html53"
+  HREF="node16.html">R Interface</A>
+<LI><A NAME="tex2html54"
+  HREF="node17.html">File Overview</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html36"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html37"
+  HREF="node1.html">Installation</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>MATLAB Interface</TITLE>
+<META NAME="description" CONTENT="MATLAB Interface">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html204"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html202"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html196"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html205"
+  HREF="node16.html">R Interface</A>
+<B> Up:</B> <A NAME="tex2html203"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html197"
+  HREF="node14.html">Building and running the</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000100000000000000000"></A>
+<A NAME="section:MATLAB"></A>
+<BR>
+MATLAB Interface
+</H1>
+
+<P>
+This section describes the Gurobi MATLAB interface.  We begin with
+information on how to set up Gurobi for use within MATLAB.  An
+example of how to use the MATLAB interface follows.
+
+<P>
+<B>Setting up Gurobi for MATLAB</B>
+
+<P>
+To begin, you'll need to tell MATLAB where to find the Gurobi
+routines.  We've provided a script to assist you with this.  The
+Gurobi MATLAB setup script, <EM>gurobi_setup.m</EM>, can be found in
+the <EM>&lt;installdir&gt;/matlab</EM> directory of your Gurobi installation
+(e.g., <EM>/opt/gurobi500/linux64/matlab</EM> for the 64-bit Linux
+version of Gurobi 5.0).  To get started, type the following commands
+within MATLAB to change to the <EM>matlab</EM> directory and call
+<EM>gurobi_setup</EM>:
+<PRE>
+&gt;&gt; cd /opt/gurobi500/linux64/matlab
+&gt;&gt; gurobi_setup
+</PRE>
+
+<P>
+You will need to be careful that the MATLAB binary and the Gurobi
+package you install both use the same instruction set.  For example,
+if you are using the 64-bit version of MATLAB, you'll need to install
+the 64-bit version of Gurobi, and you'll need to use the 64-bit Gurobi
+MATLAB libraries (i.e., the ones included with the 64-bit version of
+Gurobi).  This is particularly important on Windows systems, where the
+error messages that result from instruction set mismatches can be
+quite cryptic.
+
+<P>
+<B>Example</B>
+
+<P>
+Let us now turn our attention to an example of using Gurobi to
+solve a simple MIP model.  Our example optimizes the following model:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="RIGHT"><B>maximize</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 z</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="RIGHT"><B>subject to</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">3 z</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\leq$"></SPAN></TD>
+<TD ALIGN="RIGHT">4</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$\geq$"></SPAN></TD>
+<TD ALIGN="RIGHT">1</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" COLSPAN=6><SPAN>x, y, z binary</SPAN></TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+Note that this is the same model that was modeled and optimized in the
+<A HREF="node7.html#section:C">C Interface</A> section.
+
+<P>
+This is the complete source code for our example (also available in
+<EM>&lt;installdir&gt;/examples/matlab/mip1.m</EM>)...
+
+<P>
+<PRE>
+names = {'x'; 'y'; 'z'};
+
+try
+    clear model;
+    model.A = sparse([1 2 3; 1 1 0]);
+    model.obj = [1 1 2];
+    model.rhs = [4; 1];
+    model.sense = '&lt;&gt;';
+    model.vtype = 'B';
+    model.modelsense = 'max';
+
+    clear params;
+    params.outputflag = 0;
+    params.resultfile = 'mip1.lp';
+
+    result = gurobi(model, params);
+
+    disp(result)
+
+    for v=1:length(names)
+        fprintf('%s %d\n', names{v}, result.x(v));
+    end
+
+    fprintf('Obj: %e\n', result.objval);
+
+catch gurobiError
+    fprintf('Error reported\n');
+end
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of optimizing the indicated model.
+
+<P>
+<B>Building the model</B>
+
+<P>
+The example begins by building an optimization model.  The data
+associated with an optimization model must be stored in a MATLAB
+<EM>struct</EM>.  Fields in this struct contain the different parts of the
+model.  A few fields are mandatory: the constraint matrix (<EM>A</EM>),
+the objective vector (<EM>obj</EM>), the right-hand side vector
+(<EM>rhs</EM>), and the constraint sense vector (<EM>sense</EM>).  A model
+can also include optional fields (e.g., the objective
+sense <EM>modelsense</EM>).
+
+<P>
+The example uses the built-in <EM>sparse</EM> function to build the
+constraint matrix <EM>A</EM>.  The Gurobi MATLAB interface only accepts
+sparse matrices as input.  If you have a dense matrix, use
+<EM>sparse</EM> to convert it to a sparse matrix before passing it to our interface.
+
+<P>
+Subsequent statements populate other fields of the <EM>model</EM>
+variable, including the objective vector, the right-hand-side vector,
+and the constraint sense vector.
+
+<P>
+In addition to the mandatory fields, this example also sets two
+optional fields: <EM>modelsense</EM> and <EM>vtype</EM>.  The former is
+used to indicate the sense of the objective function.  The default is
+minimization, so we've set the fields equal to <EM>'max'</EM> to
+indicate that we would like to maximize the specified objective.  The
+<EM>vtype</EM> field is used to indicate the types of the variables in
+the model.  In our example, all variables are binary (<EM>'B'</EM>).
+Note that our interface allows you to specify a scalar value for the
+<EM>sense</EM> and <EM>vtype</EM> arguments.  The Gurobi interface will
+expand that scalar to a constant array of the appropriate length.  In
+this example, the scalar value <EM>'B'</EM> will be expanded to an
+array of length 3, containing one <EM>'B'</EM> value for each column of
+<EM>A</EM>.
+
+<P>
+<B>Modifying Gurobi parameters</B>
+
+<P>
+The next statements create a <EM>struct</EM> variable that will
+be used to modify two Gurobi parameters:
+<PRE>
+params.outputflag = 0;
+params.resultfile = 'mip1.lp';
+</PRE>
+In this example, we set the Gurobi <EM>OutputFlag</EM> parameter to 0
+in order to shut off Gurobi output.  We also set the <EM>  ResultFile</EM> parameter to request that Gurobi produce a file as
+output (in this case, a <EM>LP</EM> format file that contains the
+optimization model).  The Gurobi MATLAB interface allows you to set as
+many Gurobi parameters as you would like. The field names in the
+parameter structure simply need to match Gurobi parameter names,
+and the values of the fields should be set to the desired parameter value.
+Please consult the <EM>Parameters</EM> section of the
+<A NAME="tex2html32"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>
+for
+a complete list of all Gurobi parameters.
+
+<P>
+<B>Solving the model</B>
+
+<P>
+The next statement is where the actual optimization occurs:
+<PRE>
+result = gurobi(model, params);
+</PRE>
+We pass the <EM>model</EM> and the optional list of parameter changes
+to the <EM>gurobi()</EM> function.  It computes an optimal solution to
+the specified model and returns the computed result.
+
+<P>
+<B>Printing the solution</B>
+
+<P>
+The <EM>gurobi()</EM> function returns a <EM>struct</EM> as its result.
+This struct contains a number of fields, where each field contains
+information about the computed solution.  The available fields depend
+on the result of the optimization, the type of model that was solved
+(LP, QP, QCP, SOCP, or MIP), and the algorithm used to solve the model.
+The returned <EM>struct</EM> will always contain a <EM>status</EM> field,
+which indicates whether Gurobi was able to compute an optimal solution
+to the model.  You should consult the <EM>Status Codes</EM> section of
+the <A NAME="tex2html33"
+  HREF="../refman/refman.html">Gurobi Reference Manual</A>
+for a complete list of all possible status codes.  If Gurobi was able
+to find a solution to the model, the return value will also include
+<EM>objval</EM> and <EM>x</EM> fields.  The former gives the
+objective value for the computed solution, and the latter is the
+computed solution vector (one entry per column of the constraint
+matrix).  For continuous models, we will also return dual information
+(reduced costs and dual multipliers), and possibly an optimal basis.
+
+<P>
+In our example, we simply print the optimal objective value
+(<EM>result.objval</EM>)
+and the optimal solution vector
+(<EM>result.x</EM>).
+
+<P>
+<B>Running the example</B>
+
+<P>
+The Gurobi MATLAB examples can be found in the
+<EM>&lt;installdir&gt;/examples/matlab/</EM> directory of your Gurobi installation
+(e.g., <EM>/opt/gurobi500/linux64/examples/matlab</EM> for the 64-bit Linux
+version of Gurobi 5.0).
+To run one of the examples, first change to this directory in MATLAB, then
+type its name into the MATLAB prompt.
+For example, to run example <EM>mip1</EM>,
+you would say:
+<PRE>
+&gt;&gt; cd /opt/gurobi500/linux64/examples/matlab
+&gt;&gt; mip1
+</PRE>
+
+<P>
+If Gurobi was successfully set up for use in MATLAB, you should see the
+following output:
+<PRE>
+         status: 'OPTIMAL'
+    versioninfo: [1x1 struct]
+         objval: 3
+        runtime: 0.0386
+              x: [3x1 double]
+          slack: [2x1 double]
+
+x 1
+y 0
+z 1
+Obj: 3.000000e+00
+</PRE>
+
+<P>
+The MATLAB example directory contains
+a number of examples.  We encourage you to browse and modify them in
+order to become more familiar with the Gurobi MATLAB interface.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html204"
+  HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html202"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html196"
+  HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html205"
+  HREF="node16.html">R Interface</A>
+<B> Up:</B> <A NAME="tex2html203"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html197"
+  HREF="node14.html">Building and running the</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

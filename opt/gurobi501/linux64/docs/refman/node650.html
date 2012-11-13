@@ -1,0 +1,511 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>MATLAB Reference Manual</TITLE>
+<META NAME="description" CONTENT="MATLAB Reference Manual">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node651.html">
+<LINK REL="previous" HREF="node522.html">
+<LINK REL="up" HREF="refman.html">
+<LINK REL="next" HREF="node651.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html8356"
+  HREF="node651.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8354"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8348"
+  HREF="node649.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8357"
+  HREF="node651.html">R Reference Manual</A>
+<B> Up:</B> <A NAME="tex2html8355"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8349"
+  HREF="node649.html">tuplelist.clean()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00060000000000000000"></A>
+<A NAME="sec:MATLAB"></A>
+<BR>
+MATLAB Reference Manual
+</H1>
+
+<P>
+The Gurobi MATLAB&#174; interface allows you to build an
+optimization model, pass the model to Gurobi, and obtain the
+optimization result, all from within the MATLAB environment.  For
+those of you who are not familiar with MATLAB, it is an environment
+for doing numerical computing.  Please visit the
+<A NAME="tex2html12"
+  HREF="http://www.mathworks.com/products/matlab">MATLAB web site</A>
+for more information.
+
+<P>
+The Gurobi MATLAB interface can be used to solve optimization problems of
+the following form:
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">minimize</TD>
+<TD ALIGN="LEFT">x'*Q*x + c'*x + alpha</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">subject to</TD>
+<TD ALIGN="LEFT">Ax = b</TD>
+<TD ALIGN="LEFT">(linear constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">l &lt;= x &lt;= u</TD>
+<TD ALIGN="LEFT">(bound constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">some xj integral</TD>
+<TD ALIGN="LEFT">(integrality constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">some xk lie within second order cones</TD>
+<TD ALIGN="LEFT">(cone constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">x'*Qc*x + q'*x &lt;= beta</TD>
+<TD ALIGN="LEFT">(quadratic constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">some xi in SOS</TD>
+<TD ALIGN="LEFT">(special ordered set constraints)</TD>
+</TR>
+</TABLE>
+Many of the model components listed here are optional.  For example,
+integrality constraints may be omitted.  We'll discuss the details of
+how models are represented shortly.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The Gurobi MATLAB API</SPAN></BIG>
+
+<P>
+The Gurobi MATLAB interface is quite concise.  It consists of a single
+MATLAB function that takes a pair of arguments:
+
+<P>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">GUROBI(model, params)</SPAN></FONT></BIG>
+
+<P>
+The two arguments are MATLAB <EM>struct</EM> variables, each consisting
+of multiple <EM>fields</EM>.  The first argument contains the
+optimization model to be solved.  The second contains an optional set
+of Gurobi parameters to be modified during the solution process.  The
+return value of this function is a <EM>struct</EM>, also consisting of
+multiple fields.  It contains the result of performing the
+optimization on the specified model.  We'll now discuss the details of
+each of these data structures.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The optimization model</SPAN></BIG>
+
+<P>
+As we've mentioned, the <EM>model</EM> argument to the <EM>GUROBI</EM>
+function is a <EM>struct</EM> variable, containing multiple <EM>fields</EM> that
+represent the various parts of the optimization model.  Several of
+these fields are optional.  Note that you refer to a field of a MATLAB
+struct variable by adding a period to the end of the variable name,
+followed by the name of the field.  For example, <EM>model.A</EM> refers
+to field <EM>A</EM> of variable <EM>model</EM>.
+
+<P>
+The following is an enumeration of all of the fields of the
+<EM>model</EM> argument that Gurobi will take into account when
+optimizing the model:
+<TABLE CELLPADDING=3>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">A</SPAN></TH>
+<TD ALIGN="LEFT">The linear constraint matrix.  This must be a sparse matrix.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">obj</SPAN></TH>
+<TD ALIGN="LEFT">The linear objective vector (<EM>c</EM>
+               in the problem statement above). You must specify
+               one value for each column of <EM>A</EM>.  This must
+               be a dense vector.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">sense</SPAN></TH>
+<TD ALIGN="LEFT">The senses of the linear constraints.  Allowed
+                 values are '=', '&lt;', or '&gt;'.  You must specify
+                 one value for each row of <EM>A</EM>, or a single
+                 value to specify that all constraints have the same sense.
+                 This must be a char array.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">rhs</SPAN></TH>
+<TD ALIGN="LEFT">The right-hand side vector for the linear constraints (
+               <EM>b</EM> in the problem statement above).  You
+               must specify one value for each row of <EM>A</EM>.  This
+               must be a dense vector.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">lb</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The lower bound vector. When present, you must
+                         specify one value for each column of <EM>A</EM>.
+                         This must be a dense vector.
+                         When absent, each variable has a lower bound
+                         of 0.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ub</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The upper bound vector. When present, you must
+                         specify one value for each column of <EM>A</EM>.
+                         This must be a dense vector.
+                         When absent, the variables have infinite
+                         upper bounds.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">vtype</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The variable types. This char array is
+                            used to capture variable integrality
+                            constraints. Allowed values
+                            are 'C' (continuous), 'B' (binary),
+                            'I' (integer), 'S' (semi-continuous), or
+                            'N' (semi-integer).  Binary variables must
+                            be either 0 or 1.  Integer variables can
+                            take any integer value between the specified
+                            lower and upper bounds.  Semi-continuous
+                            variables can take any value between the
+                            specified lower and upper bounds, or a value
+                            of zero.  Semi-integer
+                            variables can take any integer value between the
+                            specified lower and upper bounds, or a value
+                            of zero.  When present, you
+                            must specify one value for each column of
+                            <EM>A</EM>, or a single value to specify that all
+                            variables have the same type.  When absent, each
+                            variable is treated as being continuous.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">modelsense</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The optimization sense. Allowed values
+                                 are 'min' (minimize) or 'max' (maximize).
+                                 When absent, the default optimization sense
+                                 is minimization.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">modelname</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The name of the model.  The name appears in
+                                the Gurobi log, and when writing a model
+                                to a file.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">objcon</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The constant offset in the objective function
+                             (<EM>alpha</EM> in the problem statement above).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">vbasis</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The variable basis status vector. Used to provide
+                             an advanced starting point for the simplex
+                             algorithm.  You would generally never
+                             concern yourself with the contents of this array,
+                             but would instead simply pass it from
+                             the result of a previous optimization run to
+                             the input of a subsequent run. When present,
+                             you must specify one value for each column
+                             of <EM>A</EM>.  This must be a dense vector.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">cbasis</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The constraint basis status vector. Used to provide
+                             an advanced starting point for the simplex
+                             algorithm.  Consult the <EM>vbasis</EM>
+                             description for details.  When present,
+                             you must specify one value for each row
+                             of <EM>A</EM>.  This must be a dense vector.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Q</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The quadratic objective matrix. When present,
+                        <EM>Q</EM> must be a square matrix whose row and column
+                        counts are equal to the number of columns
+                        in <EM>A</EM>.  <EM>Q</EM> must be a sparse matrix.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">cones</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">Second-order cone constraints.  A struct array.
+                            Each element in the array defines a single cone
+                            constraint: <EM>x(k)^2 &gt;= sum(x(idx).^2), x(k) &gt;= 0</EM>.
+                            The constraint is defined via <EM>model.cones.index = [k idx]</EM>,
+                            with the first entry in <EM>index</EM> corresponding
+                            to the index of the variable on the left-hand
+                            side of the constraint, and the remaining entries
+                            corresponding to the indices of the variables
+                            on the right-hand side of the constraint.
+                            <EM>model.cones.index</EM> must be a dense vector.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">quadcon</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The quadratic constraints. A struct array. When present,
+                              each element in the array defines a single quadratic
+                              constraint: <EM>x'*Qc*x + q'*x &lt;= beta</EM>.
+                              The <EM>Qc</EM> matrix must be a square matrix whose row and
+                              column counts are equal to the number of columns of <EM>A</EM>.
+                              <EM>Qc</EM> must be a sparse matrix. It is stored in
+                              <EM>model.quadcon.Qc</EM>. The <EM>q</EM> vector defines the linear terms
+                              in the constraint. You must specify a value for <EM>q</EM> for
+                              each column of <EM>A</EM>. This must be a dense vector. It is
+                              stored in <EM>model.quadcon.q</EM>.  The scalar beta defines the
+                              right-hand side of the constraint. It is stored in
+                              <EM>model.quadcon.rhs</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">sos</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The Special Ordered Set (SOS) constraints. A struct
+                              array.  When present, each element in the array defines
+                              a single SOS constraint.  A SOS constraint can be of
+                              type 1 or 2. This is specified via <EM>model.sos.type</EM>. A
+                              type 1 SOS constraint is a set of variables for which
+                              at most one variable in the set may take a value other
+                              than zero. A type 2 SOS constraint is an ordered set of
+                              variables where at most two variables in the set may
+                              take non-zero values. If two take non-zeros values, they
+                              must be contiguous in the ordered set.  The members of
+                              an SOS constraint are specified by placing their
+                              indices in <EM>model.sos.index</EM>. Optional weights associated
+                              with SOS members may be defined in <EM>model.sos.weight</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">start</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The MIP start vector. The MIP solver will attempt to
+                            build an initial solution from this vector. When present,
+                            you must specify a start value for each variable. This
+                            must be a dense vector. Note that you can leave the
+                            start value for a variable undefined--the MIP solver
+                            will attempt to fill in values for the undefined start
+                            values. This may be done by setting the start value
+                            for that variable to <EM>nan</EM>.</TD>
+</TR>
+</TABLE>
+If any of the mandatory fields listed above are missing, the
+<EM>GUROBI</EM> function will return an error.
+
+<P>
+Below is an example that demonstrates the construction of a simple
+optimization model:
+<PRE>
+model.A          = sparse([1 2 3; 1 1 0]);
+model.obj        = [1 1 2];
+model.modelsense = 'max';
+model.rhs        = [4; 1];
+model.sense      = '&lt;&gt;'
+</PRE>
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Parameters</SPAN></BIG>
+
+<P>
+The optional <EM>params</EM> argument to the <EM>GUROBI</EM> function is
+also a <EM>struct</EM>, potentially containing multiple fields.  The name of
+each field must be the name of a Gurobi parameter, and the
+associated value should be the desired value of that parameter.
+Gurobi parameters allow users to modify the default behavior of the
+Gurobi optimization algorithms.  You can find a complete list of the
+available Gurobi parameters <A HREF="node653.html#sec:Parameters">here</A>.
+
+<P>
+To create a struct that would set the Gurobi <EM>Method</EM> parameter
+to 2 and the <EM>resultfile</EM> parameter to <EM>model.mps</EM>,
+you would do the following:
+<PRE>
+params.method = 2;
+params.resultfile = 'model.mps';
+</PRE>
+
+<P>
+We should say a bit more about the
+<EM>resultfile</EM> parameter.  If this parameter is set, the optimization
+model that is eventually passed to Gurobi will also be output to the
+specified file.  The filename suffix should be one of <EM>.mps</EM>,
+<EM>.lp</EM>, <EM>.rew</EM>, or <EM>.rlp</EM>,
+to indicate the desired file format (see the
+<A HREF="node743.html#sec:FileFormats">file formats</A>
+section for details on Gurobi file formats).
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The optimization result</SPAN></BIG>
+
+<P>
+The <EM>GUROBI</EM> function returns a <EM>struct</EM>, with the various results
+of the optimization stored in its fields.  The specific
+results that are available depend on the type of model that was
+solved, and the status of the optimization.
+The following is a list of fields that might be available
+in the returned result.  We'll discuss the circumstances under which
+each will be available after presenting the list.
+<TABLE CELLPADDING=3>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">status</SPAN></TH>
+<TD ALIGN="LEFT">The status of the optimization, returned as a string.
+The desired result is <EM>'OPTIMAL'</EM>,
+which indicates that an optimal solution to the model was found.
+Other status are possible, for example if the model has no feasible
+solution or if you set a Gurobi parameter that leads to early solver
+termination.  See the
+<A HREF="node740.html#sec:StatusCodes">Status Code</A> section for further
+information on the Gurobi status codes.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">objval</SPAN></TH>
+<TD ALIGN="LEFT">The objective value of the computed solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">runtime</SPAN></TH>
+<TD ALIGN="LEFT">The elapsed wall-clock time (in seconds) for the
+optimization.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">x</SPAN></TH>
+<TD ALIGN="LEFT">The computed solution.  This array contains one entry for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">slack</SPAN></TH>
+<TD ALIGN="LEFT">The constraint slack for the computed solution.  This array contains one entry for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">qcslack</SPAN></TH>
+<TD ALIGN="LEFT">The quadratic constraint slack in the current solution. This array contains one entry for second-order cone constraint and one entry for each quadratic constraint. The slacks for the second-order cone constraints appear before the slacks for the quadratic constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">pi</SPAN></TH>
+<TD ALIGN="LEFT">Dual values for the computed solution (also known as <EM>shadow prices</EM>).  This array contains one entry for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">qcpi</SPAN></TH>
+<TD ALIGN="LEFT">The dual values associated with the quadratic constraints. This array contains one entry for each second-order cone constraint and one entry for each quadratic constraint. The dual values for the second-order cone constraints appear before the dual values for the quadratic constraints.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">rc</SPAN></TH>
+<TD ALIGN="LEFT">Variable reduced costs for the computed solution.  This array contains one entry for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">vbasis</SPAN></TH>
+<TD ALIGN="LEFT">Variable basis status values for the computed optimal basis.  You generally should not concern yourself with the contents of this array.  If you wish to use an advanced start later, you would simply copy the <EM>vbasis</EM> and <EM>cbasis</EM> arrays into the corresponding fields for the next model.  This array contains one entry for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">cbasis</SPAN></TH>
+<TD ALIGN="LEFT">Constraint basis status values for the computed optimal basis.  This array contains one entry for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">unbdray</SPAN></TH>
+<TD ALIGN="LEFT">Unbounded ray.
+                   Provides a vector that, when added to any feasible
+                   solution, yields a new solution that is also feasible
+                   but improves the objective.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">farkasdual</SPAN></TH>
+<TD ALIGN="LEFT">Farkas infeasibility proof. This is a dual unbounded vector.
+                      Adding this vector to any feasible solution of
+                      the dual model yields a new solution that is also
+                      feasible but improves the dual objective.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">farkasproof</SPAN></TH>
+<TD ALIGN="LEFT">Magnitude of infeasibility violation in Farkas
+                       infeasibility proof. A Farkas infeasibility proof identifies a
+                       new constraint, obtained by taking a linear
+                       combination of the constraints in the model, that
+                       can never be satisfied. (the linear combination is
+                       available in the <EM>farkasdual</EM> attribute). This
+                       attribute indicates the magnitude of the violation
+                       of this aggregated constraint.</TD>
+</TR>
+</TABLE>
+The <EM>Status</EM> field will be present in all cases.  It indicates
+whether Gurobi was able to find a proven optimal solution to the
+model.  In cases where a solution to the model was found, optimal or
+otherwise, the <EM>objval</EM> and <EM>x</EM> fields will be present.
+For linear and quadratic programs, if a solution is available, then
+the <EM>pi</EM> and <EM>rc</EM> fields will also be present.  For models
+with quadratic constraints, if the parameter <EM>qcpdual</EM> is set to
+1, the field <EM>qcpi</EM> will be present. If the final solution is a
+<EM>basic</EM> solution (computed by simplex), then <EM>vbasis</EM> and
+<EM>cbasis</EM> will be present. If the model is an unbounded linear
+program and the parameter <EM>infunbdinfo</EM> is set to 1, the field
+<EM>unbdray</EM> will be present. Finally, if the model is an infeasible
+linear program and the parameter <EM>infunbdinfo</EM> is set to 1, the
+fields <EM>farkasdual</EM> and <EM>farkasproof</EM> will be set.
+
+<P>
+The following is an example of how the results of the <EM>GUROBI</EM>
+call might be extracted and output:
+<PRE>
+result = gurobi(model, params)
+if strcmp(result.status, 'OPTIMAL')
+  fprintf('Optimal objective: %e\n', result.objval);
+  disp(result.x)
+else
+  fprintf('Optimization returned status: %s\n', result.status);
+end
+</PRE>
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Using the Gurobi MATLAB interface</SPAN></BIG>
+
+<P>
+In order to use our MATLAB interface, you'll need to use
+the MATLAB function <EM>gurobi_setup</EM> to tell MATLAB where
+to find the Gurobi <EM>mex</EM> file.  This file is stored in the
+<EM>&lt;installdir&gt;/matlab</EM> directory of your Gurobi installation.
+For example, if you installed the 64-bit Windows version of Gurobi 5.0.0
+in the default location, you should run
+<PRE>
+&gt;&gt; cd c:/Users/jones/gurobi500/win64/matlab
+&gt;&gt; gurobi_setup
+</PRE>
+The <EM>gurobi_setup</EM> function adjusts your MATLAB path to include
+the <EM>&lt;installdir&gt;/matlab</EM> directory. If you want to avoid typing
+this command every time you start MATLAB, follow the instructions
+issued by <EM>gurobi_setup</EM> to permanently adjust your path.
+
+<P>
+The MATLAB examples provided with the Gurobi distribution are
+included in the <EM>&lt;installdir&gt;/examples/matlab</EM> directory.
+To run these examples you need to change to this directory.
+For example, if you are running the 64-bit Windows version of Gurobi,
+you would say:
+<PRE>
+&gt;&gt; cd c:/Users/jones/gurobi500/win64/examples/matlab
+&gt;&gt; mip1
+</PRE>
+
+<P>
+If the Gurobi package was successfully installed, you should see the
+following output:
+<PRE>
+         status: 'OPTIMAL'
+    versioninfo: [1x1 struct]
+         objval: 3
+        runtime: 0.0386
+              x: [3x1 double]
+          slack: [2x1 double]
+
+x 1
+y 0
+z 1
+Obj: 3.000000e+00
+</PRE>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html8356"
+  HREF="node651.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8354"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8348"
+  HREF="node649.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8357"
+  HREF="node651.html">R Reference Manual</A>
+<B> Up:</B> <A NAME="tex2html8355"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8349"
+  HREF="node649.html">tuplelist.clean()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

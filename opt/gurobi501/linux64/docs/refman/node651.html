@@ -1,0 +1,442 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>R Reference Manual</TITLE>
+<META NAME="description" CONTENT="R Reference Manual">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node652.html">
+<LINK REL="previous" HREF="node650.html">
+<LINK REL="up" HREF="refman.html">
+<LINK REL="next" HREF="node652.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html8366"
+  HREF="node652.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8364"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8358"
+  HREF="node650.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8367"
+  HREF="node652.html">Attributes</A>
+<B> Up:</B> <A NAME="tex2html8365"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8359"
+  HREF="node650.html">MATLAB Reference Manual</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00070000000000000000"></A>
+<A NAME="sec:R"></A>
+<BR>
+R Reference Manual
+</H1>
+
+<P>
+The Gurobi R interface allows you to build an optimization model, pass
+the model to Gurobi, and obtain the optimization result, all from
+within the R environment.  For those of you who are not familiar with
+R, it is a free language for statistical computing.  Please visit the
+<A NAME="tex2html13"
+  HREF="http://www.r-project.org">R Project web site</A>
+for
+more information.
+
+<P>
+The Gurobi R interface can be used to solve optimization problems of
+the following form:
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">minimize</TD>
+<TD ALIGN="LEFT">x'Qx + c'x + alpha</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">subject to</TD>
+<TD ALIGN="LEFT">Ax = b</TD>
+<TD ALIGN="LEFT">(linear constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">l &lt;= x &lt;= u</TD>
+<TD ALIGN="LEFT">(bound constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">some xj integral</TD>
+<TD ALIGN="LEFT">(integrality constraints)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">some xk lie within second order cones</TD>
+<TD ALIGN="LEFT">(cone constraints)</TD>
+</TR>
+</TABLE>
+Many of the model components listed here are optional.  For example,
+integrality constraints or second order cone constraints may be
+omitted.  We'll discuss the details of how models are represented
+shortly.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The Gurobi R API</SPAN></BIG>
+
+<P>
+The Gurobi R interface is quite concise.  It consists of a single R
+function that takes a pair of arguments:
+
+<P>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">gurobi(model, params=NULL)</SPAN></FONT></BIG>
+
+<P>
+The two arguments are R <EM>list</EM> variables, each consisting of
+multiple <EM>named components</EM>.  The first argument contains the
+optimization model to be solved.  The second contains an optional list
+of Gurobi parameters to be modified during the solution process.  The
+return value of this function is a list, also consisting of multiple
+named components.  It contains the result of performing the
+optimization on the specified model.  We'll now discuss the details of
+each of these lists.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The optimization model</SPAN></BIG>
+
+<P>
+As we've mentioned, the <EM>model</EM> argument to the <EM>gurobi()</EM>
+function is a <EM>list</EM> variable, containing multiple
+<EM>named components</EM> that represent the various parts
+of the optimization
+model.  Several of these components are optional.
+Note that you refer to a
+named component of an R list variable by appending a dollar sign
+followed by the component name to the list variable name.  For
+example, <EM>model$A</EM> refers to component <EM>A</EM> of list
+variable <EM>model</EM>.
+
+<P>
+The following is an enumeration of all of the named components of the
+<EM>model</EM> argument that Gurobi will take into account when
+optimizing the model:
+<TABLE CELLPADDING=3>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">A</SPAN></TH>
+<TD ALIGN="LEFT">The linear constraint matrix.  This can be dense or sparse.
+             Sparse matrices should be built using either
+             <EM>sparseMatrix</EM> from the <EM>Matrix</EM> package,
+             or <EM>simple_triplet_matrix</EM> from
+             the <EM>slam</EM> package.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">obj</SPAN></TH>
+<TD ALIGN="LEFT">The linear objective vector (the <EM>c</EM> vector
+               in the problem statement above). You must specify
+               one value for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">sense</SPAN></TH>
+<TD ALIGN="LEFT">The senses of the linear constraints.  Allowed
+                 values are '=', '&lt;=', or '&gt;='.  You must specify
+                 one value for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">rhs</SPAN></TH>
+<TD ALIGN="LEFT">The right-hand side vector for the linear constraints (the
+               <EM>b</EM> vector in the problem statement above).  You
+               must specify one value for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">lb</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The lower bound vector. When present, you must
+                         specify one value for each column of <EM>A</EM>.
+                         When absent, each variable has a lower bound
+                         of 0.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">ub</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The upper bound vector. When present, you must
+                         specify one value for each column of <EM>A</EM>.
+                         When absent, the variables have infinite
+                         upper bounds.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">vtype</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The variable type vector. This vector is
+                            used to capture variable integrality
+                            constraints. Allowed values
+                            are 'C' (continuous), 'B' (binary),
+                            'I' (integer), 'S' (semi-continuous), or
+                            'N' (semi-integer).  Binary variables must
+                            be either 0 or 1.  Integer variables can
+                            take any integer value between the specified
+                            lower and upper bounds.  Semi-continuous
+                            variables can take any value between the
+                            specified lower and upper bounds, or a value
+                            of zero.  Semi-integer
+                            variables can take any integer value between the
+                            specified lower and upper bounds, or a value
+                            of zero.  When present, you
+                            must specify one value for each column of
+                            <EM>A</EM>.  When absent, each variable
+                            is treated as being continuous.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">modelsense</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The optimization sense. Allowed values
+                                 are 'min' (minimize) or 'max' (maximize).
+                                 When absent, the default optimization sense
+                                 is minimization.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">modelname</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The name of the model.  The name appears in
+                                the Gurobi log, and when writing a model
+                                to a file.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">objcon</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The constant offset in the objective function
+                             (<EM>alpha</EM> in the problem statement above).</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">start</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The MIP start vector.  The MIP solver will attempt
+                            to build an initial solution from this vector.
+                            When present, you must specify a start value for
+                            each variable.  Note that you can set the start
+                            value for a variable to <EM>NA</EM>, which instructs
+                            the MIP solver to try to fill in a value for
+                            that variable.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">vbasis</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The variable basis status vector. Used to provide
+                             an advanced starting point for the simplex
+                             algorithm.  You would generally never
+                             concern yourself with the contents of this array,
+                             but would instead simply pass it from
+                             the result of a previous optimization run to
+                             the input of a subsequent run. When present,
+                             you must specify one value for each column
+                             of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">cbasis</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The constraint basis status vector. Used to provide
+                             an advanced starting point for the simplex
+                             algorithm.  Consult the <EM>vbasis</EM>
+                             description for details.  When present,
+                             you must specify one value for each row
+                             of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Q</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">The quadratic objective matrix. When present,
+                        Q must be a square matrix whose row and column
+                        counts are equal to the number of columns
+                        in <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">cones</SPAN> (optional)</TH>
+<TD ALIGN="LEFT">Second-order cone constraints.  A list of lists.
+                            Each member list defines a single cone constraint:
+                            sum x_i^2 &lt;= y^2.  The first integer in the list
+                            gives the column index for variable <EM>y</EM>,
+                            and the remainder give the column indices for
+                            the <EM>x </EM> variables.</TD>
+</TR>
+</TABLE>
+If any of the mandatory components listed above are missing, the
+<EM>gurobi()</EM> function will return an error.
+
+<P>
+Below is an example that demonstrates the construction of a simple
+optimization model:
+<PRE>
+model &lt;- list()
+
+model$A          &lt;- matrix(c(1,1,0,0,1,1), nrow=2, byrow=T)
+model$obj        &lt;- c(1,1,2)
+model$modelsense &lt;- "max"
+model$rhs        &lt;- c(1,1)
+model$sense      &lt;- c('&lt;=', '&lt;=')
+</PRE>
+
+<P>
+You can also build <EM>A</EM> as a sparse matrix,
+using either <EM>sparseMatrix</EM> or <EM>simple_triplet_matrix</EM>:
+<PRE>
+model$A &lt;- spMatrix(2, 3, c(1, 1, 2, 2), c(1, 2, 2, 3), c(1, 1, 1, 1))
+model$A &lt;- simple_triplet_matrix(c(1, 1, 2, 2), c(1, 2, 2, 3), c(1, 1, 1, 1))
+</PRE>
+
+<P>
+Note that the Gurobi interface allows you to specify a scalar value
+for any of the array-valued components.  The specified value will be
+expanded to an array of the appropriate size, with each component of
+the array equal to the scalar (e.g., model$rhs &lt;- 1 would be
+equivalent to model$rhs &lt;- c(1,1) in the example).
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The parameter list</SPAN></BIG>
+
+<P>
+The optional <EM>params</EM> argument to the <EM>gurobi()</EM> function
+is also a list of named components.  For each component, the name
+should be the name of a Gurobi parameter, and the associated value
+should be the desired value of that parameter.  Gurobi parameters
+allow users to modify the default behavior of the Gurobi optimization
+algorithms.  You can find a complete list of the available Gurobi
+parameters <A HREF="node653.html#sec:Parameters">here</A>.
+
+<P>
+To create a list that would set the Gurobi <EM>Method</EM> parameter
+to 2 and the <EM>ResultFile</EM> parameter to <EM>model.mps</EM>,
+you would do the following:
+<PRE>
+params &lt;- list(Method=2, ResultFile='model.mps')
+</PRE>
+
+<P>
+We should say a bit more about the
+<EM>ResultFile</EM> parameter.  If this parameter is set, the optimization
+model that is eventually passed to Gurobi will also be output to the
+specified file.  The filename suffix should be one of <EM>.mps</EM>,
+<EM>.lp</EM>, <EM>.rew</EM>, or <EM>.rlp</EM>,
+to indicate the desired file format (see the
+<A HREF="node743.html#sec:FileFormats">file formats</A>
+section for details on Gurobi file formats).
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">The optimization result</SPAN></BIG>
+
+<P>
+The <EM>gurobi()</EM> function returns a list, with the various results
+of the optimization stored in its named components.  The specific
+results that are available depend on the type of model that was
+solved, and the status of the optimization.
+The following is a list of components that might be available
+in the result list.  We'll discuss the circumstances under which
+each will be available after presenting the list.
+<TABLE CELLPADDING=3>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">status</SPAN></TH>
+<TD ALIGN="LEFT">The status of the optimization, returned as a string.
+The desired result is <EM>"OPTIMAL"</EM>,
+which indicates that an optimal solution to the model was found.
+Other status are possible, for example if the model has no feasible
+solution or if you set a Gurobi parameter that leads to early solver
+termination.  See the
+<A HREF="node740.html#sec:StatusCodes">Status Code</A> section for further
+information on the Gurobi status codes.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">objval</SPAN></TH>
+<TD ALIGN="LEFT">The objective value of the computed solution.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">x</SPAN></TH>
+<TD ALIGN="LEFT">The computed solution.  This array contains one entry for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">slack</SPAN></TH>
+<TD ALIGN="LEFT">Constraint slacks for the computed solution.  This array contains one entry for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">pi</SPAN></TH>
+<TD ALIGN="LEFT">Dual values for the computed solution (also known as <EM>shadow prices</EM>).  This array contains one entry for each row of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">rc</SPAN></TH>
+<TD ALIGN="LEFT">Variable reduced costs for the computed solution.  This array contains one entry for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">vbasis</SPAN></TH>
+<TD ALIGN="LEFT">Variable basis status values for the computed optimal basis.  You generally should not concern yourself with the contents of this array.  If you wish to use an advanced start later, you would simply copy the <EM>vbasis</EM> and <EM>cbasis</EM> arrays into the corresponding components for the next model.  This array contains one entry for each column of <EM>A</EM>.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">cbasis</SPAN></TH>
+<TD ALIGN="LEFT">Constraint basis status values for the computed optimal basis.  This array contains one entry for each row of <EM>A</EM>.</TD>
+</TR>
+</TABLE>
+The <EM>status</EM> component will be present in all cases.  It
+indicates whether Gurobi was able to find a proven optimal solution to
+the model.  In cases where a solution to the model was found, optimal
+or otherwise, the <EM>objval</EM>, <EM>x</EM>, and <EM>slack</EM>
+components will be present.  For linear and quadratic programs, if a
+solution is available, then the <EM>pi</EM> and <EM>rc</EM> components
+will also be present.  Finally, if the final solution is a
+<EM>basic</EM> solution (computed by simplex), then <EM>vbasis</EM> and
+<EM>cbasis</EM> will be present.
+
+<P>
+The following is an example of how the results of the <EM>gurobi()</EM>
+call might be extracted and output:
+<PRE>
+result &lt;- gurobi(model, params)
+print(result$objval)
+print(result$x)
+</PRE>
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Installing the R package</SPAN></BIG>
+
+<P>
+To use our R interface, you'll need to install the Gurobi package in
+R.  The R command for doing this is:
+<PRE>
+install.packages('&lt;R-package-file&gt;')
+</PRE>
+The Gurobi R package file can be found in the <EM>&lt;installdir&gt;/R</EM>
+directory of your Gurobi installation
+(e.g., <EM>/opt/gurobi500/linux64/R</EM> for the 64-bit Linux
+version of Gurobi
+5.0).  You should browse the <EM>&lt;installdir&gt;/R</EM> directory to find
+the exact name of the file for your platform (the 64-bit Linux
+package is in file
+<EM>gurobi_5.0-0_R_x86_64-pc-linux-gnu.tar.gz</EM>, while
+the 64-bit Windows package is in file
+<EM>gurobi_5.0-0_R_win64.zip</EM>).
+
+<P>
+You will need to be careful to make sure that the R binary and the
+Gurobi package you install both use the same instruction set.  For
+example, if you are using the 64-bit version of R, you'll need to
+install the 64-bit version of Gurobi, and the 64-bit Gurobi R package.
+This is particularly important on Windows systems, where the error
+messages that result from instruction set mismatches can be quite
+cryptic.
+
+<P>
+To run one of the R examples provided with the Gurobi distribution,
+you can use the <EM>source</EM> command in R.  For example, if you
+are running R from the Gurobi R examples directory, you can say:
+<PRE>
+&gt; source('mip.R')
+</PRE>
+
+<P>
+If the Gurobi package was successfully installed, you should see the
+following output:
+<PRE>
+[1] "Solution:"
+[1] 3
+[1] 1 0 1
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html8366"
+  HREF="node652.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html8364"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html8358"
+  HREF="node650.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html8367"
+  HREF="node652.html">Attributes</A>
+<B> Up:</B> <A NAME="tex2html8365"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html8359"
+  HREF="node650.html">MATLAB Reference Manual</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBModel</TITLE>
+<META NAME="description" CONTENT="GRBModel">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node158.html">
+<LINK REL="previous" HREF="node106.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node117.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html2255"
+  HREF="node117.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2253"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2247"
+  HREF="node115.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html2256"
+  HREF="node117.html">GRBModel()</A>
+<B> Up:</B> <A NAME="tex2html2254"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html2248"
+  HREF="node115.html">GRBEnv::writeParams()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00022000000000000000"></A>
+<A NAME="cppclass:GRBModel"></A>
+<BR>
+GRBModel
+</H2>
+
+<P>
+Gurobi model object.  Commonly used methods include
+<A HREF="node124.html#cppmethod:GRBModel::addVar">addVar</A> (adds a new decision
+variable to the model),
+<A HREF="node118.html#cppmethod:GRBModel::addConstr">addConstr</A> (adds a new
+constraint to the model),
+<A HREF="node147.html#cppmethod:GRBModel::optimize">optimize</A> (optimizes the
+current model), and <A HREF="node132.html#cppmethod:GRBModel::get">get</A>
+(retrieves the value of an attribute).
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2257"
+  HREF="node117.html">GRBModel()</A>
+<LI><A NAME="tex2html2258"
+  HREF="node118.html">GRBModel::addConstr()</A>
+<LI><A NAME="tex2html2259"
+  HREF="node119.html">GRBModel::addConstrs()</A>
+<LI><A NAME="tex2html2260"
+  HREF="node120.html">GRBModel::addQConstr()</A>
+<LI><A NAME="tex2html2261"
+  HREF="node121.html">GRBModel::addRange()</A>
+<LI><A NAME="tex2html2262"
+  HREF="node122.html">GRBModel::addRanges()</A>
+<LI><A NAME="tex2html2263"
+  HREF="node123.html">GRBModel::addSOS()</A>
+<LI><A NAME="tex2html2264"
+  HREF="node124.html">GRBModel::addVar()</A>
+<LI><A NAME="tex2html2265"
+  HREF="node125.html">GRBModel::addVars()</A>
+<LI><A NAME="tex2html2266"
+  HREF="node126.html">GRBModel::chgCoeff()</A>
+<LI><A NAME="tex2html2267"
+  HREF="node127.html">GRBModel::chgCoeffs()</A>
+<LI><A NAME="tex2html2268"
+  HREF="node128.html">GRBModel::computeIIS()</A>
+<LI><A NAME="tex2html2269"
+  HREF="node129.html">GRBModel::discardConcurrentEnvs()</A>
+<LI><A NAME="tex2html2270"
+  HREF="node130.html">GRBModel::feasRelax()</A>
+<LI><A NAME="tex2html2271"
+  HREF="node131.html">GRBModel::fixedModel()</A>
+<LI><A NAME="tex2html2272"
+  HREF="node132.html">GRBModel::get()</A>
+<LI><A NAME="tex2html2273"
+  HREF="node133.html">GRBModel::getCoeff()</A>
+<LI><A NAME="tex2html2274"
+  HREF="node134.html">GRBModel::getCol()</A>
+<LI><A NAME="tex2html2275"
+  HREF="node135.html">GRBModel::getConcurrentEnv()</A>
+<LI><A NAME="tex2html2276"
+  HREF="node136.html">GRBModel::getConstrByName()</A>
+<LI><A NAME="tex2html2277"
+  HREF="node137.html">GRBModel::getConstrs()</A>
+<LI><A NAME="tex2html2278"
+  HREF="node138.html">GRBModel::getEnv()</A>
+<LI><A NAME="tex2html2279"
+  HREF="node139.html">GRBModel::getObjective()</A>
+<LI><A NAME="tex2html2280"
+  HREF="node140.html">GRBModel::getQConstr()</A>
+<LI><A NAME="tex2html2281"
+  HREF="node141.html">GRBModel::getQConstrs()</A>
+<LI><A NAME="tex2html2282"
+  HREF="node142.html">GRBModel::getRow()</A>
+<LI><A NAME="tex2html2283"
+  HREF="node143.html">GRBModel::getSOS()</A>
+<LI><A NAME="tex2html2284"
+  HREF="node144.html">GRBModel::getSOSs()</A>
+<LI><A NAME="tex2html2285"
+  HREF="node145.html">GRBModel::getVarByName()</A>
+<LI><A NAME="tex2html2286"
+  HREF="node146.html">GRBModel::getVars()</A>
+<LI><A NAME="tex2html2287"
+  HREF="node147.html">GRBModel::optimize()</A>
+<LI><A NAME="tex2html2288"
+  HREF="node148.html">GRBModel::presolve()</A>
+<LI><A NAME="tex2html2289"
+  HREF="node149.html">GRBModel::read()</A>
+<LI><A NAME="tex2html2290"
+  HREF="node150.html">GRBModel::remove()</A>
+<LI><A NAME="tex2html2291"
+  HREF="node151.html">GRBModel::reset()</A>
+<LI><A NAME="tex2html2292"
+  HREF="node152.html">GRBModel::setCallback()</A>
+<LI><A NAME="tex2html2293"
+  HREF="node153.html">GRBModel::set()</A>
+<LI><A NAME="tex2html2294"
+  HREF="node154.html">GRBModel::setObjective()</A>
+<LI><A NAME="tex2html2295"
+  HREF="node155.html">GRBModel::terminate()</A>
+<LI><A NAME="tex2html2296"
+  HREF="node156.html">GRBModel::update()</A>
+<LI><A NAME="tex2html2297"
+  HREF="node157.html">GRBModel::write()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2255"
+  HREF="node117.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2253"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2247"
+  HREF="node115.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html2256"
+  HREF="node117.html">GRBModel()</A>
+<B> Up:</B> <A NAME="tex2html2254"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html2248"
+  HREF="node115.html">GRBEnv::writeParams()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

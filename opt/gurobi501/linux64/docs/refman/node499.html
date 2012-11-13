@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBCallback</TITLE>
+<META NAME="description" CONTENT="GRBCallback">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node510.html">
+<LINK REL="previous" HREF="node490.html">
+<LINK REL="up" HREF="node380.html">
+<LINK REL="next" HREF="node500.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html6618"
+  HREF="node500.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6616"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6610"
+  HREF="node498.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6619"
+  HREF="node500.html">GRBCallback()</A>
+<B> Up:</B> <A NAME="tex2html6617"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6611"
+  HREF="node498.html">implicit cast</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000413000000000000000"></A>
+<A NAME="dotnetclass:GRBCallback"></A>
+<BR>
+GRBCallback
+</H2>
+
+<P>
+Gurobi callback class.  This is an abstract class.  To implement a
+callback, you should create a subclass of this class and implement a
+<EM>callback()</EM> method.  If you pass an object of this subclass to
+method
+<A HREF="node430.html#dotnetmethod:GRBModel.SetCallback">GRBModel.SetCallback</A>
+before calling
+<A HREF="node425.html#dotnetmethod:GRBModel.Optimize">GRBModel.Optimize</A>, the
+         <EM>callback()</EM> method of the class will be called
+         periodically.  Depending on where the callback is called
+         from, you will be able to obtain various information about
+         the progress of the optimization.
+
+<P>
+Note that this class contains one protected <EM>int</EM> member
+variable: <EM>where</EM>.  You can query this variable from your <EM>  callback()</EM> method to determine where the callback was called
+from.
+
+<P>
+Gurobi callbacks can be used both to monitor the progress of the
+optimization and to modify the behavior of the Gurobi optimizer.  A
+simple user callback function might call the
+<A HREF="node505.html#dotnetmethod:GRBCallback.GetIntInfo">GRBCallback.GetIntInfo</A>
+or
+<A HREF="node504.html#dotnetmethod:GRBCallback.GetDoubleInfo">GRBCallback.GetDoubleInfo</A>
+methods to produce a custom display, or perhaps to terminate
+optimization early (using
+<A HREF="node501.html#dotnetmethod:GRBCallback.Abort">GRBCallback.Abort</A>).
+More sophisticated MIP callbacks might use
+<A HREF="node507.html#dotnetmethod:GRBCallback.GetSolution">GRBCallback.GetSolution</A>
+to retrieve values from the solution to the current node relaxation,
+and then use
+<A HREF="node502.html#dotnetmethod:GRBCallback.AddCut">GRBCallback.AddCut</A> or
+<A HREF="node503.html#dotnetmethod:GRBCallback.AddLazy">GRBCallback.AddLazy</A> to
+add a constraint to cut off that relaxation solution, or
+<A HREF="node509.html#dotnetmethod:GRBCallback.SetSolution">GRBCallback.SetSolution</A>
+to import a heuristic solution built from the relaxation solution.
+
+<P>
+When solving a model using multiple threads, note that the user
+callback is only ever called from a single thread, so you don't need
+to worry about the thread-safety of your callback.
+
+<P>
+You can look at the <EM>callback_cs.cs</EM> example for details of how
+to use Gurobi callbacks.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html6620"
+  HREF="node500.html">GRBCallback()</A>
+<LI><A NAME="tex2html6621"
+  HREF="node501.html">GRBCallback.Abort()</A>
+<LI><A NAME="tex2html6622"
+  HREF="node502.html">GRBCallback.AddCut()</A>
+<LI><A NAME="tex2html6623"
+  HREF="node503.html">GRBCallback.AddLazy()</A>
+<LI><A NAME="tex2html6624"
+  HREF="node504.html">GRBCallback.GetDoubleInfo()</A>
+<LI><A NAME="tex2html6625"
+  HREF="node505.html">GRBCallback.GetIntInfo()</A>
+<LI><A NAME="tex2html6626"
+  HREF="node506.html">GRBCallback.GetNodeRel()</A>
+<LI><A NAME="tex2html6627"
+  HREF="node507.html">GRBCallback.GetSolution()</A>
+<LI><A NAME="tex2html6628"
+  HREF="node508.html">GRBCallback.GetStringInfo()</A>
+<LI><A NAME="tex2html6629"
+  HREF="node509.html">GRBCallback.SetSolution()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html6618"
+  HREF="node500.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6616"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6610"
+  HREF="node498.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6619"
+  HREF="node500.html">GRBCallback()</A>
+<B> Up:</B> <A NAME="tex2html6617"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6611"
+  HREF="node498.html">implicit cast</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

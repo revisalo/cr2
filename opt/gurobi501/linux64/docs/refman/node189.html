@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBQuadExpr</TITLE>
+<META NAME="description" CONTENT="GRBQuadExpr">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node207.html">
+<LINK REL="previous" HREF="node173.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node190.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html3037"
+  HREF="node190.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3035"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3029"
+  HREF="node188.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html3038"
+  HREF="node190.html">GRBQuadExpr()</A>
+<B> Up:</B> <A NAME="tex2html3036"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html3030"
+  HREF="node188.html">GRBLinExpr::size()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00029000000000000000"></A>
+<A NAME="cppclass:GRBQuadExpr"></A>
+<BR>
+GRBQuadExpr
+</H2>
+
+<P>
+Gurobi quadratic expression object.  A quadratic expression consists
+of a linear expression, plus a list of coefficient-variable-variable
+triples that capture the quadratic terms.  Quadratic expressions are
+used to build quadratic objective functions and quadratic constraints.
+They are temporary objects that typically have short lifespans.
+
+<P>
+The <EM>GRBQuadExpr</EM> class is a sub-class of the abstract base
+class <A HREF="node171.html#cppclass:GRBExpr">GRBExpr</A>.
+
+<P>
+You generally build quadratic expressions using overloaded operators.
+For example, if <EM>x</EM> is a <A HREF="node158.html#cppclass:GRBVar">GRBVar</A>
+object, then <EM>x * x</EM> is a
+<A HREF="#cppclass:GRBQuadExpr">GRBQuadExpr</A> object.  Expressions
+can be built from constants (e.g., <EM>expr = 0</EM>), variables (e.g.,
+<EM>expr = 1 * x *x + 2 * x * y</EM>), or from other expressions (e.g.,
+<EM>expr2 = 2 * expr1 + x * x</EM>, or <EM>expr3 = expr1 + 2 * expr2</EM>).
+You can also modify existing expressions (e.g.,
+<EM>expr += x * x</EM>, or <EM>expr2 -= expr1</EM>).
+
+<P>
+The other option for building expressions is to start with an empty
+expression (using the
+<A HREF="node190.html#cppmethod:GRBQuadExpr">GRBQuadExpr</A> constructor), and
+then add terms.  Terms can be added individually (using
+<A HREF="node191.html#cppmethod:GRBQuadExpr::addTerm">addTerm</A>) or in groups
+(using <A HREF="node192.html#cppmethod:GRBQuadExpr::addTerms">addTerms</A>).
+Terms can also be removed from an expression (using
+<A HREF="node205.html#cppmethod:GRBQuadExpr::remove">remove</A>).
+
+<P>
+Note that it is <EM>much</EM> more efficient to build large quadratic
+expressions by extending existing expressions (using <EM>+=</EM>
+or <EM>-=</EM>), rather than by repeatedly creating new expressions.  The
+statement <EM>expr = expr + x * x</EM> creates a new copy of <EM>expr</EM>,
+for example, while <EM>expr += x * x</EM> just appends a new term.
+
+<P>
+Individual terms in a quadratic expression can be queried using the
+<A HREF="node197.html#cppmethod:GRBQuadExpr::getVar1">getVar1</A>,
+<A HREF="node198.html#cppmethod:GRBQuadExpr::getVar2">getVar2</A>, and
+<A HREF="node194.html#cppmethod:GRBQuadExpr::getCoeff">getCoeff</A> methods.  You
+can query the number of quadratic terms in the expression using the
+<A HREF="node206.html#cppmethod:GRBQuadExpr::size">size</A> method.
+To
+query the constant and linear terms associated with a quadratic
+expression, first obtain the linear portion of the quadratic
+expression using
+<A HREF="node195.html#cppmethod:GRBQuadExpr::getLinExpr">getLinExpr</A>, and then use
+the <A HREF="node177.html#cppmethod:GRBLinExpr::getConstant">getConstant</A>,
+<A HREF="node178.html#cppmethod:GRBLinExpr::getCoeff">getCoeff</A>, or
+<A HREF="node180.html#cppmethod:GRBLinExpr::getVar">getVar</A> on the
+resulting <A HREF="node173.html#cppclass:GRBLinExpr">GRBLinExpr</A> object.
+
+<P>
+Note that a quadratic expression may contain multiple terms that
+involve the same variable pair.  These duplicate terms are merged when
+creating the model objective from an expression, but they may be
+visible when inspecting individual terms in the expression (e.g., when
+using <A HREF="node197.html#cppmethod:GRBQuadExpr::getVar1">getVar1</A> and
+<A HREF="node198.html#cppmethod:GRBQuadExpr::getVar2">getVar2</A>).
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3039"
+  HREF="node190.html">GRBQuadExpr()</A>
+<LI><A NAME="tex2html3040"
+  HREF="node191.html">GRBQuadExpr::addTerm()</A>
+<LI><A NAME="tex2html3041"
+  HREF="node192.html">GRBQuadExpr::addTerms()</A>
+<LI><A NAME="tex2html3042"
+  HREF="node193.html">GRBQuadExpr::clear()</A>
+<LI><A NAME="tex2html3043"
+  HREF="node194.html">GRBQuadExpr::getCoeff()</A>
+<LI><A NAME="tex2html3044"
+  HREF="node195.html">GRBQuadExpr::getLinExpr()</A>
+<LI><A NAME="tex2html3045"
+  HREF="node196.html">GRBQuadExpr::getValue()</A>
+<LI><A NAME="tex2html3046"
+  HREF="node197.html">GRBQuadExpr::getVar1()</A>
+<LI><A NAME="tex2html3047"
+  HREF="node198.html">GRBQuadExpr::getVar2()</A>
+<LI><A NAME="tex2html3048"
+  HREF="node199.html">GRBQuadExpr::operator=</A>
+<LI><A NAME="tex2html3049"
+  HREF="node200.html">GRBQuadExpr::operator+</A>
+<LI><A NAME="tex2html3050"
+  HREF="node201.html">GRBQuadExpr::operator-</A>
+<LI><A NAME="tex2html3051"
+  HREF="node202.html">GRBQuadExpr::operator+=</A>
+<LI><A NAME="tex2html3052"
+  HREF="node203.html">GRBQuadExpr::operator-=</A>
+<LI><A NAME="tex2html3053"
+  HREF="node204.html">GRBQuadExpr::operator*=</A>
+<LI><A NAME="tex2html3054"
+  HREF="node205.html">GRBQuadExpr::remove()</A>
+<LI><A NAME="tex2html3055"
+  HREF="node206.html">GRBQuadExpr::size()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3037"
+  HREF="node190.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3035"
+  HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3029"
+  HREF="node188.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html3038"
+  HREF="node190.html">GRBQuadExpr()</A>
+<B> Up:</B> <A NAME="tex2html3036"
+  HREF="node105.html">C++ Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html3030"
+  HREF="node188.html">GRBLinExpr::size()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

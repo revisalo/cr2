@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Model.addQConstr()</TITLE>
+<META NAME="description" CONTENT="Model.addQConstr()">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node538.html">
+<LINK REL="previous" HREF="node536.html">
+<LINK REL="up" HREF="node534.html">
+<LINK REL="next" HREF="node538.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7194"
+  HREF="node538.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7192"
+  HREF="node534.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7186"
+  HREF="node536.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7195"
+  HREF="node538.html">Model.addRange()</A>
+<B> Up:</B> <A NAME="tex2html7193"
+  HREF="node534.html">Model</A>
+<B> Previous:</B> <A NAME="tex2html7187"
+  HREF="node536.html">Model.addConstr()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00052300000000000000"></A>
+<A NAME="pythonmethod:Model.addQConstr"></A>
+<BR>
+Model.addQConstr()
+</H3>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">addQConstr</SPAN></FONT></BIG> ( lhs, sense, rhs, name='''' )
+
+
+<P>
+Add a quadratic constraint to a model.
+
+<P>
+Important note: the algorithms that Gurobi uses to solve
+quadratically constrained problems can only handle certain
+types of quadratic constraints.  Constraints of the following
+forms are always accepted:
+
+<UL>
+<LI>x'Qx + q'x &lt;= b, where Q is Positive Semi-Definite (PSD)
+</LI>
+<LI>x'x &lt;= y^2, where <EM>x</EM> is a vector of variables, and
+    <EM>y</EM> is a non-negative variable (a Second-Order Cone)
+</LI>
+<LI>x'x &lt;= y z, where <EM>x</EM> is a vector of variables,
+    and <EM>y</EM> and <EM>z</EM> are non-negative variables
+    (a rotated Second-Order Cone)
+</LI>
+</UL>
+If you add a constraint that isn't in one of these forms (and Gurobi
+presolve is unable to transform the constraint into one of these
+forms), you'll get an error when you try to solve the model.
+Constraints where the quadratic terms only involve binary variables
+will always be transformed into one of these forms.
+
+<P>
+Note that this method also accepts a
+<A HREF="node630.html#pythonclass:TempConstr">TempConstr</A> as its first
+argument (with the name as its second argument).  This allows you
+to use operator overloading to create constraints.
+See <A HREF="node630.html#pythonclass:TempConstr">TempConstr</A> for more
+information.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">lhs</SPAN>: Left-hand side for new quadratic constraint.  Can be a
+  constant, a <A HREF="node584.html#pythonclass:Var">Var</A>, a
+  <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A>, or a
+  <A HREF="node613.html#pythonclass:QuadExpr">QuadExpr</A>.
+
+<P>
+ <SPAN  CLASS="textbf">sense</SPAN>: Sense for new quadratic constraint (GRB.LESS_EQUAL
+  or GRB.GREATER_EQUAL).
+
+<P>
+ <SPAN  CLASS="textbf">rhs</SPAN>: Right-hand side for new quadratic constraint.  Can be a
+  constant, a <A HREF="node584.html#pythonclass:Var">Var</A>, a
+  <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A>, or a
+  <A HREF="node613.html#pythonclass:QuadExpr">QuadExpr</A>.
+
+<P>
+ <SPAN  CLASS="textbf">name</SPAN>: Name for new constraint.
+
+<P>
+
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Return value:</SPAN></BIG>
+
+<P>
+New quadratic constraint object.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Example usage:</SPAN></BIG>
+<PRE>
+  model.addQConstr(x*x + y*y, GRB.LESS_EQUAL, z*z, "c0")
+  model.addQConstr(x*x + y*y &lt;= 2.0, "c1")
+</PRE>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7194"
+  HREF="node538.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7192"
+  HREF="node534.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7186"
+  HREF="node536.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7195"
+  HREF="node538.html">Model.addRange()</A>
+<B> Up:</B> <A NAME="tex2html7193"
+  HREF="node534.html">Model</A>
+<B> Previous:</B> <A NAME="tex2html7187"
+  HREF="node536.html">Model.addConstr()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Error Codes</TITLE>
+<META NAME="description" CONTENT="Error Codes">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node743.html">
+<LINK REL="previous" HREF="node741.html">
+<LINK REL="up" HREF="refman.html">
+<LINK REL="next" HREF="node743.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html9440"
+  HREF="node743.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html9438"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html9432"
+  HREF="node741.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html9441"
+  HREF="node743.html">File Formats</A>
+<B> Up:</B> <A NAME="tex2html9439"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html9433"
+  HREF="node741.html">Callback Codes</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000120000000000000000"></A>
+<A NAME="sec:ErrorCodes"></A>
+<BR>
+Error Codes
+</H1>
+
+<P>
+Errors can arise in most of the Gurobi library routines.  In the C
+interface, library routines return an integer error code.  In the C++,
+Java, .NET, and Python interfaces, Gurobi methods can throw an
+exception (a <A HREF="node228.html#cppclass:GRBException">C++ exception</A>, a
+<A HREF="node368.html#javaclass:GRBException">Java exception</A>, a
+<A HREF="node510.html#dotnetclass:GRBException">.NET exception</A>, or a
+<A HREF="node641.html#pythonclass:GurobiError">Python exception</A>)
+
+<P>
+Underlying all Gurobi error reporting is a set of error codes.  These
+are integer values, but we recommend that you use one of the
+pre-defined error code constants to check the error status in your
+program.  Each error code has a name, and each language requires a
+prefix on this name to obtain the appropriate constant.  You would
+access error code <EM>OUT_OF_MEMORY</EM> in the following ways
+from the available Gurobi interfaces:
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Language</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Error Code</SPAN></TH>
+</TR>
+<TR><TD ALIGN="LEFT">C</TD>
+<TD ALIGN="LEFT">GRB_ERROR_OUT_OF_MEMORY</TD>
+</TR>
+<TR><TD ALIGN="LEFT">C++</TD>
+<TD ALIGN="LEFT">GRB_ERROR_OUT_OF_MEMORY</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Java</TD>
+<TD ALIGN="LEFT">GRB.Error.OUT_OF_MEMORY</TD>
+</TR>
+<TR><TD ALIGN="LEFT">.NET</TD>
+<TD ALIGN="LEFT">GRB.Error.OUT_OF_MEMORY</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Python</TD>
+<TD ALIGN="LEFT">GRB.Error.OUT_OF_MEMORY</TD>
+</TR>
+</TABLE>
+
+<P>
+Note that when an error occurs, it produces both an error code and an
+error message. The message can be obtained through
+<A HREF="node104.html#routine:GRBgeterrormsg">GRBgeterrormessage</A> in C,
+through
+<A HREF="node231.html#cppmethod:GRBException::getMessage">GRBException::getMessage()</A>
+in C++, through the inherited <EM>getMessage()</EM> method on the
+<A HREF="node368.html#javaclass:GRBException">GRBException</A> class in Java,
+through the inherited <EM>Message</EM> property on the
+<A HREF="node510.html#dotnetclass:GRBException">GRBException</A> class in .NET, or
+through the <EM>e.message</EM> attribute on the
+<A HREF="node641.html#pythonclass:GurobiError">GurobiError</A> object in Python.
+
+<P>
+Possible error codes are:
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Error code</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Error number</SPAN></TH>
+<TH ALIGN="LEFT"><SPAN  CLASS="textbf">Description</SPAN></TH>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">OUT_OF_MEMORY</SPAN></TH>
+<TD ALIGN="LEFT">10001</TD>
+<TD ALIGN="LEFT">Available memory was exhausted</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NULL_ARGUMENT</SPAN></TH>
+<TD ALIGN="LEFT">10002</TD>
+<TD ALIGN="LEFT">NULL input value provided for a required argument</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">INVALID_ARGUMENT</SPAN></TH>
+<TD ALIGN="LEFT">10003</TD>
+<TD ALIGN="LEFT">An invalid value was provided for a routine argument</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">UNKNOWN_ATTRIBUTE</SPAN></TH>
+<TD ALIGN="LEFT">10004</TD>
+<TD ALIGN="LEFT">Tried to query or set an unknown attribute</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DATA_NOT_AVAILABLE</SPAN></TH>
+<TD ALIGN="LEFT">10005</TD>
+<TD ALIGN="LEFT">Attempted to query or set an attribute that could not be accessed at that time</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">INDEX_OUT_OF_RANGE</SPAN></TH>
+<TD ALIGN="LEFT">10006</TD>
+<TD ALIGN="LEFT">Tried to query or set an attribute, but one or more of the provided indices (e.g., constraint index, variable index) was outside the range of valid values</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">UNKNOWN_PARAMETER</SPAN></TH>
+<TD ALIGN="LEFT">10007</TD>
+<TD ALIGN="LEFT">Tried to query or set an unknown parameter</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">VALUE_OUT_OF_RANGE</SPAN></TH>
+<TD ALIGN="LEFT">10008</TD>
+<TD ALIGN="LEFT">Tried to set a parameter to a value that is outside the parameter's valid range</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NO_LICENSE</SPAN></TH>
+<TD ALIGN="LEFT">10009</TD>
+<TD ALIGN="LEFT">Failed to obtain a valid license</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">SIZE_LIMIT_EXCEEDED</SPAN></TH>
+<TD ALIGN="LEFT">10010</TD>
+<TD ALIGN="LEFT">Attempted to solve a model that is larger than the limit for a demo license</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">CALLBACK</SPAN></TH>
+<TD ALIGN="LEFT">10011</TD>
+<TD ALIGN="LEFT">Problem in callback</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">FILE_READ</SPAN></TH>
+<TD ALIGN="LEFT">10012</TD>
+<TD ALIGN="LEFT">Failed to read the requested file</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">FILE_WRITE</SPAN></TH>
+<TD ALIGN="LEFT">10013</TD>
+<TD ALIGN="LEFT">Failed to write the requested file</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NUMERIC</SPAN></TH>
+<TD ALIGN="LEFT">10014</TD>
+<TD ALIGN="LEFT">Numerical error during requested operation</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">IIS_NOT_INFEASIBLE</SPAN></TH>
+<TD ALIGN="LEFT">10015</TD>
+<TD ALIGN="LEFT">Attempted to perform infeasibility analysis on a feasible model</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NOT_FOR_MIP</SPAN></TH>
+<TD ALIGN="LEFT">10016</TD>
+<TD ALIGN="LEFT">Requested operation not valid for a MIP model</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">OPTIMIZATION_IN_PROGRESS</SPAN></TH>
+<TD ALIGN="LEFT">10017</TD>
+<TD ALIGN="LEFT">Tried to query or modify a model while optimization was in progress</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">DUPLICATES</SPAN></TH>
+<TD ALIGN="LEFT">10018</TD>
+<TD ALIGN="LEFT">Constraint, variable, or SOS contained duplicated indices</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NODEFILE</SPAN></TH>
+<TD ALIGN="LEFT">10019</TD>
+<TD ALIGN="LEFT">Error in reading or writing a node file during MIP optimization</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">Q_NOT_PSD</SPAN></TH>
+<TD ALIGN="LEFT">10020</TD>
+<TD ALIGN="LEFT">Q matrix in QP model is not positive semi-definite</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">QCP_EQUALITY_CONSTRAINT</SPAN></TH>
+<TD ALIGN="LEFT">10021</TD>
+<TD ALIGN="LEFT">QCP equality constraint specified (only inequalities are supported)</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">NOT_IN_MODEL</SPAN></TH>
+<TD ALIGN="LEFT">20001</TD>
+<TD ALIGN="LEFT">Tried to use a constraint or variable that is not in the model, either because it was removed or because it has not yet been added.</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">FAILED_TO_CREATE_MODEL</SPAN></TH>
+<TD ALIGN="LEFT">20002</TD>
+<TD ALIGN="LEFT">Failed to create the requested model</TD>
+</TR>
+<TR><TH ALIGN="LEFT"><SPAN  CLASS="textbf">INTERNAL</SPAN></TH>
+<TD ALIGN="LEFT">20003</TD>
+<TD ALIGN="LEFT">Internal Gurobi error</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html9440"
+  HREF="node743.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html9438"
+  HREF="refman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html9432"
+  HREF="node741.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html9441"
+  HREF="node743.html">File Formats</A>
+<B> Up:</B> <A NAME="tex2html9439"
+  HREF="refman.html">Gurobi Optimizer Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html9433"
+  HREF="node741.html">Callback Codes</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

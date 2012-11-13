@@ -1,0 +1,671 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Python Dictionary Example</TITLE>
+<META NAME="description" CONTENT="Python Dictionary Example">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html186"
+  HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html184"
+  HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html178"
+  HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html187"
+  HREF="node14.html">Building and running the</A>
+<B> Up:</B> <A NAME="tex2html185"
+  HREF="node11.html">Python Interface</A>
+<B> Previous:</B> <A NAME="tex2html179"
+  HREF="node12.html">Simple Python Example</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00092000000000000000"></A>
+<A NAME="subsection:pythondictionary"></A>
+<BR>
+Python Dictionary Example
+</H2>
+
+<P>
+In order to provide a gentle introduction to our interfaces, the
+examples so far have demonstrated only very basic capabilities.  We
+will now attempt to demonstrate some of the power of our Python
+interface by describing a more complex example.  This example is
+intended to capture most of the common ingredients of large, complex
+optimization models.  Implementing this same example in another API
+would most likely have required hundreds of lines of code (ours is
+around 70 lines of Python code).
+
+<P>
+We'll need to present a few preliminaries before getting to the
+example itself.  You'll need to learn a bit about the Python language,
+and we'll need to describe a few custom classes and functions.  Our
+intent is that you will come away from this section with an
+appreciation for the power and flexibility of this interface.  It can
+be used to create quite complex models using what we believe are very
+concise and natural modeling constructs.  Our goal with this interface
+has been to provide something that feels more like a mathematical
+modeling language than a programming language API.
+
+<P>
+If you'd like to dig a bit deeper into the Python language constructs
+described here, we recommend that you visit the
+<A NAME="tex2html29"
+  HREF="http://docs.python.org/release/2.7.2/tutorial/">online Python
+  tutorial</A>.
+
+<P>
+<B>Motivation</B>
+
+<P>
+At the heart of any optimization model lies a set of decision
+variables.  Finding a convenient way to store and access these
+variables can often represent the main challenge in implementing the
+model.  While the variables in some models map naturally to simple
+programming language constructs (e.g., <EM>x[i]</EM> for contiguous
+integer values <EM>i</EM>), other models can present a much greater
+challenge.  For example, consider a model that optimizes the flow of
+multiple different commodities through a supply network.  You might
+have a variable <EM>x['Pens', 'Denver', 'New York']</EM> that
+captures the flow of a manufactured item (pens in this example) from
+Denver to New York.  At the same time, you might <EM>not</EM> want to
+have a variable <EM>x['Pencils', 'Denver', 'Seattle']</EM>, since not all
+combinations of commodities, source cities, and destination cities
+represent valid paths through the network.  Representing a sparse set
+of decision variables in a typical programming language can
+be cumbersome.
+
+<P>
+To compound the challenge, you typically need to build constraints
+that involve subsets of these decision variables.  For example, in our
+network flow model you might want to put an upper bound on the total
+flow that enters a particular city.  You could certainly collect the
+relevant decision variables by iterating over all possible cities and
+selecting only those variables that capture possible flow from that
+source city into the desired destination city.  However, this is
+clearly wasteful if not all origin-destination pairs are valid.  In a
+large network problem, the inefficiency of this approach could lead to
+major performance issues.  Handling this efficiently can require
+complex data structures.
+
+<P>
+The Gurobi Python interface has been designed to make the issues we've
+just described quite easy to manage.  We'll present a specific example
+of how this is done shortly.  Before we do, though, we'll need to
+describe a few important constructs: <EM>lists</EM>, <EM>tuples</EM>,
+<EM>dictionaries</EM>, <EM>list comprehension</EM>, and the
+<EM>tuplelist</EM> class.  The first four are standard Python concepts
+that are particularly important in our interface, while the last is a
+custom class that we've added to the Gurobi Python interface.
+
+<P>
+A quick reminder: you can consult the <A NAME="tex2html30"
+  HREF="http://docs.python.org/release/2.7.2/tutorial/datastructures.html">online Python
+  documentation</A>
+for additional information on any of the Python data structures
+mentioned here.
+
+<P>
+<B>Lists and Tuples</B>
+
+<P>
+The <EM>list</EM> data structure is central to most Python programs;
+Gurobi Python programs are no exception.  We'll also rely heavily on a
+similar data structure, the <EM>tuple</EM>.  Tuples are crucial to
+providing efficient and convenient access to Gurobi decision variables
+in Gurobi Python programs.  The difference between a list and a tuple
+is subtle but important.  We'll discuss it shortly.
+
+<P>
+Lists and tuples are both simply ordered collections of Python
+objects.  A list is created and displayed as a comma-separated
+list of member objects, enclosed in square brackets.  A tuple is
+similar, except that the member objects are enclosed in parenthesis.
+For example, <EM>[1, 2, 3]</EM> is a list, while
+<EM>(1, 2, 3)</EM> is a tuple.  Similarly,
+<EM>['Pens', 'Denver', 'New York']</EM> is a list,
+while
+<EM>('Pens', 'Denver', 'New York')</EM> is a tuple.
+
+<P>
+You can retrieve individual entries from a list or tuple using
+square brackets and zero-based indices:
+<PRE>
+gurobi&gt; l = [1, 2.0, 'abc']
+gurobi&gt; t = (1, 2.0, 'abc')
+gurobi&gt; print l[0]
+1
+gurobi&gt; print t[1]
+2.0
+gurobi&gt; print l[2]
+abc
+</PRE>
+
+<P>
+What's the difference between a list and a tuple?  A tuple is
+<EM>immutable</EM>, meaning that you can't modify it once it has been
+created.  By contrast, you can add new members to a list, remove
+members, change existing members, etc.  This immutable property
+allows you to use tuples as indices for <EM>dictionaries</EM>.
+
+<P>
+<B>Dictionaries</B>
+
+<P>
+A Python <EM>dictionary</EM> allows you to map arbitrary <EM>key</EM>
+values to pieces of data.  Any <EM>immutable</EM> Python object can be
+used as a key: an integer, a floating-point number, a string, or even
+a tuple.
+
+<P>
+To give an example, the following statements create a dictionary <EM>x</EM>,
+and then associates a value <EM>1</EM> with key
+<EM>('Pens', 'Denver', 'New York')</EM>
+<PRE>
+gurobi&gt; x = {}  # creates an empty dictionary
+gurobi&gt; x[('Pens', 'Denver', 'New York')] = 1
+gurobi&gt; print x[('Pens', 'Denver', 'New York')]
+1
+</PRE>
+Python allows you to omit the parenthesis when accessing
+a dictionary using a tuple, so the following is also valid:
+<PRE>
+gurobi&gt; x = {}
+gurobi&gt; x['Pens', 'Denver', 'New York'] = 2
+gurobi&gt; print x['Pens', 'Denver', 'New York']
+2
+</PRE>
+We've stored integers in the dictionary here, but dictionaries can
+hold arbitrary objects.  In particular, they can hold Gurobi
+decision variables:
+<PRE>
+gurobi&gt; x['Pens', 'Denver', 'New York'] = model.addVar()
+gurobi&gt; print x['Pens', 'Denver', 'New York']
+&lt;gurobi.Var *Awaiting Model Update*&gt;
+</PRE>
+
+<P>
+To initialize a dictionary, you can of course simply perform
+assignments for each relevant key:
+<PRE>
+gurobi&gt; values = {}
+gurobi&gt; values['zero'] = 0
+gurobi&gt; values['one'] = 1
+gurobi&gt; values['two'] = 2
+</PRE>
+You can also use the Python dictionary initialization construct:
+<PRE>
+gurobi&gt; values = { 'zero': 0, 'one': 1, 'two': 2 }
+gurobi&gt; print values['zero']
+0
+gurobi&gt; print values['one']
+1
+</PRE>
+
+<P>
+We have included a utility routine in the Gurobi Python interface that
+simplifies dictionary initialization for a case that arises frequently
+in mathematical modeling.  The <EM>multidict</EM> function allows you
+to initialize one or more dictionaries in a single statement.  The
+function takes a dictionary as its argument, where the value
+associated with each key is a list of length <EM>n</EM>.  The function
+splits these lists into individual entries, creating <EM>n</EM>
+separate dictionaries.  The function returns a list.  The first
+result is the list of shared key values, followed by the <EM>n</EM>
+individual dictionaries:
+<PRE>
+gurobi&gt; names, lower, upper = multidict({ 'x': [0, 1], 'y': [1, 2], 'z': [0, 3] })
+gurobi&gt; print names
+['x', 'y', 'z']
+gurobi&gt; print lower
+{'x': 0, 'y': 1, 'z': 0}
+gurobi&gt; print upper
+{'x': 1, 'y': 2, 'z': 3}
+</PRE>
+Note that you can also apply this function to a dictionary where each
+key maps to a scalar value.  In that case, the function simply returns
+the list of keys as the first result, and the original dictionary as
+the second.
+
+<P>
+You will see this function in several of our Python examples.
+
+<P>
+<B>List comprehension</B>
+
+<P>
+List comprehension is an important Python feature that allows you to
+build lists in a concise fashion.  To give a simple example, the
+following list comprehension builds a list containing the squares of
+the numbers from 1 through 5:
+<PRE>
+gurobi&gt; print [x*x for x in [1, 2, 3, 4, 5]]
+[1, 4, 9, 16, 25]
+</PRE>
+A list comprehension can contain more than one <EM>for</EM> clause,
+and it can contain one or more <EM>if</EM> clauses.
+The following example builds
+a list of tuples containing all <EM>x,y</EM> pairs where x and y
+are both less than 3 and are not equal:
+<PRE>
+gurobi&gt; print [(x,y) for x in range(3) for y in range(3) if x != y]
+[(0, 1), (0, 2), (1, 0), (1, 2) (2, 0), (2, 1)]
+</PRE>
+(Details on the <EM>range</EM> function can be found
+<A NAME="tex2html31"
+  HREF="http://docs.python.org/release/2.7.2/library/functions.html">here</A>).
+List comprehension is used extensively in our Python examples.
+
+<P>
+<B>The tuplelist class</B>
+
+<P>
+The final important item we would like to discuss is the
+<EM>tuplelist</EM> class.  This is a custom sub-class of the Python
+<EM>list</EM> class that is designed to allow
+you to efficiently build sub-lists from a list of tuples.
+To be more specific, you can
+use the <EM>select</EM> method on a <EM>tuplelist</EM> object to
+retrieve all tuples that match one or more specified values
+in specified fields.
+
+<P>
+Let us give a simple example.  We'll begin by creating a simple
+<EM>tuplelist</EM> (by passing a list of tuples to the constructor):
+<PRE>
+gurobi&gt; l = tuplelist([(1, 2), (1, 3), (2, 3), (2, 4)])
+</PRE>
+To select a sub-list where particular tuple entries match desired
+values, you specify the desired values as arguments
+to the <EM>select</EM> method.
+The number of arguments to <EM>select</EM> is equal
+to the number of entries in the members of the <EM>tuplelist</EM>
+(they should all have the same number of entries).
+You use a
+<EM>'*'</EM> string to indicate that any value is acceptable in that position
+in the tuple.
+
+<P>
+Each tuple in our example contains two entries, so we
+can perform the following selections:
+<PRE>
+gurobi&gt; print l.select(1, '*')
+[(1, 2), (1, 3)]
+gurobi&gt; print l.select('*', 3)
+[(1, 3), (2, 3)]
+gurobi&gt; print l.select(1, 3)
+[(1, 3)]
+gurobi&gt; print l.select('*', '*')
+[(1, 2), (1, 3), (2, 3), (2, 4)]
+</PRE>
+
+<P>
+You may have noticed that similar results could have been achieved
+using list comprehension.  For example:
+<PRE>
+gurobi&gt; print l.select(1, '*')
+[(1, 2), (1, 3)]
+gurobi&gt; print [(x,y) for x,y in l if x == 1]
+[(1, 2), (1, 3)]
+</PRE>
+The problem is that the latter statement considers every member in the list,
+which can be quite inefficient for large lists.  The <EM>select</EM>
+method builds internal data structures that make these
+selections quite efficient.
+
+<P>
+Note that <EM>tuplelist</EM> is a sub-class of <EM>list</EM>, so you can
+use the standard <EM>list</EM> methods to access or modify a
+<EM>tuplelist</EM>:
+<PRE>
+gurobi&gt; print l[1]
+(1,3)
+gurobi&gt; l += [(3, 4)]
+gurobi&gt; print l
+[(1, 2), (1, 3), (2, 3), (2, 4), (3, 4)]
+</PRE>
+
+<P>
+Returning to our network flow example, once we've built a
+<EM>tuplelist</EM> containing all valid commodity-source-destination
+combinations on the network (we'll call it <EM>flows</EM>), we
+can select
+all arcs that flow into a specific destination city as follows:
+<PRE>
+gurobi&gt; inbound = flows.select('*', '*', 'New York')
+</PRE>
+
+<P>
+We now present an example that illustrates the use of all of the
+concepts discussed so far.
+
+<P>
+<B>netflow.py example</B>
+
+<P>
+Our example solves a multi-commodity flow model on a small network.
+In the example, two commodities (Pencils and Pens) are produced in two
+cities (Detroit and Denver), and must be shipped to warehouses in
+three cities (Boston, New York, and Seattle) to satisfy given demand.
+Each arc in the transportation network has a cost associated with it,
+and a total capacity.
+
+<P>
+This is the complete source code for our example (also available in
+<EM>&lt;installdir&gt;/examples/python/netflow.py</EM>)...
+
+<P>
+<PRE>
+from gurobipy import *
+
+# Model data
+
+commodities = ['Pencils', 'Pens']
+nodes = ['Detroit', 'Denver', 'Boston', 'New York', 'Seattle']
+
+arcs, capacity = multidict({
+  ('Detroit', 'Boston'):   100,
+  ('Detroit', 'New York'):  80,
+  ('Detroit', 'Seattle'):  120,
+  ('Denver',  'Boston'):   120,
+  ('Denver',  'New York'): 120,
+  ('Denver',  'Seattle'):  120 })
+arcs = tuplelist(arcs)
+
+cost = {
+  ('Pencils', 'Detroit', 'Boston'):   10,
+  ('Pencils', 'Detroit', 'New York'): 20,
+  ('Pencils', 'Detroit', 'Seattle'):  60,
+  ('Pencils', 'Denver',  'Boston'):   40,
+  ('Pencils', 'Denver',  'New York'): 40,
+  ('Pencils', 'Denver',  'Seattle'):  30,
+  ('Pens',    'Detroit', 'Boston'):   20,
+  ('Pens',    'Detroit', 'New York'): 20,
+  ('Pens',    'Detroit', 'Seattle'):  80,
+  ('Pens',    'Denver',  'Boston'):   60,
+  ('Pens',    'Denver',  'New York'): 70,
+  ('Pens',    'Denver',  'Seattle'):  30 }
+
+inflow = {
+  ('Pencils', 'Detroit'):   50,
+  ('Pencils', 'Denver'):    60,
+  ('Pencils', 'Boston'):   -50,
+  ('Pencils', 'New York'): -50,
+  ('Pencils', 'Seattle'):  -10,
+  ('Pens',    'Detroit'):   60,
+  ('Pens',    'Denver'):    40,
+  ('Pens',    'Boston'):   -40,
+  ('Pens',    'New York'): -30,
+  ('Pens',    'Seattle'):  -30 }
+
+# Create optimization model
+m = Model('netflow')
+
+# Create variables
+flow = {}
+for h in commodities:
+    for i,j in arcs:
+        flow[h,i,j] = m.addVar(ub=capacity[i,j], obj=cost[h,i,j],
+                               name='flow_%s_%s_%s' % (h, i, j))
+m.update()
+
+# Arc capacity constraints
+for i,j in arcs:
+    m.addConstr(quicksum(flow[h,i,j] for h in commodities) &lt;= capacity[i,j],
+                'cap_%s_%s' % (i, j))
+
+# Flow conservation constraints
+for h in commodities:
+    for j in nodes:
+        m.addConstr(
+          quicksum(flow[h,i,j] for i,j in arcs.select('*',j)) +
+              inflow[h,j] ==
+          quicksum(flow[h,j,k] for j,k in arcs.select(j,'*')),
+                   'node_%s_%s' % (h, j))
+
+# Compute optimal solution
+m.optimize()
+
+# Print solution
+if m.status == GRB.status.OPTIMAL:
+    for h in commodities:
+        print '\nOptimal flows for', h, ':'
+        for i,j in arcs:
+            if flow[h,i,j].x &gt; 0:
+                print i, '-&gt;', j, ':', flow[h,i,j].x
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of computing the optimal network flow.
+As with the simple Python example presented earlier, this example
+begins by importing the Gurobi functions and classes:
+<PRE>
+from gurobipy import *
+</PRE>
+
+<P>
+We then create a few lists that contain model data:
+<PRE>
+commodities = ['Pencils', 'Pens']
+nodes = ['Detroit', 'Denver', 'Boston', 'New York', 'Seattle']
+
+arcs, capacity = multidict({
+  ('Detroit', 'Boston'):   100,
+  ('Detroit', 'New York'):  80,
+  ('Detroit', 'Seattle'):  120,
+  ('Denver',  'Boston'):   120,
+  ('Denver',  'New York'): 120,
+  ('Denver',  'Seattle'):  120 })
+arcs = tuplelist(arcs)
+</PRE>
+The model works with two commodities (Pencils and Pens), and the
+network contains 5 nodes and 6 arcs.  We initialize <EM>commodities</EM>
+and <EM>nodes</EM> as simple Python lists.  We use the Gurobi
+<EM>multidict</EM> function to initialize <EM>arcs</EM> (the <EM>list</EM>
+of keys) and <EM>capacity</EM> (a <EM>dictionary</EM>).
+
+<P>
+In our example, we plan to use <EM>arcs</EM> to select subsets of the
+arcs when building constraints later.  We therefore pass the
+<EM>list</EM> of tuples returned by <EM>multidict</EM> to the
+<EM>tuplelist</EM> constructor to create a <EM>tuplelist</EM> object
+instead.
+
+<P>
+The model also requires cost data for each commodity-arc pair:
+<PRE>
+cost = {
+  ('Pencils', 'Detroit', 'Boston'):   10,
+  ('Pencils', 'Detroit', 'New York'): 20,
+  ('Pencils', 'Detroit', 'Seattle'):  60,
+  ('Pencils', 'Denver',  'Boston'):   40,
+  ('Pencils', 'Denver',  'New York'): 40,
+  ('Pencils', 'Denver',  'Seattle'):  30,
+  ('Pens',    'Detroit', 'Boston'):   20,
+  ('Pens',    'Detroit', 'New York'): 20,
+  ('Pens',    'Detroit', 'Seattle'):  80,
+  ('Pens',    'Denver',  'Boston'):   60,
+  ('Pens',    'Denver',  'New York'): 70,
+  ('Pens',    'Denver',  'Seattle'):  30 }
+</PRE>
+Once this dictionary has been created, the cost of moving commodity
+<EM>h</EM> from node <EM>i</EM> to <EM>j</EM> can be queried as
+<EM>cost[(h,i,j)]</EM>.  Recall that Python allows you to omit the
+parenthesis when using a tuple to index a dictionary, so this can be
+shortened to just <EM>cost[h,i,j]</EM>.
+
+<P>
+A similar construct is used to initialize node demand data:
+<PRE>
+inflow = {
+  ('Pencils', 'Detroit'):   50,
+  ('Pencils', 'Denver'):    60,
+  ('Pencils', 'Boston'):   -50,
+  ('Pencils', 'New York'): -50,
+  ('Pencils', 'Seattle'):  -10,
+  ('Pens',    'Detroit'):   60,
+  ('Pens',    'Denver'):    40,
+  ('Pens',    'Boston'):   -40,
+  ('Pens',    'New York'): -30,
+  ('Pens',    'Seattle'):  -30 }
+</PRE>
+
+<P>
+<B>Building a multi-dimensional array of variables</B>
+
+<P>
+The next step in our example (after creating an empty <EM>Model</EM>
+object) is to add variables to the model.  The variables are
+stored in a dictionary <EM>flow</EM>:
+<PRE>
+flow = {}
+for h in commodities:
+  for i,j in arcs:
+    flow[h,i,j] = m.addVar(ub=capacity[i,j], cost=cost[h,i,j],
+                           name='flow_%s_%s_%s' % (h, i, j))
+m.update()
+</PRE>
+The <EM>flow</EM> variable is triply subscripted: by commodity, source
+node, and destination node.  Note that the dictionary only contains
+variables for source, destination pairs that are present in <EM>arcs</EM>.
+
+<P>
+<B>Arc capacity constraints</B>
+
+<P>
+We begin with a straightforward set of constraints.  The sum of the
+flow variables on an arc must be less than or equal to the capacity of
+that arc:
+<PRE>
+for i,j in arcs:
+  m.addConstr(quicksum(flow[h,i,j] for h in commodities) &lt;= capacity[i,j],
+              'cap_%s_%s' % (i, j))
+</PRE>
+Note that we use list comprehension to build a list of all variables
+associated with an arc <EM>(i,j)</EM>:
+<PRE>
+flow[h,i,j] for h in commodities
+</PRE>
+(To be precise, as we've used it here, this is actually called a <EM>generator expression</EM> in Python, but it is similar enough
+to list comprehension that you can safely ignore the difference
+for the purpose of understanding this example).
+The result is passed into the <EM>quicksum</EM> function to create a
+Gurobi linear expression that captures the sum of all of these
+variables.  The Gurobi <EM>quicksum</EM> function is an alternative to the
+Python <EM>sum</EM> function that is much faster for building large
+expressions.
+
+<P>
+<B>Flow conservation constraints</B>
+
+<P>
+The next set of constraints are the flow conservation constraints.  They
+require that, for each commodity and node, the sum of the flow into
+the node plus the quantity of external inflow at that node must be equal
+to the sum of the flow out of the node:
+<PRE>
+for h in commodities:
+  for j in nodes:
+    m.addConstr(
+      quicksum(flow[h,i,j] for i,j in arcs.select('*',j)) + inflow[h,j] ==
+      quicksum(flow[h,j,k] for j,k in arcs.select(j,'*')),
+               'node_%s_%s' % (h, j))
+</PRE>
+
+<P>
+<B>Results</B>
+
+<P>
+Once we've added the model constraints, we call <EM>optimize</EM> and
+then output the optimal solution:
+<PRE>
+if m.status == GRB.status.OPTIMAL:
+  for h in commodities:
+    print '\nOptimal flows for', h, ':'
+    for i,j in arcs:
+      if flow[h,i,j].x &gt; 0:
+        print i, '-&gt;', j, ':', flow[h,i,j].x
+</PRE>
+
+<P>
+If you run the example (<EM>gurobi.bat netflow.py</EM> on Windows,
+or <EM>gurobi.sh netflow.py</EM> on Linux and Mac), you should
+see the following output:
+<PRE>
+Optimize a model with 16 rows, 12 columns and 36 nonzeros
+Presolve removed 16 rows and 12 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    5.5000000e+03   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds
+Optimal objective  5.500000000e+03
+
+Optimal flows for Pencils :
+Detroit -&gt; Boston : 50.0
+Denver -&gt; New York : 50.0
+Denver -&gt; Seattle : 10.0
+
+Optimal flows for Pens :
+Detroit -&gt; Boston : 30.0
+Detroit -&gt; New York : 30.0
+Denver -&gt; Boston : 10.0
+Denver -&gt; Seattle : 30.0
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html186"
+  HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html184"
+  HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html178"
+  HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html187"
+  HREF="node14.html">Building and running the</A>
+<B> Up:</B> <A NAME="tex2html185"
+  HREF="node11.html">Python Interface</A>
+<B> Previous:</B> <A NAME="tex2html179"
+  HREF="node12.html">Simple Python Example</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

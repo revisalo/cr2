@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Model-Data Separation in Python</TITLE>
+<META NAME="description" CONTENT="Model-Data Separation in Python">
+<META NAME="keywords" CONTENT="examples">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="examples.css">
+
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node1.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html261"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html259"
+  HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html253"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html262"
+  HREF="node9.html">Callbacks</A>
+<B> Up:</B> <A NAME="tex2html260"
+  HREF="node1.html">Example tour</A>
+<B> Previous:</B> <A NAME="tex2html254"
+  HREF="node7.html">MIP starts</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00017000000000000000"></A>
+<A NAME="subsection:ModelDataSeparation"></A>
+<BR>
+Model-Data Separation in Python
+</H2>
+<B>Examples:</B> diet2.py, diet3.py, diet4.py
+
+<P>
+When building an optimization model in a modeling language, it is
+typical to separate the optimization model itself from the data used
+to create an instance of the model.  These two model ingredients are
+often stored in completely different files.  We show how a similar
+result can be achieved in our Python interface with our
+<EM>diet2.py</EM>, <EM>diet3.py</EM>, and <EM>diet4.py</EM>
+examples. These examples
+illustrate alternate approaches to providing data to the optimization
+model: <EM>diet2.py</EM> embeds the
+data in the source file, <EM>diet3.py</EM> reads the data from an
+SQL database (using the Python <EM>sqlite3</EM> package),
+and <EM>diet4.py</EM> reads the data from an Excel spreadsheet
+(using the Python <EM>xlrd</EM> package).
+<EM>dietmodel.py</EM> contains the optimization model itself.  The same
+model is used by <EM>diet2.py</EM>, <EM>diet3.py</EM>, and <EM>diet4.py</EM>.
+
+<P>
+The key construct that enables the separation of the model
+from the data is the Python module.  A module is simply
+a set of functions and variables, stored in a file.
+You import a module into a program using the <EM>import</EM> statement.
+<EM>diet2.py</EM>, <EM>diet3.py</EM>, and <EM>diet4.py</EM> all populate a set
+of variables, and then pass them to the <EM>solve</EM> function
+of the <EM>dietmodel</EM> module using the following pair of statements:
+<PRE>
+import dietmodel
+dietmodel.solve(categories, minNutrition, maxNutrition, foods, cost, nutritionValues)
+</PRE>
+The first statement imports the <EM>dietmodel</EM> module, which must
+be stored in file <EM>dietmodel.py</EM> in the current directory.  The
+second passes the model data to the <EM>solve</EM> function in the
+newly imported module.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html261"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html259"
+  HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html253"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html262"
+  HREF="node9.html">Callbacks</A>
+<B> Up:</B> <A NAME="tex2html260"
+  HREF="node1.html">Example tour</A>
+<B> Previous:</B> <A NAME="tex2html254"
+  HREF="node7.html">MIP starts</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

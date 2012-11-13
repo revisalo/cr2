@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>quicksum()</TITLE>
+<META NAME="description" CONTENT="quicksum()">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node528.html">
+<LINK REL="previous" HREF="node526.html">
+<LINK REL="up" HREF="node523.html">
+<LINK REL="next" HREF="node528.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7047"
+  HREF="node528.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7045"
+  HREF="node523.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7039"
+  HREF="node526.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7048"
+  HREF="node528.html">read()</A>
+<B> Up:</B> <A NAME="tex2html7046"
+  HREF="node523.html">Global Functions</A>
+<B> Previous:</B> <A NAME="tex2html7040"
+  HREF="node526.html">paramHelp()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00051400000000000000"></A>
+<A NAME="pythonmethod:quicksum"></A>
+<BR>
+quicksum()
+</H3>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">quicksum</SPAN></FONT></BIG> ( data )
+
+
+<P>
+A version of the Python <EM>sum</EM> function that is much more
+efficient for building large Gurobi expressions
+(<A HREF="node597.html#pythonclass:LinExpr">LinExpr</A> or
+<A HREF="node613.html#pythonclass:QuadExpr">QuadExpr</A> objects).  The function
+takes a list of terms as its argument.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Arguments:</SPAN></BIG>
+
+<P>
+ <SPAN  CLASS="textbf">data</SPAN>: List of terms to add.  The terms can be constants,
+                <A HREF="node584.html#pythonclass:Var">Var</A> objects,
+                <A HREF="node597.html#pythonclass:LinExpr">LinExpr</A> objects, or
+                 <A HREF="node613.html#pythonclass:QuadExpr">QuadExpr</A> objects.
+
+<P>
+
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Return value:</SPAN></BIG>
+
+<P>
+An expression that represents the sum of the terms
+                   in the input list.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Example usage:</SPAN></BIG>
+<PRE>
+  expr = quicksum([2*x, 3*y+1, 4*z*z])
+  expr = quicksum(model.getVars())
+</PRE>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7047"
+  HREF="node528.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7045"
+  HREF="node523.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7039"
+  HREF="node526.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7048"
+  HREF="node528.html">read()</A>
+<B> Up:</B> <A NAME="tex2html7046"
+  HREF="node523.html">Global Functions</A>
+<B> Previous:</B> <A NAME="tex2html7040"
+  HREF="node526.html">paramHelp()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

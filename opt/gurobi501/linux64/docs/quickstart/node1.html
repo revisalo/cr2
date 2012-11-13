@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Installation</TITLE>
+<META NAME="description" CONTENT="Installation">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node2.html">
+<LINK REL="previous" HREF="quickstart.html">
+<LINK REL="up" HREF="quickstart.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html63"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html61"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html55"
+  HREF="quickstart.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html64"
+  HREF="node2.html">How to Obtain and</A>
+<B> Up:</B> <A NAME="tex2html62"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html56"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00010000000000000000"></A>
+<A NAME="section:Installation"></A>
+<BR>
+Installation
+</H1>
+
+<P>
+The first step in using the Gurobi Optimizer is to install the
+relevant files on your computer.  You should have obtained a
+distribution package from the Gurobi Web site
+(<A NAME="tex2html3"
+  HREF="http://www.gurobi.com">www.gurobi.com</A>).  The name
+of this package will depend on the version of the Gurobi Optimizer you
+have and the platform on which it is intended to run.  The file
+<EM>Gurobi-5.0.0-win32.msi</EM>, for example, installs the
+32-bit version of Gurobi 5.0.0 on a machine that runs a Microsoft
+Windows&#174; operating system.  The file
+<EM>gurobi5.0.0_linux64.tar.gz</EM>, on the other hand,
+installs the 64-bit version on a machine that runs a supported
+distribution of the Linux&#174; operating system.
+
+<P>
+The steps required to install the Gurobi Optimizer differ on Windows,
+Linux, and Mac OS systems.  Detailed instructions for each platform
+follow.
+
+<P>
+<B>Installation - Windows</B>
+
+<P>
+To install the Gurobi optimizer on your Windows machine, simply
+double-click on the appropriate Gurobi installer (e.g.,
+<EM>Gurobi-5.0.0-win32.msi</EM> for the 32-bit version of Gurobi 5.0.0).
+By default, the installer will place the Gurobi 5.0.0 files in
+directory <EM>c:&#92;gurobi500&#92;win32</EM> (or
+<EM>c:&#92;gurobi500&#92;win64</EM> for 64-bit
+Windows installs).  The installer gives you the option to change the
+installation target.  We'll refer to the installation directory as
+<EM>&lt;installdir&gt;</EM>.
+
+<P>
+By default, Gurobi is installed for use by the current Windows user
+only.  If you would like to install Gurobi for all users, you may do
+so using the command line interface to the Windows Installer: open a
+<EM>cmd</EM> prompt, use <EM>cd</EM> to go to the directory that
+contains the Gurobi installer image, and enter the following command:
+<PRE>
+  msiexec /i Gurobi-5.0.0-win32.msi allusers=1
+</PRE>
+
+<P>
+If you would like to work with compressed files from within the Gurobi
+Optimizer, we recommend that you also install <EM>gzip</EM>
+and/or <EM>7zip</EM>.  They can be
+downloaded from
+<A NAME="tex2html4"
+  HREF="http://www.gzip.org">www.gzip.org</A>
+and
+<A NAME="tex2html5"
+  HREF="http://www.7-zip.org">www.7-zip.org</A>, respectively.
+
+<P>
+Once installation is complete, you should see a Gurobi desktop
+shortcut that can be used to launch the Gurobi Interactive Shell.  You
+shouldn't try to launch Gurobi quite yet.  Doing so will produce a
+lengthy error message indicating that you haven't yet installed a license
+key.
+
+<P>
+You are now ready to proceed to the section on
+<A HREF="node2.html#section:License">How to Obtain and Install a Gurobi License</A>.
+
+<P>
+If you would like an overview of the files included in the Gurobi
+distribution, you can also view the <A HREF="node17.html#section:Overview">File
+  Overview</A> section.
+
+<P>
+<B>Installation - Linux</B>
+
+<P>
+The first step in installing the Gurobi Optimizer on a Linux system is
+to choose a destination directory.  We recommend <EM>/opt</EM> for a
+shared installation, but other directories will work as well.
+
+<P>
+Once a destination directory has been chosen, the next step is to copy
+the Gurobi distribution to the destination directory and extract the
+contents.  Extraction is done with the following command:
+<PRE>
+  tar xvfz gurobi5.0.0_linux64.tar.gz
+</PRE>
+This command will create a sub-directory <EM>gurobi500/linux64</EM> that
+contains the complete Gurobi distribution.  In the default case, your
+<EM>&lt;installdir&gt;</EM> is <EM>/opt/gurobi500/linux64</EM>.  The file and
+directory names should of course be adjusted to reflect the actual
+distribution being installed (i.e., extracting the 32-bit Linux
+distribution (<EM>gurobi5.0.0_linux32.tar.gz</EM>) would create
+<EM>/opt/gurobi500/linux32</EM>).
+
+<P>
+The Gurobi Optimizer makes use of several executable files.  In order
+to allow these files to be found when needed, you will have to modify
+a few environment variables:
+
+<UL>
+<LI><EM>GUROBI_HOME</EM> should point to your <EM>&lt;installdir&gt;</EM>.
+</LI>
+<LI><EM>PATH</EM> should be extended to include <EM>&lt;installdir&gt;/bin</EM>.
+</LI>
+<LI><EM>LD_LIBRARY_PATH</EM> should be extended to include <EM>    &lt;installdir&gt;/lib</EM>.
+</LI>
+</UL>
+Users of the <EM>bash</EM> shell would add the following lines to their
+<EM>.bashrc</EM> files...
+<PRE>
+  export GUROBI_HOME="/opt/gurobi500/linux64"
+  export PATH="${PATH}:${GUROBI_HOME}/bin"
+  export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+</PRE>
+Users of the <EM>csh</EM> shell would add the following lines to their
+<EM>.cshrc</EM> files...
+<PRE>
+  setenv GUROBI_HOME /opt/gurobi500/linux64
+  setenv PATH ${PATH}:${GUROBI_HOME}/bin
+  setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib
+</PRE>
+If <EM>LD_LIBRARY_PATH</EM> is not already set, you would use
+the following instead:
+<PRE>
+  export LD_LIBRARY_PATH="${GUROBI_HOME}/lib"
+</PRE>
+or
+<PRE>
+  setenv LD_LIBRARY_PATH ${GUROBI_HOME}/lib
+</PRE>
+Again, these paths should be adjusted to reflect the actual
+distribution being installed.
+
+<P>
+You are now ready to proceed to the section on
+<A HREF="node2.html#section:License">How to Obtain and Install a Gurobi License</A>.
+
+<P>
+If you would like an overview of the files included in the Gurobi
+distribution, you can also view the <A HREF="node17.html#section:Overview">File
+  Overview</A> section.
+
+<P>
+<B>Installation - Mac OS</B>
+
+<P>
+To install the Gurobi Optimizer on your Mac, simply double-click on
+the appropriate Gurobi installer (e.g., <EM>gurobi5.0.0_mac64.pkg</EM> for
+Gurobi 5.0.0) and follow the prompts.  By default, the installer will
+place the Gurobi 5.0.0 files in <EM>/Library/gurobi500/mac64</EM>.
+
+<P>
+You are now ready to proceed to the section on
+<A HREF="node2.html#section:License">How to Obtain and Install a Gurobi License</A>.
+
+<P>
+If you would like an overview of the files included in the Gurobi
+distribution, you can also view the <A HREF="node17.html#section:Overview">File
+  Overview</A> section.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html63"
+  HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html61"
+  HREF="quickstart.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html55"
+  HREF="quickstart.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html64"
+  HREF="node2.html">How to Obtain and</A>
+<B> Up:</B> <A NAME="tex2html62"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A>
+<B> Previous:</B> <A NAME="tex2html56"
+  HREF="quickstart.html">Gurobi Optimizer Quick Start</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

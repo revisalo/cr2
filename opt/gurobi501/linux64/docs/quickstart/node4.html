@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Setting up a token server</TITLE>
+<META NAME="description" CONTENT="Setting up a token server">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html93"
+  HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html91"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html87"
+  HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html94"
+  HREF="node5.html">Interactive Shell</A>
+<B> Up:</B> <A NAME="tex2html92"
+  HREF="node2.html">How to Obtain and</A>
+<B> Previous:</B> <A NAME="tex2html88"
+  HREF="node3.html">Academic validation troubleshooting</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00022000000000000000"></A>
+<A NAME="subsection:tokenserver"></A>
+<BR>
+Setting up a token server
+</H2>
+
+<P>
+<B>Important note: most Gurobi licenses do not use the token server.
+  You should only follow these instructions if your <EM>gurobi.lic</EM>
+  file contains the line <EM>TYPE=TOKEN</EM>.</B>
+
+<P>
+If you are using a floating or single-use license, you will also need
+to start the Gurobi token server before you can use the Gurobi
+Optimizer.  The next step depends on your platform.  You should
+consult <A HREF="#subsection:windowstokenserver">Activating a Windows token
+  server</A>, or <A HREF="#subsection:unixtokenserver">Activating
+  a Linux token server</A>, as
+appropriate.  Note that a Mac OS system cannot currently be used as a
+token server.
+
+<P>
+<B>Activating a Windows token server</B>
+<A NAME="subsection:windowstokenserver"></A>
+<P>
+If you have purchased a single-use or floating license (look
+for <EM>TYPE=TOKEN</EM> in your license key file), you will need to set up
+a Gurobi token server.  For a single-use license, the token server
+must run on the licensed machine.  For a floating license, you will
+need to choose a single machine to act as the token server.  You
+should follow the instructions in this section if you will be using a
+Windows machine as your token server (note that the clients for
+floating licenses don't need to be Windows machines).  The first part
+of this section gives instructions for setting up the token server.
+Later in this section we give instructions for setting up client
+licenses.  To be clear, client machines for floating licenses do not
+need to run the token server.  Their licenses simply need to indicate
+where the token server is running.
+
+<P>
+On a Windows system, you will need to start the token service by
+selecting the <EM>Gurobi Token Server</EM> menu item in the
+<EM>Gurobi Optimization</EM> folder of the <EM>Start</EM> menu.  You should only
+do this after you have installed the Gurobi license key file.
+
+<P>
+The next step after starting the Gurobi token server depends on your
+anti-virus software and firewall settings.  Most anti-virus software
+will immediately ask you to confirm that you are allowing program
+<EM>grbd.exe</EM> to receive network traffic.  Once you confirm this, the
+token server will start serving tokens.  If you don't receive such a
+prompt, you will need to add <EM>grbd.exe</EM> to the firewall
+exceptions list.  In Windows Vista or Windows 7, you do this by
+selecting <EM>Allow a program through Windows firewall</EM> under the
+<EM>Security</EM> area of the Control Panel.  In Windows XP, you do
+this from the <EM>Windows Firewall</EM> selection under the Control
+Panel.  You should add <EM>grbd.exe</EM> to the list of exceptions.
+
+<P>
+Once the token service has been started, you should see the
+<EM>grbd</EM> service listed in the <EM>Services</EM> tab of the Task
+Manager.  To start or stop the service, click on the <EM>Services</EM>
+button at the bottom-right of the <EM>Services</EM> tab, and then
+right-click on the <EM>Gurobi License Manager</EM> item on this screen.
+
+<P>
+You can also start or stop the Gurobi License Manager service from the
+command line.  Running <EM>grbd -h</EM> lists command-line options.
+Issuing a <EM>grbd -s</EM> command stops a running license service.
+Issuing a <EM>grbd -v</EM> command starts the license service in
+verbose mode.  Verbose mode produces a log message each time a token
+is checked in or out.
+
+<P>
+To upgrade from an earlier version of the Gurobi Optimizer, you will
+need to perform the following steps (on the machine running the token
+server):
+
+<OL>
+<LI>Stop the old token server.
+</LI>
+<LI>Install the new version of the Gurobi Optimizer.
+</LI>
+<LI>Upgrade your license file (or modify GRB_LICENSE_FILE to
+point to the new license file).
+</LI>
+<LI>Start the new token server.
+</LI>
+</OL>
+
+<P>
+All output from the Gurobi License Manager goes to the Windows Event
+Log.  You can access this in Windows Vista or Windows 7 through the
+Event Viewer.  Type <EM>Event</EM> in the search box under the
+<EM>Start</EM> menu to launch the viewer.
+
+<P>
+To set up client licenses, you should install the <EM>gurobi.lic</EM>
+file on every machine that will be using the token server (using the
+license installation instructions given above).  Alternatively, you
+can use a simpler client license key file that only contains the
+name or IP address of the token server machine:
+<PRE>
+TOKENSERVER=mymachine.mydomain.com
+</PRE>
+or
+<PRE>
+TOKENSERVER=192.168.1.100
+</PRE>
+You would of course substitute the name or IP address of your token
+server.
+
+<P>
+You can now try
+<A HREF="node2.html#subsection:testlicense">Testing the license</A>.
+
+<P>
+<B>Activating a Linux token server</B>
+<A NAME="subsection:unixtokenserver"></A>
+<P>
+If you have purchased a single-use or floating license (look for
+<EM>TYPE=TOKEN</EM> in your license key file), you will need to set up a
+Gurobi token server.  For a single-use license, the token server must
+run on the licensed machine.  For a floating license, you will need to
+choose a single machine to act as the token server.  You should follow
+the instructions in this section if you will be using a Linux machine
+as your token server (note that the clients for floating licenses
+don't need to be Linux machines).  The first part of this section
+gives instructions for setting up the token server.  Later in this
+section we give instructions for setting up client licenses.  To be
+clear, client machines for floating licenses do not need to run the
+token server.  Their licenses simply need to indicate where the token
+server is running.
+
+<P>
+On a Linux system, you will need to start the token server daemon by
+running program <EM>grbd</EM> (with no arguments) on your license
+server machine.  You only need to do this once -- the token server
+will keep running until you stop it (or until the machine is shut
+down).  Be sure that the license key file has been installed before
+running this program.  Note that the token server runs as a user
+process, so you do not need root priviledges to start it.
+
+<P>
+Note that if you would like the license server to restart when the
+machine is rebooted, you should ask your system administrator to start
+it from <EM>/etc/rc.local</EM>.  If your Gurobi installation and
+license key file are in their default locations, then adding the following
+should suffice:
+<PRE>
+/opt/gurobi500/linux64/bin/grbd
+</PRE>
+
+<P>
+To stop a running token server, you should simply kill the
+<EM>grbd</EM> process.  You can use the <EM>ps</EM> command to find the
+relevant process ID, and the <EM>kill</EM> command to terminate that
+process.
+
+<P>
+To upgrade from an earlier version of the Gurobi Optimizer, you will
+need to perform the following steps (on the machine running the token
+server):
+
+<OL>
+<LI>Stop the old token server.
+</LI>
+<LI>Install the new version of the Gurobi Optimizer.
+</LI>
+<LI>Upgrade your license file (or modify GRB_LICENSE_FILE to
+point to the new license file).
+</LI>
+<LI>Start the new token server.
+</LI>
+</OL>
+
+<P>
+Output from the token server goes to the system log
+(<EM>/var/log/syslog</EM>).  You should see a message similar to the
+following when you start the server:
+<PRE>
+Mar  7 12:37:21 mymachine grbd[7917]: Daemon started: Sat Mar  7 12:37:21 2009
+</PRE>
+By default, the token server only produces logging output when it
+starts.  To obtain more detailed logging information, start the token
+server with the <EM>-v</EM> switch.  This will produce a log message
+each time a token is checked in or out.
+
+<P>
+To set up client licenses, you should install the <EM>gurobi.lic</EM>
+file on every machine that will be using the token server (using the
+license installation instructions given above).  Alternatively, you
+can use a simpler client license key file that only contains the
+name or IP address of the token server machine:
+<PRE>
+TOKENSERVER=mymachine.mydomain.com
+</PRE>
+or
+<PRE>
+TOKENSERVER=192.168.1.100
+</PRE>
+You would of course substitute the name or IP address of your token
+server.
+
+<P>
+If you run into trouble accessing the token server, check to see if
+the server machine is running firewall software (like <EM>Bastille</EM>
+or <EM>ipfilter</EM>) that is blocking access to some ports .  The
+Gurobi token server uses port number 41954 by default, so you'll need
+to open access to that port on the server.  Please consult the
+documentation for your firewall software to determine how to do this.
+If there's a conflict on the default port, you can choose a different
+one by adding a <EM>PORT</EM> line to both the server and the client
+license key files:
+<PRE>
+PORT=46325
+</PRE>
+You can choose any available port number.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html93"
+  HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html91"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html87"
+  HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html94"
+  HREF="node5.html">Interactive Shell</A>
+<B> Up:</B> <A NAME="tex2html92"
+  HREF="node2.html">How to Obtain and</A>
+<B> Previous:</B> <A NAME="tex2html88"
+  HREF="node3.html">Academic validation troubleshooting</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

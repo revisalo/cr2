@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>LinExpr()</TITLE>
+<META NAME="description" CONTENT="LinExpr()">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node599.html">
+<LINK REL="previous" HREF="node597.html">
+<LINK REL="up" HREF="node597.html">
+<LINK REL="next" HREF="node599.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html7818"
+  HREF="node599.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7816"
+  HREF="node597.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7810"
+  HREF="node597.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7819"
+  HREF="node599.html">LinExpr.add()</A>
+<B> Up:</B> <A NAME="tex2html7817"
+  HREF="node597.html">LinExpr</A>
+<B> Previous:</B> <A NAME="tex2html7811"
+  HREF="node597.html">LinExpr</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00057100000000000000"></A>
+<A NAME="pythonmethod:LinExpr"></A>
+<BR>
+LinExpr()
+</H3>
+<BIG CLASS="LARGE">
+<FONT COLOR="#801a1a"> <SPAN  CLASS="textbf">LinExpr</SPAN></FONT></BIG> ( arg1=0.0, arg2=None )
+
+
+<P>
+Linear expression constructor.  Note that you should generally use
+overloaded operators instead of the explicit constructor to build
+linear expression objects.
+
+<P>
+This constructor takes multiple forms.  You can initialize a
+linear expression using a constant (<EM>LinExpr(2.0)</EM>),
+a variable (<EM>LinExpr(x)</EM>), an expression (<EM>LinExpr(2*x)</EM>),
+a pair of lists containing coefficients and variables, respectively
+(<EM>LinExpr([1.0, 2.0], [x, y])</EM>), or a list of coefficient-variable
+tuples (<EM>LinExpr([(1.0, x), (2.0, y), (1.0, z)])</EM>.
+
+<P>
+
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Return value:</SPAN></BIG>
+
+<P>
+A linear expression object.
+
+<P>
+<BIG CLASS="LARGE"><SPAN  CLASS="textbf">Example usage:</SPAN></BIG>
+<PRE>
+  expr = LinExpr(2.0)
+  expr = LinExpr(2*x)
+  expr = LinExpr([1.0, 2.0], [x, y])
+  expr = LinExpr([(1.0, x), (2.0, y), (1.0, z)])
+</PRE>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html7818"
+  HREF="node599.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html7816"
+  HREF="node597.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html7810"
+  HREF="node597.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html7819"
+  HREF="node599.html">LinExpr.add()</A>
+<B> Up:</B> <A NAME="tex2html7817"
+  HREF="node597.html">LinExpr</A>
+<B> Previous:</B> <A NAME="tex2html7811"
+  HREF="node597.html">LinExpr</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

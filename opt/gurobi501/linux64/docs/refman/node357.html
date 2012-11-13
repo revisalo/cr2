@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBCallback</TITLE>
+<META NAME="description" CONTENT="GRBCallback">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node368.html">
+<LINK REL="previous" HREF="node348.html">
+<LINK REL="up" HREF="node248.html">
+<LINK REL="next" HREF="node358.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html4961"
+  HREF="node358.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4959"
+  HREF="node248.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4953"
+  HREF="node356.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html4962"
+  HREF="node358.html">GRBCallback()</A>
+<B> Up:</B> <A NAME="tex2html4960"
+  HREF="node248.html">Java Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html4954"
+  HREF="node356.html">GRBColumn.size()</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000311000000000000000"></A>
+<A NAME="javaclass:GRBCallback"></A>
+<BR>
+GRBCallback
+</H2>
+
+<P>
+Gurobi callback class.  This is an abstract class.  To implement a
+callback, you should create a subclass of this class and implement a
+<EM>callback()</EM> method.  If you pass an object of this subclass to
+method
+<A HREF="node298.html#javamethod:GRBModel.setCallback">GRBModel.setCallback</A>
+before calling
+<A HREF="node293.html#javamethod:GRBModel.optimize">GRBModel.optimize</A>, the
+         <EM>callback()</EM> method of the class will be called
+         periodically.  Depending on where the callback is called
+         from, you will be able to obtain various information about
+         the progress of the optimization.
+
+<P>
+Note that this class contains one protected <EM>int</EM> member
+variable: <EM>where</EM>.  You can query this variable from your <EM>  callback()</EM> method to determine where the callback was called
+from.
+
+<P>
+Gurobi callbacks can be used both to monitor the progress of the
+optimization and to modify the behavior of the Gurobi optimizer.  A
+simple user callback function might call the
+<A HREF="node363.html#javamethod:GRBCallback.getIntInfo">GRBCallback.getIntInfo</A>
+or
+<A HREF="node362.html#javamethod:GRBCallback.getDoubleInfo">GRBCallback.getDoubleInfo</A>
+methods to produce a custom display, or perhaps to terminate
+optimization early (using
+<A HREF="node359.html#javamethod:GRBCallback.abort">GRBCallback.abort</A>).
+More sophisticated MIP callbacks might use
+<A HREF="node365.html#javamethod:GRBCallback.getSolution">GRBCallback.getSolution</A>
+to retrieve values from the solution to the current node relaxation,
+and then use
+<A HREF="node360.html#javamethod:GRBCallback.addCut">GRBCallback.addCut</A> or
+<A HREF="node361.html#javamethod:GRBCallback.addLazy">GRBCallback.addLazy</A> to
+add a constraint to cut off that relaxation solution, or
+<A HREF="node367.html#javamethod:GRBCallback.setSolution">GRBCallback.setSolution</A>
+to import a heuristic solution built from the relaxation solution.
+
+<P>
+When solving a model using multiple threads, note that the user
+callback is only ever called from a single thread, so you don't need
+to worry about the thread-safety of your callback.
+
+<P>
+You can look at the <EM>Callback.java</EM> example for details of how
+to use Gurobi callbacks.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html4963"
+  HREF="node358.html">GRBCallback()</A>
+<LI><A NAME="tex2html4964"
+  HREF="node359.html">GRBCallback.abort()</A>
+<LI><A NAME="tex2html4965"
+  HREF="node360.html">GRBCallback.addCut()</A>
+<LI><A NAME="tex2html4966"
+  HREF="node361.html">GRBCallback.addLazy()</A>
+<LI><A NAME="tex2html4967"
+  HREF="node362.html">GRBCallback.getDoubleInfo()</A>
+<LI><A NAME="tex2html4968"
+  HREF="node363.html">GRBCallback.getIntInfo()</A>
+<LI><A NAME="tex2html4969"
+  HREF="node364.html">GRBCallback.getNodeRel()</A>
+<LI><A NAME="tex2html4970"
+  HREF="node365.html">GRBCallback.getSolution()</A>
+<LI><A NAME="tex2html4971"
+  HREF="node366.html">GRBCallback.getStringInfo()</A>
+<LI><A NAME="tex2html4972"
+  HREF="node367.html">GRBCallback.setSolution()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4961"
+  HREF="node358.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4959"
+  HREF="node248.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4953"
+  HREF="node356.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html4962"
+  HREF="node358.html">GRBCallback()</A>
+<B> Up:</B> <A NAME="tex2html4960"
+  HREF="node248.html">Java Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html4954"
+  HREF="node356.html">GRBColumn.size()</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

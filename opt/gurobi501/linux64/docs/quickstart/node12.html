@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Simple Python Example</TITLE>
+<META NAME="description" CONTENT="Simple Python Example">
+<META NAME="keywords" CONTENT="quickstart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="quickstart.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html176"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html174"
+  HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html168"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html177"
+  HREF="node13.html">Python Dictionary Example</A>
+<B> Up:</B> <A NAME="tex2html175"
+  HREF="node11.html">Python Interface</A>
+<B> Previous:</B> <A NAME="tex2html169"
+  HREF="node11.html">Python Interface</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00091000000000000000"></A>
+<A NAME="subsection:simplepython"></A>
+<BR>
+Simple Python Example
+</H2>
+
+<P>
+This section will work through a simple Python example in order to
+illustrate the use of the Gurobi Python interface.  The example builds
+a model, optimizes it, and outputs the optimal objective value.
+
+<P>
+Our example optimizes the following model:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="RIGHT"><B>maximize</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 z</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="RIGHT"><B>subject to</B></TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">2 y</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">3 z</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\leq$"></SPAN></TD>
+<TD ALIGN="RIGHT">4</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">x</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">y</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="RIGHT"><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$\geq$"></SPAN></TD>
+<TD ALIGN="RIGHT">1</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="CENTER" COLSPAN=6><SPAN>x, y, z binary</SPAN></TD>
+<TD ALIGN="RIGHT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+Note that this is the same model that was modeled and optimized in the
+<A HREF="node7.html#section:C">C Interface</A> section.
+
+<P>
+<B>Example mip1.py</B>
+
+<P>
+This is the complete source code for our example (also available in
+<EM>&lt;installdir&gt;/examples/python/mip1.py</EM>)...
+
+<P>
+<PRE>
+from gurobipy import *
+
+try:
+
+    # Create a new model
+    m = Model("mip1")
+
+    # Create variables
+    x = m.addVar(vtype=GRB.BINARY, name="x")
+    y = m.addVar(vtype=GRB.BINARY, name="y")
+    z = m.addVar(vtype=GRB.BINARY, name="z")
+
+    # Integrate new variables
+    m.update()
+
+    # Set objective
+    m.setObjective(x + y + 2 * z, GRB.MAXIMIZE)
+
+    # Add constraint: x + 2 y + 3 z &lt;= 4
+    m.addConstr(x + 2 * y + 3 * z &lt;= 4, "c0")
+
+    # Add constraint: x + y &gt;= 1
+    m.addConstr(x + y &gt;= 1, "c1")
+
+    m.optimize()
+
+    for v in m.getVars():
+        print v.varName, v.x
+
+    print 'Obj:', m.objVal
+
+except GurobiError:
+    print 'Error reported'
+</PRE>
+
+<P>
+<B>Example details</B>
+
+<P>
+Let us now walk through the example, line by line, to understand how
+it achieves the desired result of optimizing the indicated model.
+
+<P>
+The example begins by importing the Gurobi functions and classes:
+<PRE>
+from gurobipy import *
+</PRE>
+Gurobi Python applications should always start with this line.
+
+<P>
+Note that in order for this command to succeed, the Python application
+needs to know how to find the Gurobi functions and classes.  Recall
+that you have two options here.  The first is to use the Python files
+that are included with our distribution.  You would run this example
+by typing <EM>gurobi.bat mip1.py</EM> (Windows) or
+<EM>gurobi.sh mip1.py</EM> (Linux and Mac).  The second option is to install
+the Gurobi functions and classes into your own Python installation.
+Follow the instructions for running
+<A HREF="node5.html#subsection:setup.py">setup.py</A>
+to do this.
+
+<P>
+<B>Creating the model</B>
+
+<P>
+The first step in our example is to create a model.  A Gurobi model
+holds a single optimization problem.  It consists of a set of
+variables, a set of constraints, and the associated attributes
+(variable bounds, objective coefficients, variable integrality types,
+constraint senses, constraint right-hand side values, etc.).  We start
+this example with an empty model object:
+<PRE>
+  m = Model("mip1")
+</PRE>
+This function takes the desired model name as its argument.
+
+<P>
+<B>Adding variables to the model</B>
+
+<P>
+The next step in our example is to add variables to the model.
+<PRE>
+  # Create variables
+  x = m.addVar(vtype=GRB.BINARY, name="x")
+  y = m.addVar(vtype=GRB.BINARY, name="y")
+  z = m.addVar(vtype=GRB.BINARY, name="z")
+</PRE>
+Variables are added through the <EM>addVar()</EM> method on a model
+object.  A variable is always associated with a particular model.
+
+<P>
+Python allows you to pass arguments by position or by name.  We've
+passed them by name here.  Each variable gets a type (binary), and
+a name.  We use the default values for the other arguments.
+Please refer to the online help (<EM>help(Model.addVar)</EM>
+in the Gurobi Shell) for further details on <EM>addVar()</EM>.
+
+<P>
+<B>Updating the model - lazy modification</B>
+
+<P>
+Model modifications in the Gurobi optimizer are done in a <EM>lazy</EM>
+fashion, meaning that the effects of the modifications are not seen
+immediately.  This approach makes it easier to perform a sequence of
+model modifications, since the model doesn't change while it is being
+modified.  However, lazy modifications do require you to manually
+integrate model changes when needed.  This is done with the
+<EM>update</EM> method:
+<PRE>
+  # Integrate new variables
+  m.update()
+</PRE>
+
+<P>
+<B>Setting the objective</B>
+
+<P>
+The next step in the example is to set the optimization
+objective:
+<PRE>
+  # Set objective: maximize x + y + 2 z
+  model.setObjective(x + y + 2 * z, GRB.MAXIMIZE)
+</PRE>
+
+<P>
+The objective is built here using overloaded operators.  The Python
+API overloads the arithmetic operators to allow you to build linear
+and quadratic expression involving Gurobi variables.
+
+<P>
+The second argument indicates that the sense is maximization.
+
+<P>
+<B>Adding constraints to the model</B>
+
+<P>
+The next step in the example is to add the constraints.  The first
+constraint is added here:
+<PRE>
+  # Add constraint: x + 2 y + 3 z &lt;= 4
+  m.addConstr(x + 2 * y + 3 * z &lt;= 4, "c0")
+</PRE>
+As with variables, constraints are always associated with a specific
+model.  They are created using the <EM>addConstr()</EM> method on the
+model object.
+
+<P>
+We again use overloaded arithmetic operators to build linear
+expressions.  The comparison operators are also overloaded to make it
+easy to build constraints.
+
+<P>
+The second argument to <EM>addConstr</EM> gives the (optional)
+constraint name.
+
+<P>
+The second constraint is created in a similar manner:
+<PRE>
+  # Add constraint: x + y &gt;= 1
+  m.addConstr(x + y &gt;= 1, "c1")
+</PRE>
+
+<P>
+<B>Optimizing the model</B>
+
+<P>
+Now that the model has been built, the next step is to optimize it:
+<PRE>
+  # Optimize model
+  m.optimize()
+</PRE>
+This routine performs the optimization and populates several internal
+model attributes (including the status of the optimization, the
+solution, etc.).
+
+<P>
+<B>Reporting results - attributes</B>
+
+<P>
+Once the optimization is complete, we can query the values of the
+attributes.  In particular, we can query the <EM>varName</EM> and <EM>x</EM>
+variable attributes to obtain the name and solution value for each
+variable:
+<PRE>
+  for v in m.getVars():
+    print v.varName, v.x
+</PRE>
+
+<P>
+We can also query the <EM>objVal</EM> attribute on the model
+to obtain the objective value for the current solution:
+<PRE>
+  print 'Obj:', m.objVal
+</PRE>
+
+<P>
+The names and types of all model, variable, and constraint attributes
+can be found in the online Python documentation.  Type
+<EM>help(GRB.attr)</EM> in the Gurobi Shell for details.
+
+<P>
+<B>Error handling</B>
+
+<P>
+Errors in the Gurobi Python interface are handled through the Python
+exception mechanism.  In the example, all Gurobi statements are
+enclosed inside a <EM>try</EM> block, and any associated errors would be
+caught by the <EM>except</EM> block.
+
+<P>
+<B>Running the example</B>
+
+<P>
+When you run the example (<EM>gurobi.bat mip1.py</EM> on Windows,
+or <EM>gurobi.sh mip1.py</EM> on Linux or Mac), you should see the following
+output:
+<PRE>
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+x 1.0
+y 0.0
+z 1.0
+Obj: 3.0
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html176"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html174"
+  HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html168"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html177"
+  HREF="node13.html">Python Dictionary Example</A>
+<B> Up:</B> <A NAME="tex2html175"
+  HREF="node11.html">Python Interface</A>
+<B> Previous:</B> <A NAME="tex2html169"
+  HREF="node11.html">Python Interface</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

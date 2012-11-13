@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBTempConstr</TITLE>
+<META NAME="description" CONTENT="GRBTempConstr">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node481.html">
+<LINK REL="previous" HREF="node465.html">
+<LINK REL="up" HREF="node380.html">
+<LINK REL="next" HREF="node481.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html6416"
+  HREF="node481.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6414"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6408"
+  HREF="node479.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6417"
+  HREF="node481.html">GRBColumn</A>
+<B> Up:</B> <A NAME="tex2html6415"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6409"
+  HREF="node479.html">GRBQuadExpr.Value</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000410000000000000000"></A>
+<A NAME="dotnetclass:GRBTempConstr"></A>
+<BR>
+GRBTempConstr
+</H2>
+
+<P>
+Gurobi temporary constraint object.  Objects of this class are created
+as intermediate results when building constraints using overloaded
+operators.  There are no public methods on this class.  Instead,
+<EM>GRBTempConstr</EM> objects are created by
+operators <A HREF="node493.html#dotnetmethod:operator__">==</A>,
+<A HREF="node491.html#dotnetmethod:operator_SPMlt__">&lt;=</A>, or
+<A HREF="node492.html#dotnetmethod:operator_SPMgt__">&gt;=</A>.  You will generally never
+store objects of this class in your own variables.
+
+<P>
+Consider the following examples:
+<PRE>
+  model.AddConstr(x + y &lt;= 1);
+  model.AddQConstr(x*x + y*y &lt;= 1);
+</PRE>
+The overloaded <EM>&lt;=</EM> operator creates an object of type
+<EM>GRBTempConstr</EM>, which is then immediately passed to
+<A HREF="node395.html#dotnetmethod:GRBModel.AddConstr">GRBModel.AddConstr</A> or
+<A HREF="node397.html#dotnetmethod:GRBModel.AddQConstr">GRBModel.AddQConstr</A>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html6416"
+  HREF="node481.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html6414"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html6408"
+  HREF="node479.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html6417"
+  HREF="node481.html">GRBColumn</A>
+<B> Up:</B> <A NAME="tex2html6415"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html6409"
+  HREF="node479.html">GRBQuadExpr.Value</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>

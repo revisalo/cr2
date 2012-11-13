@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GRBEnv</TITLE>
+<META NAME="description" CONTENT="GRBEnv">
+<META NAME="keywords" CONTENT="refman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="refman.css">
+
+<LINK REL="next" HREF="node393.html">
+<LINK REL="previous" HREF="node380.html">
+<LINK REL="up" HREF="node380.html">
+<LINK REL="next" HREF="node382.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html5354"
+  HREF="node382.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html5352"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html5346"
+  HREF="node380.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html5355"
+  HREF="node382.html">GRBEnv()</A>
+<B> Up:</B> <A NAME="tex2html5353"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html5347"
+  HREF="node380.html">.NET Reference Manual</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00041000000000000000"></A>
+<A NAME="dotnetclass:GRBEnv"></A>
+<BR>
+GRBEnv
+</H2>
+
+<P>
+Gurobi environment object.  Gurobi models are always associated with
+an environment.  You must create an environment before can you create
+and populate a model.  You will generally only need a single
+environment object in your program.
+
+<P>
+The methods on environment objects are mainly used to manage
+Gurobi parameters (e.g.,
+<A HREF="node385.html#dotnetmethod:GRBEnv.Get">Get</A>,
+<A HREF="node386.html#dotnetmethod:GRBEnv.GetParamInfo">GetParamInfo</A>,
+<A HREF="node391.html#dotnetmethod:GRBEnv.Set">Set</A>).
+
+<P>
+While the .NET garbage collector will eventually collect an unused
+<EM>GRBEnv</EM> object, an environment will hold onto resources (Gurobi
+licenses, file descriptors, etc.) until that collection occurs.  If
+your program creates multiple <EM>GRBEnv</EM> objects, we recommend
+that you call <A HREF="node383.html#dotnetmethod:GRBEnv.Dispose">GRBEnv.Dispose</A>
+when you are done using one.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html5356"
+  HREF="node382.html">GRBEnv()</A>
+<LI><A NAME="tex2html5357"
+  HREF="node383.html">GRBEnv.Dispose()</A>
+<LI><A NAME="tex2html5358"
+  HREF="node384.html">GRBEnv.ErrorMsg</A>
+<LI><A NAME="tex2html5359"
+  HREF="node385.html">GRBEnv.Get()</A>
+<LI><A NAME="tex2html5360"
+  HREF="node386.html">GRBEnv.GetParamInfo()</A>
+<LI><A NAME="tex2html5361"
+  HREF="node387.html">GRBEnv.Message()</A>
+<LI><A NAME="tex2html5362"
+  HREF="node388.html">GRBEnv.ReadParams()</A>
+<LI><A NAME="tex2html5363"
+  HREF="node389.html">GRBEnv.Release()</A>
+<LI><A NAME="tex2html5364"
+  HREF="node390.html">GRBEnv.ResetParams()</A>
+<LI><A NAME="tex2html5365"
+  HREF="node391.html">GRBEnv.Set()</A>
+<LI><A NAME="tex2html5366"
+  HREF="node392.html">GRBEnv.WriteParams()</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html5354"
+  HREF="node382.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html5352"
+  HREF="node380.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html5346"
+  HREF="node380.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html5355"
+  HREF="node382.html">GRBEnv()</A>
+<B> Up:</B> <A NAME="tex2html5353"
+  HREF="node380.html">.NET Reference Manual</A>
+<B> Previous:</B> <A NAME="tex2html5347"
+  HREF="node380.html">.NET Reference Manual</A></DIV>
+<!--End of Navigation Panel-->
+
+</BODY>
+</HTML>
