@@ -14,7 +14,7 @@ class SectionsController < ApplicationController
       pensumium = params[:pensum_id]# pensum
 
       escribir
-      system("/bin/bash ~/bash2.sh")
+      system("/bin/bash ./bash2.sh")
       leer
 
       redirect_to new_section_path(:id => pensumium)
@@ -122,14 +122,17 @@ class SectionsController < ApplicationController
     obf = params[:ObFunction]# 1 capacity, 2 no room
     
     puts ("id: ")
-    puts (:pensum_id)
+    puts (params[:pensum_id])
     @pensum = Pensum.find(params[:pensum_id])
     File.open('./files/data', 'w') do |f|
       #f.puts @pensum.subjects.count
+      puts "#{@pensum.subjects.count};#{cross};#{obf}" 
       f.puts "#{@pensum.subjects.count};#{cross};#{obf}" 
       f.puts "----------"
       @pensum.subjects.each do |sub|
-      f.puts "#{sub.code};#{sub.capacity};#{sub.blocks};#{sub.preinscription.enrolled}" 
+      preins = Preinscription.where("pensum_id = ? AND subject_id = ?", @pensum, sub.code).first
+      puts "#{sub.code};#{sub.capacity};#{sub.blocks};#{preins.enrolled}" 
+      f.puts "#{sub.code};#{sub.capacity};#{sub.blocks};#{preins.enrolled}" 
       end
       f.puts "----------"
       @pensum.subjects.each do |sub|
